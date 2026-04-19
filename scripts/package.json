@@ -1,0 +1,13 @@
+{
+  "name": "cc-design-scripts",
+  "private": true,
+  "description": "Export utility scripts for cc-design skill (Claude Code)",
+  "scripts": {
+    "pptx": "node gen_pptx.js",
+    "inline": "node super_inline_html.js",
+    "pdf": "node open_for_print.js"
+  },
+  "dependencies": {
+    "pptxgenjs": "^3.12.0"
+  }
+}

@@ -1,29 +1,64 @@
 # Tweaks System
 
-Tweaks let the user toggle in-page controls from the toolbar to adjust design aspects — colors, fonts, spacing, copy, layout variants, etc. You design the Tweaks UI; it lives inside the prototype.
+Tweaks let the user toggle in-page controls to adjust design aspects — colors, fonts, spacing, copy, layout variants, etc. You design the Tweaks UI; it lives inside the prototype as a self-contained panel.
 
-## Protocol
+## Implementation
 
-**Order matters: register the listener before you announce availability.**
+The tweaks system is a pure in-page toggle — no parent frame communication needed.
 
-1. **First**, register a `message` listener on `window`:
-   ```js
-   window.addEventListener('message', (e) => {
-     if (e.data?.type === '__activate_edit_mode') { /* show Tweaks panel */ }
-     if (e.data?.type === '__deactivate_edit_mode') { /* hide it */ }
-   });
-   ```
-2. **Then** call: `window.parent.postMessage({type: '__edit_mode_available'}, '*');`
-   This makes the toolbar toggle appear.
+### 1. Floating toggle button
 
-3. When a value changes, apply it live **and** persist:
-   ```js
-   window.parent.postMessage({type: '__edit_mode_set_keys', edits: {fontSize: 18}}, '*');
-   ```
+Add a fixed-position button in the bottom-right corner that shows/hides the tweaks panel:
 
-## Persisting State
+```html
+<style>
+  #tweaks-toggle {
+    position: fixed; bottom: 20px; right: 20px; z-index: 9999;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: #1a1a1a; color: #fff; border: none;
+    font-size: 20px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    display: flex; align-items: center; justify-content: center;
+  }
+  #tweaks-panel {
+    position: fixed; bottom: 74px; right: 20px; z-index: 9998;
+    width: 280px; max-height: 60vh; overflow-y: auto;
+    background: #1a1a1a; color: #e0e0e0; border-radius: 12px;
+    padding: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    display: none; font-family: system-ui, sans-serif; font-size: 13px;
+  }
+  #tweaks-panel.visible { display: block; }
+  #tweaks-panel label { display: block; margin-bottom: 10px; }
+  #tweaks-panel input[type="color"] { width: 40px; height: 28px; border: none; cursor: pointer; }
+  #tweaks-panel input[type="range"] { width: 100%; }
+  #tweaks-panel select { width: 100%; padding: 4px; }
+</style>
 
-Wrap tweakable defaults in comment markers:
+<button id="tweaks-toggle" title="Tweaks">⚙</button>
+<div id="tweaks-panel">
+  <h3 style="margin:0 0 12px; font-size:14px; color:#fff;">Tweaks</h3>
+  <!-- Add your tweak controls here -->
+</div>
+```
+
+### 2. Toggle logic
+
+```js
+const toggle = document.getElementById('tweaks-toggle');
+const panel = document.getElementById('tweaks-panel');
+
+// Restore visibility from localStorage
+const tweaksVisible = localStorage.getItem('cc-tweaks-visible') === 'true';
+if (tweaksVisible) panel.classList.add('visible');
+
+toggle.addEventListener('click', () => {
+  panel.classList.toggle('visible');
+  localStorage.setItem('cc-tweaks-visible', panel.classList.contains('visible'));
+});
+```
+
+### 3. Default values with persistence
+
+Wrap tweakable defaults in comment markers for easy editing:
 
 ```js
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -31,14 +66,26 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "fontSize": 16,
   "dark": false
 }/*EDITMODE-END*/;
+
+// Load from localStorage or use defaults
+const tweaks = { ...TWEAK_DEFAULTS, ...JSON.parse(localStorage.getItem('cc-tweaks') || '{}') };
+
+function applyTweaks() {
+  document.documentElement.style.setProperty('--primary', tweaks.primaryColor);
+  document.documentElement.style.setProperty('--font-size', tweaks.fontSize + 'px');
+  // Apply other tweaks...
+  localStorage.setItem('cc-tweaks', JSON.stringify(tweaks));
+}
+
+applyTweaks();
 ```
 
-The block between markers **must be valid JSON** (double-quoted keys and strings). Exactly one such block in the root HTML file, inside inline `<script>`.
+The block between `EDITMODE-BEGIN` and `EDITMODE-END` markers **must be valid JSON** (double-quoted keys and strings). The skill uses these markers to find and update default values via the `Edit` tool.
 
 ## Tips
 
-- Keep the Tweaks surface small — a floating panel in the bottom-right, or inline handles
+- Keep the Tweaks surface small — a compact floating panel
 - Hide controls entirely when Tweaks is off; the design should look final
 - If the user asks for multiple variants of a single element, use tweaks to cycle through options
 - Even if the user doesn't ask for tweaks, add a couple by default — expose interesting possibilities
-- Title your panel **"Tweaks"** so the naming matches the toolbar toggle
+- Title your panel **"Tweaks"** so the naming is consistent

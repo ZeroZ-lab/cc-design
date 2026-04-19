@@ -2,14 +2,16 @@
 
 A Claude Code skill that provides high-fidelity HTML design and prototype creation capabilities — covering slide decks, interactive prototypes, landing pages, UI mockups, animations, and visual design explorations.
 
+Adapted from the Claude Artifacts design environment to work natively with Claude Code, using Playwright MCP for preview and verification, and local template files for starter components.
+
 ## Overview
 
-CC Design embeds a structured design workflow into Claude Code, enabling it to operate as an expert product designer. It guides the full lifecycle: from clarifying requirements and acquiring design context, through building progressively with real UI kits and design systems, to delivering polished HTML artifacts with verification.
+CC Design embeds a structured design workflow into Claude Code, enabling it to operate as an expert product designer. It guides the full lifecycle: from clarifying requirements and acquiring design context, through building progressively with real UI kits and design systems, to delivering polished HTML artifacts with Playwright-based verification.
 
 The skill is designed around two core principles:
 
 - **Context-first design** — Never design from scratch when existing brand systems, component libraries, or product code is available. Actively acquire and reuse design vocabulary before creating new visual directions.
-- **Progressive disclosure** — The main skill definition stays concise (under 170 lines) while technical references are loaded on demand, keeping context window usage minimal.
+- **Progressive disclosure** — The main skill definition stays concise while technical references are loaded on demand, keeping context window usage minimal.
 
 ## Features
 
@@ -19,9 +21,9 @@ The skill is designed around two core principles:
 | **Design systems** | Auto-discovers and reuses existing tokens, components, typography, spacing, and color patterns |
 | **Variations** | Generates 3+ design directions across layout, interaction, visual intensity, and motion axes |
 | **Prototyping** | React + Babel inline JSX with pinned versions, component scope management, starter scaffolds |
-| **Tweaks system** | In-page design controls with real-time preview and persistent state |
-| **Verification** | Automated console error checks, layout validation, and screenshot-based regression via background subagents |
-| **Export** | PPTX (editable or screenshot mode), PDF, standalone HTML, Canva import, developer handoff packages |
+| **Tweaks system** | Self-contained in-page design controls with real-time preview and localStorage persistence |
+| **Verification** | Playwright-based console error checks, visual screenshot verification |
+| **Export** | PPTX (editable or screenshot mode), PDF, standalone self-contained HTML |
 
 ## Installation
 
@@ -37,6 +39,14 @@ Or add it as a submodule within an existing skill collection:
 git submodule add https://github.com/ZeroZ-lab/cc-design.git skills/cc-design
 ```
 
+### Export script setup
+
+For PPTX, PDF, and inline HTML export features:
+
+```bash
+cd ~/.claude/skills/cc-design/scripts && npm install && cd -
+```
+
 ## Project Structure
 
 ```
@@ -44,18 +54,31 @@ cc-design/
 ├── SKILL.md                          # Skill definition with YAML frontmatter
 ├── agents/
 │   └── openai.yaml                   # Interface configuration for Codex-compatible platforms
-└── references/
-    ├── platform-tools.md             # Platform tool reference (file ops, preview, export)
-    ├── react-babel-setup.md          # React/Babel pinned versions and scope rules
-    ├── starter-components.md         # Starter component catalog and usage
-    └── tweaks-system.md              # In-page tweak controls protocol
+├── references/
+│   ├── platform-tools.md             # Claude Code + Playwright tool reference
+│   ├── react-babel-setup.md          # React/Babel pinned versions and scope rules
+│   ├── starter-components.md         # Starter component catalog and usage
+│   └── tweaks-system.md              # In-page tweak controls (self-contained)
+├── templates/                        # Starter component files
+│   ├── deck_stage.js                 # Slide presentation stage
+│   ├── design_canvas.jsx             # Side-by-side option grid
+│   ├── ios_frame.jsx                 # iPhone device frame
+│   ├── android_frame.jsx             # Android device frame
+│   ├── macos_window.jsx              # macOS window chrome
+│   ├── browser_window.jsx            # Browser window chrome
+│   └── animations.jsx                # Timeline animation engine
+└── scripts/                          # Export utility scripts
+    ├── package.json                  # Node.js dependencies
+    ├── gen_pptx.js                   # HTML → PPTX export
+    ├── super_inline_html.js          # HTML + assets → single file
+    └── open_for_print.js             # HTML → PDF via Playwright
 ```
 
 ### Architecture
 
 ```
 ┌─────────────────────────────────────┐
-│           SKILL.md (168 lines)      │  ← Always loaded into context
+│           SKILL.md                  │  ← Always loaded into context
 │  Core workflow, design rules,       │
 │  content guidelines, verification   │
 └──────────────┬──────────────────────┘
@@ -63,21 +86,23 @@ cc-design/
        ┌───────┴────────┐
        ▼                ▼
 ┌──────────────┐  ┌──────────────┐
-│ references/  │  │  agents/     │
-│ (loaded as   │  │  (platform   │
-│  needed)     │  │   config)    │
+│ references/  │  │ templates/   │
+│ (loaded as   │  │ (copied to   │
+│  needed)     │  │  project)    │
 └──────────────┘  └──────────────┘
+                        │
+                ┌───────┴────────┐
+                ▼                ▼
+         ┌──────────────┐  ┌──────────────┐
+         │  scripts/    │  │  agents/     │
+         │  (export     │  │  (platform   │
+         │   tools)     │  │   config)    │
+         └──────────────┘  └──────────────┘
 ```
-
-The three-tier loading system keeps the skill responsive across diverse conversation contexts:
-
-1. **Metadata** — name + description (~40 words), always present for trigger matching
-2. **SKILL.md body** — core instructions (~168 lines), loaded when the skill is activated
-3. **References** — technical details loaded only when the relevant topic arises (React setup, component catalog, tool API, tweak protocol)
 
 ## Usage
 
-Once installed, the skill activates automatically when Claude Code encounters design-related requests. Example prompts that trigger the skill:
+Once installed, the skill activates automatically when Claude Code encounters design-related requests. Example prompts:
 
 ```
 "Design a landing page for our SaaS product"
@@ -87,37 +112,24 @@ Once installed, the skill activates automatically when Claude Code encounters de
 "Make the onboarding screens look good on mobile"
 ```
 
-For programmatic invocation in Codex-compatible environments:
-
-```yaml
-default_prompt: "Use $cc-design to explore three strong HTML-based design directions for this feature, grounded in the existing product style."
-```
-
 ## Design Workflow
 
 ```
 Understand → Explore → Plan → Build → Verify → Deliver
     │           │        │       │        │         │
     ▼           ▼        ▼       ▼        ▼         ▼
- Clarify    Read      Todo    HTML +    Console   `done`
- questions  design    list    React     errors    + verify
-            context          comps     + visual    agent
-                                        checks
-```
+ Clarify    Read      Todo    HTML +   Playwright  File
+ questions  design    list    React    console +   delivered
+            context          comps    screenshot
 
-1. **Understand** — Clarify output format, fidelity, audience, variations, and constraints
-2. **Explore** — Read design systems, copy relevant components, inspect existing UI
-3. **Plan** — Create a structured approach with a todo list
-4. **Build** — Write HTML/React with starter components and design system assets
-5. **Verify** — Automated error detection and visual regression via background agents
-6. **Deliver** — Surface the artifact with `done`, export to target format
+```
 
 ## Compatibility
 
 | Platform | Status | Notes |
 |---|---|---|
-| Claude Code (CLI) | Supported | Primary target |
-| Claude.ai (Web) | Supported | No subagents; runs inline |
+| Claude Code (CLI) | **Primary target** | Playwright MCP for preview |
+| Claude.ai (Web) | Partial | No Playwright; use `open` command |
 | Codex / OpenAI-compatible | Supported | Via `agents/openai.yaml` |
 
 ## Contributing
