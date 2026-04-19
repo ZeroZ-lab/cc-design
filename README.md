@@ -18,6 +18,7 @@ The skill is designed around two core principles:
 | Category | Capabilities |
 |---|---|
 | **Output formats** | Interactive prototypes, slide decks, landing pages, UI mockups, animated motion studies, design explorations |
+| **Brand style cloning** | Progressive loading of 68+ brand design systems from [getdesign.md](https://getdesign.md) (Stripe, Vercel, Notion, Linear, Apple, etc.) |
 | **Design systems** | Auto-discovers and reuses existing tokens, components, typography, spacing, and color patterns |
 | **Variations** | Generates 3+ design directions across layout, interaction, visual intensity, and motion axes |
 | **Prototyping** | React + Babel inline JSX with pinned versions, component scope management, starter scaffolds |
@@ -58,9 +59,11 @@ npx playwright install chromium
 ```
 cc-design/
 ├── SKILL.md                          # Skill definition with YAML frontmatter
+├── EXAMPLES.md                       # Usage examples including brand style cloning
 ├── agents/
 │   └── openai.yaml                   # Interface configuration for Codex-compatible platforms
 ├── references/
+│   ├── getdesign-loader.md           # Brand style loading from getdesign.md
 │   ├── platform-tools.md             # Claude Code + Playwright tool reference
 │   ├── react-babel-setup.md          # React/Babel pinned versions and scope rules
 │   ├── starter-components.md         # Starter component catalog and usage
@@ -117,6 +120,21 @@ Once installed, the skill activates automatically when Claude Code encounters de
 "Explore 3 visual directions for the new dashboard"
 "Make the onboarding screens look good on mobile"
 ```
+
+### Brand Style Cloning (New)
+
+Mention a brand name to automatically load its design system from [getdesign.md](https://getdesign.md):
+
+```
+"Create a pricing page with Stripe's aesthetic"
+"Notion-style kanban board"
+"Mix Vercel's minimalism with Linear's purple accents"
+"Show me this dashboard in Apple style vs Tesla style"
+```
+
+Supports 68+ brands including Stripe, Vercel, Notion, Linear, Apple, Tesla, Figma, GitHub, Airbnb, and more.
+
+See [EXAMPLES.md](./EXAMPLES.md) for detailed usage patterns and advanced workflows.
 
 ## Design Workflow
 

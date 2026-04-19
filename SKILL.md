@@ -41,6 +41,7 @@ Classify the user's task by intent (output format, keywords), then load only the
 
 | Task type | Load reference | Copy template | Verify focus |
 |-----------|---------------|---------------|-------------|
+| Brand style clone | `references/getdesign-loader.md` + `react-babel-setup.md` | Choose template as needed | Brand aesthetic match |
 | React prototype | `references/react-babel-setup.md` | Needed frame from `templates/` | No console errors |
 | Slide deck | `references/starter-components.md` | `templates/deck_stage.js` | Fixed canvas + scaling |
 | Variant exploration | `references/tweaks-system.md` | `templates/design_canvas.jsx` | Tweaks panel visible |
@@ -55,7 +56,7 @@ Classify the user's task by intent (output format, keywords), then load only the
 
 ## Workflow
 
-**1. Understand** — Ask clarifying questions via `AskUserQuestion`: output format, fidelity level, number of variations, constraints, and existing design systems. If scope is unclear, load `references/question-protocol.md` for structured question templates. Continue until scope is clear.
+**1. Understand** — Ask clarifying questions via `AskUserQuestion`: output format, fidelity level, number of variations, constraints, and existing design systems. **Detect brand mentions** — scan the user's request for brand names (Stripe, Vercel, Notion, Linear, Apple, Tesla, etc.). If a brand is mentioned, this is a "Brand style clone" task. If scope is unclear, load `references/question-protocol.md` for structured question templates. Continue until scope is clear.
 
 **2. Route** — Read the routing table above. Identify the task type. Load the specified reference(s). Copy the specified template(s) from `templates/` to the project directory:
 ```bash
