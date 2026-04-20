@@ -9,15 +9,29 @@ Adapted from the Claude Artifacts design environment to work natively in Claude 
 ## Screenshots
 
 **Demo Gallery**
-![Demo Gallery](./screenshots/cc-design-home.png)
 
-| Enterprise Hero | Sci-Fi Website | Tesla 3D |
-|:---:|:---:|:---:|
-| ![Enterprise Hero](./screenshots/cc-design-enterprise.png) | ![Sci-Fi Website](./screenshots/cc-design-scifi.png) | ![Tesla 3D](./screenshots/cc-design-tesla.png) |
+[![Demo Gallery](./screenshots/previews/cc-design-home-preview.png)](./screenshots/cc-design-home.png)
 
-| AETHER | Glass Dashboard | Banking App |
-|:---:|:---:|:---:|
-| ![AETHER](./screenshots/cc-design-aether.png) | ![Glass Dashboard](./screenshots/cc-design-glass.png) | ![Banking App](./screenshots/cc-design-banking.png) |
+<p align="center">
+  <a href="./screenshots/cc-design-enterprise.png"><img src="./screenshots/previews/cc-design-enterprise-preview.png" alt="Enterprise Hero" width="32%"></a>
+  <a href="./screenshots/cc-design-scifi.png"><img src="./screenshots/previews/cc-design-scifi-preview.png" alt="Sci-Fi Website" width="32%"></a>
+  <a href="./screenshots/cc-design-tesla.png"><img src="./screenshots/previews/cc-design-tesla-preview.png" alt="Tesla 3D" width="32%"></a>
+</p>
+<p align="center">
+  <a href="./screenshots/cc-design-aether.png"><img src="./screenshots/previews/cc-design-aether-preview.png" alt="AETHER" width="32%"></a>
+  <a href="./screenshots/cc-design-glass.png"><img src="./screenshots/previews/cc-design-glass-preview.png" alt="Glass Dashboard" width="32%"></a>
+  <a href="./screenshots/cc-design-banking.png"><img src="./screenshots/previews/cc-design-banking-preview.png" alt="Banking App" width="32%"></a>
+</p>
+<p align="center">
+  <a href="./screenshots/cc-design-spacex.png"><img src="./screenshots/previews/cc-design-spacex-preview.png" alt="SpaceX" width="32%"></a>
+  <a href="./screenshots/cc-design-mars.png"><img src="./screenshots/previews/cc-design-mars-preview.png" alt="Mars Landing" width="32%"></a>
+  <a href="./screenshots/cc-design-mechops.png"><img src="./screenshots/previews/cc-design-mechops-preview.png" alt="Mech-Ops" width="32%"></a>
+</p>
+<p align="center">
+  <a href="./screenshots/cc-design-llm-sketch.png"><img src="./screenshots/previews/cc-design-llm-sketch-preview.png" alt="LLM Sketch" width="32%"></a>
+  <a href="./screenshots/cc-design-retro.png"><img src="./screenshots/previews/cc-design-retro-preview.png" alt="Retro Pixel" width="32%"></a>
+  <a href="./screenshots/cc-design-thermo.png"><img src="./screenshots/previews/cc-design-thermo-preview.png" alt="Thermodynamics" width="32%"></a>
+</p>
 
 ## Overview
 
