@@ -57,6 +57,34 @@ Clone into your Claude Code skills directory:
 git clone https://github.com/ZeroZ-lab/claritas-design.git ~/.claude/skills/cc-design
 ```
 
+For Codex-style global installs, use:
+
+```bash
+git clone https://github.com/ZeroZ-lab/claritas-design.git ~/.codex/skills/cc-design
+```
+
+## Version Awareness
+
+`cc-design` now ships with a root `VERSION` file and a lightweight update checker:
+
+```bash
+~/.codex/skills/cc-design/bin/ccdesign-update-check
+```
+
+When the skill detects that your local version is stale, it will surface:
+
+```text
+UPGRADE_AVAILABLE <local> <remote>
+```
+
+The user-facing upgrade path stays unified:
+
+```bash
+npx skills update cc-design
+```
+
+`cc-design` only detects and prompts. It does not own the upgrade executor.
+
 ### Export scripts
 
 ```bash
