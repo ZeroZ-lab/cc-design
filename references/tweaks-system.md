@@ -1,96 +1,313 @@
-# Tweaks System
+# Tweaks: Real-Time Design Variant Parameter Adjustment
 
-> **Load when:** Generating multiple design variants or enabling real-time in-page adjustments
-> **Skip when:** Producing a single static design with no variations
-> **Why it matters:** Provides a unified, self-contained adjustment UI so users can toggle variants without file proliferation
-> **Typical failure it prevents:** Creating separate HTML files per variant instead of one file with toggleable options; losing user adjustments on refresh
+Tweaks is a core capability in this skill — allowing users to switch variations/adjust parameters in real-time without changing code.
 
-Tweaks let the user toggle in-page controls to adjust design aspects — colors, fonts, spacing, copy, layout variants, etc. You design the Tweaks UI; it lives inside the prototype as a self-contained panel.
+**Cross-agent environment adaptation**: Some native design-agent environments (like Claude.ai Artifacts) rely on the host's postMessage to write tweak values back to source code for persistence. This skill uses a **pure frontend localStorage approach** — same effect (state persists after refresh), but persistence happens in browser localStorage rather than source files. This approach works in any agent environment (Claude Code / Codex / Cursor / Trae / etc.).
 
-## Implementation
+## When to Add Tweaks
 
-The tweaks system is a pure in-page toggle — no parent frame communication needed.
+- User explicitly requests "adjustable parameters"/"multiple version switching"
+- Design has multiple variations that need comparison
+- User didn't mention it, but you subjectively judge **adding a few inspiring tweaks can help users see possibilities**
 
-### 1. Floating toggle button
+Default recommendation: **Add 2-3 tweaks to every design** (color theme/font size/layout variants) even if user didn't ask — showing users the possibility space is part of design service.
 
-Add a fixed-position button in the bottom-right corner that shows/hides the tweaks panel:
+## Implementation (Pure Frontend Version)
 
-```html
-<style>
-  #tweaks-toggle {
-    position: fixed; bottom: 20px; right: 20px; z-index: 9999;
-    width: 44px; height: 44px; border-radius: 50%;
-    background: #1a1a1a; color: #fff; border: none;
-    font-size: 20px; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    display: flex; align-items: center; justify-content: center;
-  }
-  #tweaks-panel {
-    position: fixed; bottom: 74px; right: 20px; z-index: 9998;
-    width: 280px; max-height: 60vh; overflow-y: auto;
-    background: #1a1a1a; color: #e0e0e0; border-radius: 12px;
-    padding: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-    display: none; font-family: system-ui, sans-serif; font-size: 13px;
-  }
-  #tweaks-panel.visible { display: block; }
-  #tweaks-panel label { display: block; margin-bottom: 10px; }
-  #tweaks-panel input[type="color"] { width: 40px; height: 28px; border: none; cursor: pointer; }
-  #tweaks-panel input[type="range"] { width: 100%; }
-  #tweaks-panel select { width: 100%; padding: 4px; }
-</style>
+### Basic Structure
 
-<button id="tweaks-toggle" title="Tweaks">⚙</button>
-<div id="tweaks-panel">
-  <h3 style="margin:0 0 12px; font-size:14px; color:#fff;">Tweaks</h3>
-  <!-- Add your tweak controls here -->
-</div>
+```jsx
+const TWEAK_DEFAULTS = {
+  "primaryColor": "#D97757",
+  "fontSize": 16,
+  "density": "comfortable",
+  "dark": false
+};
+
+function useTweaks() {
+  const [tweaks, setTweaks] = React.useState(() => {
+    try {
+      const stored = localStorage.getItem('design-tweaks');
+      return stored ? { ...TWEAK_DEFAULTS, ...JSON.parse(stored) } : TWEAK_DEFAULTS;
+    } catch {
+      return TWEAK_DEFAULTS;
+    }
+  });
+
+  const update = (patch) => {
+    const next = { ...tweaks, ...patch };
+    setTweaks(next);
+    try {
+      localStorage.setItem('design-tweaks', JSON.stringify(next));
+    } catch {}
+  };
+
+  const reset = () => {
+    setTweaks(TWEAK_DEFAULTS);
+    try {
+      localStorage.removeItem('design-tweaks');
+    } catch {}
+  };
+
+  return { tweaks, update, reset };
+}
 ```
 
-### 2. Toggle logic
+### Tweaks Panel UI
 
-```js
-const toggle = document.getElementById('tweaks-toggle');
-const panel = document.getElementById('tweaks-panel');
+Floating panel in bottom-right corner. Collapsible:
 
-// Restore visibility from localStorage
-const tweaksVisible = localStorage.getItem('cc-tweaks-visible') === 'true';
-if (tweaksVisible) panel.classList.add('visible');
+```jsx
+function TweaksPanel() {
+  const { tweaks, update, reset } = useTweaks();
+  const [open, setOpen] = React.useState(false);
 
-toggle.addEventListener('click', () => {
-  panel.classList.toggle('visible');
-  localStorage.setItem('cc-tweaks-visible', panel.classList.contains('visible'));
-});
+  return (
+    <div style={{
+      position: 'fixed',
+      bottom: 20,
+      right: 20,
+      zIndex: 9999,
+    }}>
+      {open ? (
+        <div style={{
+          background: 'white',
+          border: '1px solid #e5e5e5',
+          borderRadius: 12,
+          padding: 20,
+          boxShadow: '0 10px 40px rgba(0,0,0,0.12)',
+          width: 280,
+          fontFamily: 'system-ui',
+          fontSize: 13,
+        }}>
+          <div style={{ 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            marginBottom: 16,
+          }}>
+            <strong>Tweaks</strong>
+            <button onClick={() => setOpen(false)} style={{
+              border: 'none', background: 'none', cursor: 'pointer', fontSize: 16,
+            }}>×</button>
+          </div>
+
+          {/* Color */}
+          <label style={{ display: 'block', marginBottom: 12 }}>
+            <div style={{ marginBottom: 4, color: '#666' }}>Primary Color</div>
+            <input 
+              type="color" 
+              value={tweaks.primaryColor} 
+              onChange={e => update({ primaryColor: e.target.value })}
+              style={{ width: '100%', height: 32 }}
+            />
+          </label>
+
+          {/* Font size slider */}
+          <label style={{ display: 'block', marginBottom: 12 }}>
+            <div style={{ marginBottom: 4, color: '#666' }}>Font Size ({tweaks.fontSize}px)</div>
+            <input 
+              type="range" 
+              min={12} max={24} step={1}
+              value={tweaks.fontSize}
+              onChange={e => update({ fontSize: +e.target.value })}
+              style={{ width: '100%' }}
+            />
+          </label>
+
+          {/* Density options */}
+          <label style={{ display: 'block', marginBottom: 12 }}>
+            <div style={{ marginBottom: 4, color: '#666' }}>Density</div>
+            <select 
+              value={tweaks.density}
+              onChange={e => update({ density: e.target.value })}
+              style={{ width: '100%', padding: 6 }}
+            >
+              <option value="compact">Compact</option>
+              <option value="comfortable">Comfortable</option>
+              <option value="spacious">Spacious</option>
+            </select>
+          </label>
+
+          {/* Dark mode toggle */}
+          <label style={{ 
+            display: 'flex', 
+            alignItems: 'center',
+            gap: 8,
+            marginBottom: 16,
+          }}>
+            <input 
+              type="checkbox" 
+              checked={tweaks.dark}
+              onChange={e => update({ dark: e.target.checked })}
+            />
+            <span>Dark Mode</span>
+          </label>
+
+          <button onClick={reset} style={{
+            width: '100%',
+            padding: '8px 12px',
+            background: '#f5f5f5',
+            border: 'none',
+            borderRadius: 6,
+            cursor: 'pointer',
+            fontSize: 12,
+          }}>Reset</button>
+        </div>
+      ) : (
+        <button 
+          onClick={() => setOpen(true)}
+          style={{
+            background: '#1A1A1A',
+            color: 'white',
+            border: 'none',
+            borderRadius: 999,
+            padding: '10px 16px',
+            fontSize: 12,
+            cursor: 'pointer',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+          }}
+        >⚙ Tweaks</button>
+      )}
+    </div>
+  );
+}
 ```
 
-### 3. Default values with persistence
+### Applying Tweaks
 
-Wrap tweakable defaults in comment markers for easy editing:
+Use Tweaks in the main component:
 
-```js
+```jsx
+function App() {
+  const { tweaks } = useTweaks();
+
+  return (
+    <div style={{
+      '--primary': tweaks.primaryColor,
+      '--font-size': `${tweaks.fontSize}px`,
+      background: tweaks.dark ? '#0A0A0A' : '#FAFAFA',
+      color: tweaks.dark ? '#FAFAFA' : '#1A1A1A',
+    }}>
+      {/* Your content */}
+      <TweaksPanel />
+    </div>
+  );
+}
+```
+
+Use variables in CSS:
+
+```css
+button.cta {
+  background: var(--primary);
+  color: white;
+  font-size: var(--font-size);
+}
+```
+
+## Typical Tweak Options
+
+What tweaks to add for different design types:
+
+### General
+- Primary color (color picker)
+- Font size (slider 12-24px)
+- Typeface (select: display font vs body font)
+- Dark mode (toggle)
+
+### Slide Deck
+- Theme (light/dark/brand)
+- Background style (solid/gradient/image)
+- Font contrast (more decorative vs more restrained)
+- Information density (minimal/standard/dense)
+
+### Product Prototype
+- Layout variant (layout A / B / C)
+- Interaction speed (animation speed 0.5x-2x)
+- Data volume (mock data rows 5/20/100)
+- State (empty/loading/success/error)
+
+### Animation
+- Speed (0.5x-2x)
+- Loop (once/loop/ping-pong)
+- Easing (linear/easeOut/spring)
+
+### Landing Page
+- Hero style (image/gradient/pattern/solid)
+- CTA copy (several variants)
+- Structure (single column / two column / sidebar)
+
+## Tweaks Design Principles
+
+### 1. Meaningful Options, Not Tedious Ones
+
+Every tweak must showcase **real design choices**. Don't add tweaks nobody would actually use (like a border-radius 0-50px slider — users will find all intermediate values look ugly).
+
+Good tweaks expose **discrete, thoughtfully considered variations**:
+- "Corner style": no rounding / slight rounding / large rounding (three options)
+- NOT: "Corners": 0-50px slider
+
+### 2. Less Is More
+
+A design's Tweaks panel should have **at most 5-6 options**. More than that turns it into a "settings page," losing the purpose of quickly exploring variations.
+
+### 3. Default Values Are the Finished Design
+
+Tweaks are **icing on the cake**. Default values must already be a complete, publishable design. What users see when the Tweaks panel is closed is the deliverable.
+
+### 4. Group Logically
+
+When there are many options, display them in groups:
+
+```
+---- Visual ----
+Primary Color | Font Size | Dark Mode
+
+---- Layout ----
+Density | Sidebar Position
+
+---- Content ----
+Data Volume | State
+```
+
+## Forward Compatibility with Source-Level Persistence Hosts
+
+If you later want to upload the design to an environment that supports source-level tweaks (like Claude.ai Artifacts) and have it work there too, keep the **EDITMODE marker blocks**:
+
+```jsx
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "primaryColor": "#D97757",
   "fontSize": 16,
+  "density": "comfortable",
   "dark": false
 }/*EDITMODE-END*/;
-
-// Load from localStorage or use defaults
-const tweaks = { ...TWEAK_DEFAULTS, ...JSON.parse(localStorage.getItem('cc-tweaks') || '{}') };
-
-function applyTweaks() {
-  document.documentElement.style.setProperty('--primary', tweaks.primaryColor);
-  document.documentElement.style.setProperty('--font-size', tweaks.fontSize + 'px');
-  // Apply other tweaks...
-  localStorage.setItem('cc-tweaks', JSON.stringify(tweaks));
-}
-
-applyTweaks();
 ```
 
-The block between `EDITMODE-BEGIN` and `EDITMODE-END` markers **must be valid JSON** (double-quoted keys and strings). The skill uses these markers to find and update default values via the `Edit` tool.
+The marker blocks **have no effect** in the localStorage approach (they're just regular comments), but in hosts that support source-level writeback they'll be read, enabling source-level persistence. Adding them is harmless to the current environment while maintaining forward compatibility.
 
-## Tips
+## FAQ
 
-- Keep the Tweaks surface small — a compact floating panel
-- Hide controls entirely when Tweaks is off; the design should look final
-- If the user asks for multiple variants of a single element, use tweaks to cycle through options
-- Even if the user doesn't ask for tweaks, add a couple by default — expose interesting possibilities
-- Title your panel **"Tweaks"** so the naming is consistent
+**Tweaks panel blocks design content**
+→ Make it closable. Closed by default, show a small button, user clicks to expand.
+
+**User has to re-set tweaks after switching**
+→ Already uses localStorage. If not persisting after refresh, check if localStorage is available (incognito mode will fail, need to catch).
+
+**Multiple HTML pages want to share tweaks**
+→ Add project name to localStorage key: `design-tweaks-[projectName]`.
+
+**I want tweaks to have linked/cascading relationships**
+→ Add logic in `update`:
+
+```jsx
+const update = (patch) => {
+  let next = { ...tweaks, ...patch };
+  // Linked: auto-switch text color when dark mode is selected
+  if (patch.dark === true && !patch.textColor) {
+    next.textColor = '#F0EEE6';
+  }
+  setTweaks(next);
+  localStorage.setItem(...);
+};
+```

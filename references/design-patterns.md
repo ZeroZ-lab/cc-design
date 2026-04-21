@@ -13,7 +13,7 @@ This library provides battle-tested design patterns with ready-to-use CSS. Each 
 
 The hero is the first thing users see. It must communicate the core value in under 3 seconds.
 
-### Pattern 1: Center-Aligned (中心对称式)
+### Pattern 1: Center-Aligned
 
 **When to use:** Product announcements, landing pages with a single strong message, presentations
 
@@ -73,7 +73,7 @@ The hero is the first thing users see. It must communicate the core value in und
 - Subtitle should be 1-2 sentences max
 - Visual/screenshot should have subtle shadow or frame
 
-### Pattern 2: Split-Screen (左右分栏式)
+### Pattern 2: Split-Screen
 
 **When to use:** Products with strong visual assets, features with screenshots, SaaS landing pages
 
@@ -128,7 +128,7 @@ The hero is the first thing users see. It must communicate the core value in und
 - Visual should have slight perspective or depth (shadow, rotation)
 - On mobile: stack vertically, visual below text
 
-### Pattern 3: Full-Screen Visual (全屏视觉式)
+### Pattern 3: Full-Screen Visual
 
 **When to use:** Creative work, portfolios, event pages, high-impact announcements
 
@@ -194,7 +194,7 @@ The hero is the first thing users see. It must communicate the core value in und
 - Background image: high quality, relevant, not distracting
 - Keep text minimal — the image is the message
 
-### Pattern 4: Card Grid Hero (卡片网格式)
+### Pattern 4: Card Grid Hero
 
 **When to use:** Multi-product showcases, feature overviews, dashboards
 
@@ -270,7 +270,7 @@ The hero is the first thing users see. It must communicate the core value in und
 - Each card should have a visual anchor (icon, illustration)
 - Card content should be scannable — title + 1-2 sentence description
 
-### Pattern 5: Narrative Flow (故事叙述式)
+### Pattern 5: Narrative Flow
 
 **When to use:** Storytelling, long-form content, editorial, onboarding flows
 
@@ -351,7 +351,7 @@ The hero is the first thing users see. It must communicate the core value in und
 
 Cards are the building blocks of modern UI. These patterns cover the most common use cases.
 
-### Minimal Card (极简卡片)
+### Minimal Card
 
 ```css
 .card-minimal {
@@ -372,7 +372,7 @@ Cards are the building blocks of modern UI. These patterns cover the most common
 }
 ```
 
-### Image Card (图文卡片)
+### Image Card
 
 ```css
 .card-image {
@@ -410,7 +410,7 @@ Cards are the building blocks of modern UI. These patterns cover the most common
 }
 ```
 
-### Data Card (数据卡片)
+### Data Card
 
 ```css
 .card-data {
@@ -441,7 +441,7 @@ Cards are the building blocks of modern UI. These patterns cover the most common
 .card-data .trend.down { color: var(--color-error); }
 ```
 
-### Interactive Card (交互卡片)
+### Interactive Card
 
 ```css
 .card-interactive {
@@ -540,7 +540,7 @@ Buttons must have clear visual hierarchy: primary > secondary > tertiary.
 
 ## Navigation Patterns
 
-### Top Navigation (顶部导航)
+### Top Navigation
 
 ```css
 .nav-top {
@@ -580,7 +580,7 @@ Buttons must have clear visual hierarchy: primary > secondary > tertiary.
 
 ## Section Patterns
 
-### Feature Section (功能展示)
+### Feature Section
 
 ```css
 .feature-section {
@@ -601,7 +601,7 @@ Buttons must have clear visual hierarchy: primary > secondary > tertiary.
 }
 ```
 
-### Stats Section (数据统计)
+### Stats Section
 
 ```css
 .stats-section {
@@ -624,7 +624,7 @@ Buttons must have clear visual hierarchy: primary > secondary > tertiary.
 }
 ```
 
-### Testimonial Section (用户评价)
+### Testimonial Section
 
 ```css
 .testimonial {
@@ -667,7 +667,7 @@ Buttons must have clear visual hierarchy: primary > secondary > tertiary.
 
 ## CTA Patterns
 
-### Inline CTA (内嵌行动号召)
+### Inline CTA
 
 ```css
 .cta-inline {
@@ -678,7 +678,7 @@ Buttons must have clear visual hierarchy: primary > secondary > tertiary.
 }
 ```
 
-### Banner CTA (横幅行动号召)
+### Banner CTA
 
 ```css
 .cta-banner {

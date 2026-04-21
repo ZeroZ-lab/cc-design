@@ -11,28 +11,28 @@ This directory contains curated design case studies organized by category. Each 
 
 ## Categories
 
-### Product Pages (产品页面)
+### Product Pages
 High-converting landing pages and product showcases from leading SaaS companies.
 
 - [Stripe Homepage](product-pages/stripe-homepage.md) — Trust through clarity
 - [Linear Features](product-pages/linear-features.md) — Modern minimalism
 - [Notion Landing](product-pages/notion-landing.md) — Playful professionalism
 
-### Presentations (演示文稿)
+### Presentations
 Slide decks that maintain attention and convey key points effectively.
 
 - [Pitch Deck Example](presentations/pitch-deck-example.md) — Investor-ready structure
 - [Keynote Style](presentations/keynote-style.md) — Apple-inspired visual rhythm
 - [Data Story](presentations/data-story.md) — Making numbers memorable
 
-### Mobile Apps (移动应用)
+### Mobile Apps
 Mobile-first UI patterns that prioritize touch interaction and clarity.
 
 - [iOS Onboarding](mobile-apps/ios-onboarding.md) — Progressive disclosure
 - [Android Dashboard](mobile-apps/android-dashboard.md) — Information density
 - [Mobile Checkout](mobile-apps/mobile-checkout.md) — Frictionless conversion
 
-### Creative Works (创意作品)
+### Creative Works
 Award-winning designs that push boundaries while maintaining usability.
 
 - [Awwwards Winner](creative-works/awwwards-winner.md) — Bold experimental layout

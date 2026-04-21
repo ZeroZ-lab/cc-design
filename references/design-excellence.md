@@ -5,7 +5,7 @@
 > **Why it matters:** Technical correctness isn't enough. Great design requires understanding visual hierarchy, emotional impact, composition, and rhythm.
 > **Typical failure it prevents:** Designs that are technically correct but visually bland, lack personality, or fail to guide the viewer's attention
 
-This guide teaches the "卓越层" (excellence layer) of design — the principles that separate good design from great design.
+This guide teaches the "excellence layer" of design — the principles that separate good design from great design.
 
 ---
 
@@ -13,7 +13,7 @@ This guide teaches the "卓越层" (excellence layer) of design — the principl
 
 Visual hierarchy is how you control where the viewer looks first, second, third. Without hierarchy, everything competes for attention and nothing wins.
 
-### 1. Size Contrast (大小对比)
+### 1. Size Contrast
 
 **Principle:** The most important element should be significantly larger than supporting elements. Not 10% larger — 2-3x larger.
 
@@ -34,7 +34,7 @@ p  { font-size: 18px; font-weight: 400; }  /* Body */
 
 **Common mistake:** Making everything "medium" sized. If nothing is big, nothing is important.
 
-### 2. Color Weight (颜色权重)
+### 2. Color Weight
 
 **Principle:** Use color to create visual weight. Dark = heavy, light = airy. High saturation = attention, low saturation = background.
 
@@ -61,7 +61,7 @@ Black text on white → Dark gray on white → Medium gray → Light gray → Wh
 
 **Common mistake:** Using multiple bright colors. Only one element should be "loud" per section.
 
-### 3. Position Priority (位置优先级)
+### 3. Position Priority
 
 **Principle:** Position communicates importance. Top-left = start here. Center = most important. Bottom-right = least important (in left-to-right cultures).
 
@@ -80,7 +80,7 @@ Black text on white → Dark gray on white → Medium gray → Light gray → Wh
 
 **Common mistake:** Burying the most important content below the fold or in a corner.
 
-### 4. Whitespace Separation (留白分隔)
+### 4. Whitespace Separation
 
 **Principle:** Whitespace (negative space) groups related elements and separates unrelated ones. More space = stronger separation.
 
@@ -107,7 +107,7 @@ Tightest → Loosest
 
 **Common mistake:** Using the same spacing everywhere. Consistent spacing = no hierarchy.
 
-### 5. Visual Flow (视觉流动)
+### 5. Visual Flow
 
 **Principle:** Design a path for the eye to follow. Guide the viewer from most important → second most important → action.
 
@@ -143,7 +143,7 @@ Tightest → Loosest
 
 Different contexts require different emotional tones. Choose the right tone for your audience and goal.
 
-### Trust (信任感设计)
+### Trust
 
 **When to use:** Financial services, healthcare, enterprise B2B, legal, insurance
 
@@ -167,7 +167,7 @@ Different contexts require different emotional tones. Choose the right tone for 
 
 **Avoid:** Bright colors, playful fonts, asymmetric layouts, abstract imagery
 
-### Excitement (兴奋感设计)
+### Excitement
 
 **When to use:** Entertainment, gaming, social media, events, consumer products
 
@@ -191,7 +191,7 @@ Different contexts require different emotional tones. Choose the right tone for 
 
 **Avoid:** Muted colors, formal typography, rigid grids, static layouts
 
-### Professional (专业感设计)
+### Professional
 
 **When to use:** B2B SaaS, productivity tools, developer tools, business platforms
 
@@ -216,7 +216,7 @@ Different contexts require different emotional tones. Choose the right tone for 
 
 **Avoid:** Decorative elements, excessive whitespace, playful language, unnecessary animation
 
-### Creative (创意感设计)
+### Creative
 
 **When to use:** Portfolios, agencies, art/design showcases, cultural projects
 
@@ -246,7 +246,7 @@ Different contexts require different emotional tones. Choose the right tone for 
 
 Composition is how you arrange elements in space. Good composition feels balanced and intentional.
 
-### Rule of Thirds (三分法)
+### Rule of Thirds
 
 **Principle:** Divide your canvas into a 3x3 grid. Place important elements along the lines or at intersections.
 
@@ -259,7 +259,7 @@ Composition is how you arrange elements in space. Good composition feels balance
 
 **When to break it:** Presentations, posters, and hero sections often benefit from centered composition for maximum impact.
 
-### Visual Balance (视觉平衡)
+### Visual Balance
 
 **Principle:** Balance visual weight across the composition. Heavy elements (dark, large, saturated) need to be balanced by lighter elements or whitespace.
 
@@ -273,7 +273,7 @@ Composition is how you arrange elements in space. Good composition feels balance
 - If top is dense (navigation + hero), bottom should be more spacious
 - Dark elements need more whitespace around them than light elements
 
-### Visual Flow (视觉流)
+### Visual Flow
 
 **Principle:** Create a path for the eye to follow using directional cues.
 
@@ -289,7 +289,7 @@ Composition is how you arrange elements in space. Good composition feels balance
 - Use directional cues to guide to the second element
 - End with a clear action (CTA, next step)
 
-### Focal Point (焦点设计)
+### Focal Point
 
 **Principle:** Every composition needs one dominant focal point. Everything else supports it.
 
@@ -308,7 +308,7 @@ Composition is how you arrange elements in space. Good composition feels balance
 
 Rhythm creates visual interest and guides the eye through the design.
 
-### Repetition (重复)
+### Repetition
 
 **Principle:** Repeat visual elements to create consistency and pattern recognition.
 
@@ -327,7 +327,7 @@ Rhythm creates visual interest and guides the eye through the design.
 
 **When to break it:** To create emphasis. If everything is the same, nothing stands out.
 
-### Contrast (对比)
+### Contrast
 
 **Principle:** Create visual interest by contrasting elements.
 
@@ -347,7 +347,7 @@ Rhythm creates visual interest and guides the eye through the design.
 
 **Common mistake:** Not enough contrast. Everything feels "medium" and nothing stands out.
 
-### Progression (渐进)
+### Progression
 
 **Principle:** Create a sense of movement by gradually changing a property.
 
@@ -373,7 +373,7 @@ p  { font-size: 18px; opacity: 0.7; }
 
 Different output types require different design approaches.
 
-### Product Pages (产品页面)
+### Product Pages
 
 **Goal:** Build trust → explain value → drive conversion
 
@@ -387,7 +387,7 @@ Different output types require different design approaches.
 
 **Key metrics:** Conversion rate, time to CTA click, scroll depth
 
-### Presentations (演示文稿)
+### Presentations
 
 **Goal:** Maintain attention → convey key points → create memorable moments
 
@@ -401,7 +401,7 @@ Different output types require different design approaches.
 
 **Key metrics:** Audience engagement, recall of key points, time per slide
 
-### Mobile Apps (移动应用)
+### Mobile Apps
 
 **Goal:** Immediate clarity → effortless interaction → delightful experience
 
@@ -415,7 +415,7 @@ Different output types require different design approaches.
 
 **Key metrics:** Task completion rate, time to complete, error rate
 
-### Creative Works (创意作品)
+### Creative Works
 
 **Goal:** Capture attention → evoke emotion → showcase craft
 
