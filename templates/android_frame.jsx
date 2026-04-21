@@ -1,94 +1,175 @@
 /**
- * Android Frame — React component for Android phone device bezel with status bar.
- * Load via: <script type="text/babel" src="android_frame.jsx"></script>
+ * AndroidFrame — Android device frame (based on Pixel 8 series)
+ *
+ * Includes: punch-hole camera + status bar + navigation bar + rounded corners
  *
  * Usage:
- *   <AndroidFrame>
- *     <div>Your app screen content here</div>
+ *   <AndroidFrame time="9:41" battery={85}>
+ *     <YourAppContent />
  *   </AndroidFrame>
  */
 
-function AndroidFrame({ children, color = '#000' }) {
-  // Auto-compute text contrast
-  const isLight = color.match(/^#[0-9a-f]{6}$/i)
-    ? (() => { const r = parseInt(color.slice(1,3),16), g = parseInt(color.slice(3,5),16), b = parseInt(color.slice(5,7),16); return (r*299+g*587+b*114)/1000 > 128; })()
-    : false;
-  const textColor = isLight ? '#000' : '#fff';
-
-  const frameStyles = {
-    width: '393px',
-    height: '851px',
-    borderRadius: '28px',
-    border: '4px solid #1a1a1a',
-    background: color,
-    overflow: 'hidden',
+const androidFrameStyles = {
+  wrapper: {
+    display: 'inline-block',
+    padding: 10,
+    background: '#1a1a1a',
+    borderRadius: 44,
+    boxShadow: '0 0 0 2px #2a2a2a, 0 20px 60px rgba(0,0,0,0.3)',
     position: 'relative',
-    boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
-  };
-
-  const statusBarStyles = {
-    height: '48px',
+  },
+  screen: {
+    position: 'relative',
+    borderRadius: 36,
+    overflow: 'hidden',
+    background: '#fff',
+  },
+  statusBar: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 32,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '0 20px',
-    fontFamily: 'system-ui, sans-serif',
-    fontSize: '13px',
+    padding: '0 24px',
+    fontSize: 14,
     fontWeight: 500,
-    color: textColor,
-  };
-
-  const cameraCutoutStyles = {
+    fontFamily: 'Roboto, -apple-system, sans-serif',
+    zIndex: 20,
+    pointerEvents: 'none',
+  },
+  punchHole: {
     position: 'absolute',
-    top: '12px',
+    top: 10,
     left: '50%',
     transform: 'translateX(-50%)',
-    width: '12px',
-    height: '12px',
-    background: '#111',
+    width: 14,
+    height: 14,
+    background: '#000',
     borderRadius: '50%',
-    zIndex: 10,
-  };
-
-  const contentStyles = {
-    height: 'calc(100% - 48px)',
-    overflow: 'auto',
-    position: 'relative',
-  };
-
-  const navBarStyles = {
+    zIndex: 30,
+  },
+  statusIcons: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 6,
+  },
+  batteryText: {
+    fontSize: 11,
+    fontWeight: 600,
+    marginLeft: 2,
+  },
+  content: {
     position: 'absolute',
-    bottom: '0',
-    left: '0',
-    right: '0',
-    height: '48px',
+    top: 32,
+    left: 0,
+    right: 0,
+    bottom: 24,
+    overflow: 'auto',
+  },
+  navBar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 24,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: '60px',
-    background: 'rgba(0,0,0,0.5)',
-  };
+    gap: 60,
+    zIndex: 10,
+  },
+  navButton: {
+    width: 36,
+    height: 4,
+    background: 'rgba(0,0,0,0.3)',
+    borderRadius: 999,
+  },
+};
 
-  const navBtnStyles = { width: '18px', height: '18px', borderRadius: '50%', border: `2px solid ${isLight ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.5)'}` };
+function AndroidFrame({
+  children,
+  width = 412,
+  height = 892,
+  time = '9:41',
+  battery = 100,
+  darkMode = false,
+  navStyle = 'gesture',
+}) {
+  const textColor = darkMode ? '#fff' : '#1a1a1a';
 
-  const time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+  return (
+    <div style={androidFrameStyles.wrapper}>
+      <div style={{
+        ...androidFrameStyles.screen,
+        width,
+        height,
+        background: darkMode ? '#000' : '#fff',
+      }}>
+        <div style={{ ...androidFrameStyles.statusBar, color: textColor }}>
+          <span>{time}</span>
+          <div style={androidFrameStyles.statusIcons}>
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="currentColor">
+              <rect x="0" y="6" width="2" height="4" rx="0.5" />
+              <rect x="4" y="4" width="2" height="6" rx="0.5" />
+              <rect x="8" y="2" width="2" height="8" rx="0.5" />
+              <rect x="12" y="0" width="2" height="10" rx="0.5" />
+            </svg>
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none">
+              <path d="M7 9a1 1 0 100-2 1 1 0 000 2z" fill="currentColor" />
+              <path d="M3 6a5 5 0 018 0" stroke="currentColor" strokeWidth="1.2" />
+              <path d="M0.5 3.5a11 11 0 0113 0" stroke="currentColor" strokeWidth="1.2" opacity="0.6" />
+            </svg>
+            <div style={{
+              width: 22,
+              height: 10,
+              border: '1.5px solid currentColor',
+              borderRadius: 2,
+              padding: 1,
+              position: 'relative',
+            }}>
+              <div style={{
+                width: `${battery}%`,
+                height: '100%',
+                background: 'currentColor',
+                borderRadius: 1,
+              }} />
+            </div>
+            <span style={androidFrameStyles.batteryText}>{battery}%</span>
+          </div>
+        </div>
 
-  return React.createElement('div', { style: frameStyles },
-    React.createElement('div', { style: cameraCutoutStyles }),
-    React.createElement('div', { style: statusBarStyles },
-      React.createElement('span', null, time),
-      React.createElement('div', { style: { display: 'flex', gap: '6px', alignItems: 'center' } },
-        React.createElement('span', { style: { fontSize: '11px' } }, 'LTE'),
-        React.createElement('span', null, '87%')
-      )
-    ),
-    React.createElement('div', { style: contentStyles }, children),
-    React.createElement('div', { style: navBarStyles },
-      React.createElement('div', { style: { ...navBtnStyles, border: 'none', width: '14px', height: '14px' } }),
-      React.createElement('div', { style: navBtnStyles }),
-      React.createElement('div', { style: navBtnStyles })
-    )
+        <div style={androidFrameStyles.punchHole} />
+
+        <div style={androidFrameStyles.content}>
+          {children}
+        </div>
+
+        {navStyle === 'gesture' && (
+          <div style={androidFrameStyles.navBar}>
+            <div style={{
+              ...androidFrameStyles.navButton,
+              width: 100,
+              height: 4,
+              background: darkMode ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.4)',
+            }} />
+          </div>
+        )}
+
+        {navStyle === 'buttons' && (
+          <div style={androidFrameStyles.navBar}>
+            <span style={{ color: textColor, fontSize: 20 }}>◁</span>
+            <span style={{ color: textColor, fontSize: 16 }}>○</span>
+            <span style={{ color: textColor, fontSize: 16 }}>□</span>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 
-Object.assign(window, { AndroidFrame });
+if (typeof window !== 'undefined') {
+  window.AndroidFrame = AndroidFrame;
+}

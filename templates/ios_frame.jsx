@@ -1,86 +1,192 @@
 /**
- * iOS Frame — React component for iPhone device bezel with status bar.
- * Load via: <script type="text/babel" src="ios_frame.jsx"></script>
+ * IosFrame — iPhone device frame
+ *
+ * Based on iPhone 15 Pro (393×852 logical pixels)
+ * Includes: Dynamic Island + status bar (time/signal/battery) + Home Indicator + rounded corners
  *
  * Usage:
- *   <IOSFrame>
- *     <div>Your app screen content here</div>
- *   </IOSFrame>
+ *   <IosFrame time="9:41" battery={85}>
+ *     <YourAppContent />
+ *   </IosFrame>
+ *
+ * Customization:
+ *   <IosFrame width={390} height={844} darkMode showKeyboard>
+ *     ...
+ *   </IosFrame>
  */
 
-function IOSFrame({ children, color = '#000', showNotch = true }) {
-  // Auto-compute text contrast
-  const isLight = color.match(/^#[0-9a-f]{6}$/i)
-    ? (() => { const r = parseInt(color.slice(1,3),16), g = parseInt(color.slice(3,5),16), b = parseInt(color.slice(5,7),16); return (r*299+g*587+b*114)/1000 > 128; })()
-    : false;
-  const textColor = isLight ? '#000' : '#fff';
-
-  const frameStyles = {
-    width: '393px',
-    height: '852px',
-    borderRadius: '50px',
-    border: '4px solid #1a1a1a',
-    background: color,
-    overflow: 'hidden',
+const iosFrameStyles = {
+  wrapper: {
+    display: 'inline-block',
+    padding: 12,
+    background: '#000',
+    borderRadius: 60,
+    boxShadow: '0 0 0 2px #1f2937, 0 20px 60px rgba(0,0,0,0.3)',
     position: 'relative',
-    boxShadow: '0 20px 60px rgba(0,0,0,0.3)',
-  };
-
-  const statusBarStyles = {
-    height: '54px',
+  },
+  screen: {
+    position: 'relative',
+    borderRadius: 48,
+    overflow: 'hidden',
+    background: '#fff',
+  },
+  statusBar: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 54,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '0 32px 0 32px',
+    fontSize: 16,
+    fontWeight: 600,
+    fontFamily: '-apple-system, "SF Pro Text", sans-serif',
+    zIndex: 20,
+    pointerEvents: 'none',
+  },
+  dynamicIsland: {
+    position: 'absolute',
+    top: 12,
+    left: '50%',
+    transform: 'translateX(-50%)',
+    width: 124,
+    height: 36,
+    background: '#000',
+    borderRadius: 999,
+    zIndex: 30,
+  },
+  statusIcons: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 6,
+  },
+  signalIcon: {
     display: 'flex',
     alignItems: 'flex-end',
-    justifyContent: 'space-between',
-    padding: '0 32px 8px',
-    fontFamily: 'system-ui, -apple-system, sans-serif',
-    fontSize: '15px',
-    fontWeight: 600,
-    color: textColor,
-  };
-
-  const contentStyles = {
-    height: 'calc(100% - 54px)',
-    overflow: 'auto',
+    gap: 2,
+    height: 12,
+  },
+  signalBar: {
+    width: 3,
+    background: 'currentColor',
+    borderRadius: 1,
+  },
+  wifiIcon: {
+    width: 16,
+    height: 12,
     position: 'relative',
-  };
-
-  const notchStyles = {
+  },
+  batteryIcon: {
+    width: 26,
+    height: 12,
+    border: '1.5px solid currentColor',
+    borderRadius: 3,
+    padding: 1,
+    position: 'relative',
+    opacity: 0.8,
+  },
+  batteryCap: {
     position: 'absolute',
-    top: '0',
+    top: 3,
+    right: -3,
+    width: 2,
+    height: 6,
+    background: 'currentColor',
+    borderRadius: '0 1px 1px 0',
+  },
+  content: {
+    position: 'absolute',
+    top: 54,
+    left: 0,
+    right: 0,
+    bottom: 34,
+    overflow: 'auto',
+  },
+  homeIndicator: {
+    position: 'absolute',
+    bottom: 10,
     left: '50%',
     transform: 'translateX(-50%)',
-    width: '126px',
-    height: '34px',
-    background: '#000',
-    borderRadius: '0 0 20px 20px',
+    width: 140,
+    height: 5,
+    background: 'rgba(0,0,0,0.3)',
+    borderRadius: 999,
     zIndex: 10,
-  };
+  },
+  homeIndicatorDark: {
+    background: 'rgba(255,255,255,0.5)',
+  },
+};
 
-  const homeIndicatorStyles = {
-    position: 'absolute',
-    bottom: '8px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    width: '134px',
-    height: '5px',
-    background: isLight ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.3)',
-    borderRadius: '3px',
-  };
+function IosFrame({
+  children,
+  width = 393,
+  height = 852,
+  time = '9:41',
+  battery = 100,
+  darkMode = false,
+  showStatusBar = true,
+  showDynamicIsland = true,
+  showHomeIndicator = true,
+}) {
+  const textColor = darkMode ? '#fff' : '#000';
 
-  const time = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+  return (
+    <div style={iosFrameStyles.wrapper}>
+      <div style={{
+        ...iosFrameStyles.screen,
+        width,
+        height,
+        background: darkMode ? '#000' : '#fff',
+      }}>
+        {showStatusBar && (
+          <div style={{ ...iosFrameStyles.statusBar, color: textColor }}>
+            <span>{time}</span>
+            <div style={iosFrameStyles.statusIcons}>
+              <div style={iosFrameStyles.signalIcon}>
+                <div style={{ ...iosFrameStyles.signalBar, height: 4 }} />
+                <div style={{ ...iosFrameStyles.signalBar, height: 6 }} />
+                <div style={{ ...iosFrameStyles.signalBar, height: 9 }} />
+                <div style={{ ...iosFrameStyles.signalBar, height: 11 }} />
+              </div>
+              <svg width="16" height="12" viewBox="0 0 16 12" fill="none" style={{ color: textColor }}>
+                <path d="M8 11.5a1 1 0 100-2 1 1 0 000 2z" fill="currentColor" />
+                <path d="M3 7.5a7 7 0 0110 0" stroke="currentColor" strokeWidth="1.3" fill="none" strokeLinecap="round" />
+                <path d="M1 4.5a11 11 0 0114 0" stroke="currentColor" strokeWidth="1.3" fill="none" strokeLinecap="round" opacity="0.7" />
+              </svg>
+              <div style={iosFrameStyles.batteryIcon}>
+                <div style={{
+                  width: `${battery}%`,
+                  height: '100%',
+                  background: 'currentColor',
+                  borderRadius: 1,
+                  opacity: 0.9,
+                }} />
+                <div style={iosFrameStyles.batteryCap} />
+              </div>
+            </div>
+          </div>
+        )}
 
-  return React.createElement('div', { style: frameStyles },
-    showNotch && React.createElement('div', { style: notchStyles }),
-    React.createElement('div', { style: statusBarStyles },
-      React.createElement('span', null, time),
-      React.createElement('div', { style: { display: 'flex', gap: '4px', alignItems: 'center' } },
-        React.createElement('span', { style: { fontSize: '13px' } }, '5G'),
-        React.createElement('span', null, '87%')
-      )
-    ),
-    React.createElement('div', { style: contentStyles }, children),
-    React.createElement('div', { style: homeIndicatorStyles })
+        {showDynamicIsland && <div style={iosFrameStyles.dynamicIsland} />}
+
+        <div style={iosFrameStyles.content}>
+          {children}
+        </div>
+
+        {showHomeIndicator && (
+          <div style={{
+            ...iosFrameStyles.homeIndicator,
+            ...(darkMode ? iosFrameStyles.homeIndicatorDark : {}),
+          }} />
+        )}
+      </div>
+    </div>
   );
 }
 
-Object.assign(window, { IOSFrame });
+if (typeof window !== 'undefined') {
+  window.IosFrame = IosFrame;
+}

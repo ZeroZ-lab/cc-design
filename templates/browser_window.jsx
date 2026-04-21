@@ -1,117 +1,166 @@
 /**
- * Browser Window — React component for desktop browser chrome with tab bar.
- * Load via: <script type="text/babel" src="browser_window.jsx"></script>
+ * BrowserWindow — Browser window frame (Chrome-style)
+ *
+ * Includes: traffic lights + tab bar + URL bar
  *
  * Usage:
- *   <BrowserWindow url="https://example.com" width={1024} height={768}>
- *     <div>Page content</div>
+ *   <BrowserWindow url="https://example.com" title="Example">
+ *     <YourWebPage />
  *   </BrowserWindow>
  */
 
-function BrowserWindow({ children, url = 'https://example.com', width = 1024, height = 768, background = '#fff' }) {
-  const wrapperStyles = {
-    width: `${width}px`,
-    height: `${height}px`,
-    borderRadius: '10px',
-    overflow: 'hidden',
-    boxShadow: '0 20px 60px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.1)',
-    display: 'flex',
-    flexDirection: 'column',
-    background,
-  };
-
-  const tabBarStyles = {
-    height: '38px',
-    background: '#e8e8e8',
-    display: 'flex',
-    alignItems: 'center',
-    padding: '0 10px',
-    gap: '8px',
-    borderBottom: '1px solid #d0d0d0',
-  };
-
-  const dotStyles = (color) => ({
-    width: '12px',
-    height: '12px',
-    borderRadius: '50%',
-    background: color,
-    border: '0.5px solid rgba(0,0,0,0.12)',
-    flexShrink: 0,
-  });
-
-  const tabStyles = {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '6px',
-    padding: '4px 12px',
+const browserWindowStyles = {
+  window: {
+    display: 'inline-block',
     background: '#fff',
-    borderRadius: '6px',
-    fontFamily: 'system-ui, -apple-system, sans-serif',
-    fontSize: '12px',
-    color: '#333',
-    maxWidth: '200px',
+    borderRadius: 10,
     overflow: 'hidden',
-    whiteSpace: 'nowrap',
-    textOverflow: 'ellipsis',
-  };
-
-  const tabIconStyles = {
-    width: '14px',
-    height: '14px',
-    borderRadius: '3px',
-    background: 'linear-gradient(135deg, #4285f4, #34a853, #fbbc05, #ea4335)',
-    flexShrink: 0,
-  };
-
-  const toolbarStyles = {
-    height: '36px',
-    background: '#f0f0f0',
+    boxShadow: '0 30px 80px rgba(0,0,0,0.25), 0 0 0 0.5px rgba(0,0,0,0.15)',
+  },
+  chrome: {
+    background: '#dee1e6',
+    paddingTop: 10,
+    paddingLeft: 10,
+    paddingRight: 10,
+    userSelect: 'none',
+  },
+  tabRow: {
     display: 'flex',
-    alignItems: 'center',
-    padding: '0 12px',
-    gap: '8px',
-    borderBottom: '1px solid #d0d0d0',
-  };
-
-  const urlBarStyles = {
-    flex: 1,
-    height: '24px',
-    borderRadius: '12px',
-    background: '#fff',
-    border: '1px solid #ccc',
-    padding: '0 10px',
-    fontFamily: 'system-ui, sans-serif',
-    fontSize: '12px',
-    color: '#555',
-    display: 'flex',
-    alignItems: 'center',
-    lineHeight: 1,
-  };
-
-  const contentStyles = {
-    flex: 1,
-    overflow: 'auto',
+    alignItems: 'flex-end',
+    gap: 6,
     position: 'relative',
-  };
+  },
+  trafficLights: {
+    display: 'flex',
+    gap: 8,
+    alignItems: 'center',
+    paddingBottom: 10,
+    marginRight: 8,
+  },
+  light: {
+    width: 12,
+    height: 12,
+    borderRadius: '50%',
+    border: '0.5px solid rgba(0,0,0,0.15)',
+  },
+  close: { background: '#ff5f57' },
+  minimize: { background: '#febc2e' },
+  maximize: { background: '#28c840' },
+  tab: {
+    background: '#fff',
+    padding: '8px 30px 8px 14px',
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    fontSize: 12,
+    color: '#222',
+    fontFamily: '-apple-system, sans-serif',
+    maxWidth: 220,
+    display: 'flex',
+    alignItems: 'center',
+    gap: 8,
+    position: 'relative',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+  favicon: {
+    width: 14,
+    height: 14,
+    borderRadius: 2,
+    background: '#999',
+    flexShrink: 0,
+  },
+  navBar: {
+    background: '#fff',
+    padding: '8px 14px',
+    display: 'flex',
+    alignItems: 'center',
+    gap: 10,
+    borderBottom: '1px solid #e5e7eb',
+  },
+  navButtons: {
+    display: 'flex',
+    gap: 4,
+    color: '#5f6368',
+    fontSize: 16,
+  },
+  navButton: {
+    width: 28,
+    height: 28,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '50%',
+    cursor: 'pointer',
+  },
+  urlBar: {
+    flex: 1,
+    background: '#f1f3f4',
+    borderRadius: 999,
+    padding: '7px 14px',
+    fontSize: 13,
+    color: '#333',
+    display: 'flex',
+    alignItems: 'center',
+    gap: 8,
+    fontFamily: '-apple-system, sans-serif',
+  },
+  lockIcon: {
+    color: '#5f6368',
+    fontSize: 12,
+  },
+  content: {
+    position: 'relative',
+    overflow: 'auto',
+    background: '#fff',
+  },
+};
 
-  return React.createElement('div', { style: wrapperStyles },
-    React.createElement('div', { style: tabBarStyles },
-      React.createElement('div', { style: dotStyles('#FF5F56') }),
-      React.createElement('div', { style: dotStyles('#FFBD2E') }),
-      React.createElement('div', { style: dotStyles('#27C93F') }),
-      React.createElement('div', { style: tabStyles },
-        React.createElement('div', { style: tabIconStyles }),
-        url.replace(/^https?:\/\//, '').split('/')[0]
-      )
-    ),
-    React.createElement('div', { style: toolbarStyles },
-      React.createElement('span', { style: { color: '#999', fontSize: '14px' } }, '←'),
-      React.createElement('span', { style: { color: '#999', fontSize: '14px' } }, '→'),
-      React.createElement('span', { style: { color: '#999', fontSize: '14px' } }, '↻'),
-      React.createElement('div', { style: urlBarStyles }, `🔒 ${url}`)
-    ),
-    React.createElement('div', { style: contentStyles }, children)
+function BrowserWindow({
+  title = 'New Tab',
+  url = 'https://example.com',
+  width = 1200,
+  height = 800,
+  showTrafficLights = true,
+  children,
+}) {
+  return (
+    <div style={browserWindowStyles.window}>
+      <div style={browserWindowStyles.chrome}>
+        <div style={browserWindowStyles.tabRow}>
+          {showTrafficLights && (
+            <div style={browserWindowStyles.trafficLights}>
+              <div style={{ ...browserWindowStyles.light, ...browserWindowStyles.close }} />
+              <div style={{ ...browserWindowStyles.light, ...browserWindowStyles.minimize }} />
+              <div style={{ ...browserWindowStyles.light, ...browserWindowStyles.maximize }} />
+            </div>
+          )}
+          <div style={browserWindowStyles.tab}>
+            <div style={browserWindowStyles.favicon} />
+            <span>{title}</span>
+          </div>
+        </div>
+      </div>
+
+      <div style={browserWindowStyles.navBar}>
+        <div style={browserWindowStyles.navButtons}>
+          <div style={browserWindowStyles.navButton}>←</div>
+          <div style={browserWindowStyles.navButton}>→</div>
+          <div style={browserWindowStyles.navButton}>↻</div>
+        </div>
+        <div style={browserWindowStyles.urlBar}>
+          <span style={browserWindowStyles.lockIcon}>🔒</span>
+          <span>{url}</span>
+        </div>
+      </div>
+
+      <div style={{ ...browserWindowStyles.content, width, height }}>
+        {children}
+      </div>
+    </div>
   );
 }
 
-Object.assign(window, { BrowserWindow });
+if (typeof window !== 'undefined') {
+  window.BrowserWindow = BrowserWindow;
+}

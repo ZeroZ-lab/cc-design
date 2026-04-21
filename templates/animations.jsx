@@ -1,136 +1,340 @@
 /**
- * Animations — Timeline-based animation engine for React.
- * Load via: <script type="text/babel" src="animations.jsx"></script>
+ * animations.jsx — Timeline animation engine
  *
- * Provides: Stage, Sprite, useTime(), useSprite(), Easing, interpolate()
+ * Stage + Sprite pattern, inspired by Remotion but lightweight.
+ *
+ * Exports (mounted on window.Animations):
+ * - Stage: Animation container, provides time + controls
+ * - Sprite: Time segment, visible within start/end, provides local progress
+ * - useTime(): Read global time (seconds)
+ * - useSprite(): Read local progress {t: 0→1, elapsed: seconds, duration: seconds}
+ * - Easing: {linear, easeIn, easeOut, easeInOut, spring, anticipation}
+ * - interpolate(t, [input0, input1], [output0, output1], easing?)
  *
  * Usage:
- *   <Stage duration={5} width={1920} height={1080}>
- *     <Sprite start={0} end={2}>
- *       <div style={{ background: 'red', width: 100, height: 100 }}>Fade in</div>
+ *   <Stage duration={10}>
+ *     <Sprite start={0} end={3}>
+ *       <Title />
+ *     </Sprite>
+ *     <Sprite start={2} end={5}>
+ *       <Subtitle />
  *     </Sprite>
  *   </Stage>
+ *
+ * Use useSprite() inside Sprite children to read the current segment progress.
  */
 
-const AnimationsContext = React.createContext({ time: 0, duration: 1, sprite: null });
+(function() {
+  const { createContext, useContext, useState, useEffect, useRef, useCallback } = React;
 
-function useTime() {
-  return React.useContext(AnimationsContext).time;
-}
+  const TimeContext = createContext({ time: 0, duration: 10, playing: false });
+  const SpriteContext = createContext(null);
 
-function useSprite() {
-  return React.useContext(AnimationsContext).sprite ?? { start: 0, end: 1, progress: 0 };
-}
-
-const Easing = {
-  linear: (t) => t,
-  easeIn: (t) => t * t,
-  easeOut: (t) => t * (2 - t),
-  easeInOut: (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t),
-  bounce: (t) => {
-    const n1 = 7.5625, d1 = 2.75;
-    if (t < 1 / d1) return n1 * t * t;
-    if (t < 2 / d1) return n1 * (t -= 1.5 / d1) * t + 0.75;
-    if (t < 2.5 / d1) return n1 * (t -= 2.25 / d1) * t + 0.9375;
-    return n1 * (t -= 2.625 / d1) * t + 0.984375;
-  },
-  elastic: (t) => {
-    if (t === 0 || t === 1) return t;
-    return -Math.pow(2, 10 * (t - 1)) * Math.sin((t - 1.1) * 5 * Math.PI);
-  },
-};
-
-function interpolate(start, end, progress, easing = Easing.linear) {
-  const t = easing(Math.max(0, Math.min(1, progress)));
-  return start + (end - start) * t;
-}
-
-function Sprite({ children, start = 0, end = 1, easing = 'linear', style = {} }) {
-  const { time } = React.useContext(AnimationsContext);
-  const duration = end - start;
-  const easingFn = Easing[easing] || Easing.linear;
-
-  let opacity = 1;
-  if (time < start) opacity = 0;
-  else if (time > end) opacity = 0;
-  else if (time < start + 0.3) opacity = easingFn((time - start) / 0.3);
-  else if (time > end - 0.3) opacity = easingFn((time - end + 0.3) / 0.3);
-
-  const progress = duration > 0 ? Math.max(0, Math.min(1, (time - start) / duration)) : 0;
-  const sprite = { start, end, progress, easing };
-
-  return React.createElement(AnimationsContext.Provider, { value: { ...React.useContext(AnimationsContext), sprite } },
-    React.createElement('div', {
-      style: { ...style, opacity, position: 'absolute', inset: 0 },
-      'data-sprite-start': start,
-      'data-sprite-end': end,
-    }, children)
-  );
-}
-
-function Stage({ children, duration = 5, width = 1920, height = 1080 }) {
-  const [playing, setPlaying] = React.useState(false);
-  const [time, setTime] = React.useState(0);
-  const [scale, setScale] = React.useState(Math.min(window.innerWidth / width, window.innerHeight / height) * 0.9);
-  const rafRef = React.useRef(null);
-  const startRef = React.useRef(null);
-
-  React.useEffect(() => {
-    const onResize = () => setScale(Math.min(window.innerWidth / width, window.innerHeight / height) * 0.9);
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, [width, height]);
-
-  const play = React.useCallback(() => {
-    setPlaying(true);
-    startRef.current = performance.now() - time * 1000;
-  }, [time]);
-
-  const pause = React.useCallback(() => {
-    setPlaying(false);
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-  }, []);
-
-  React.useEffect(() => {
-    if (!playing) return;
-    const tick = (now) => {
-      const elapsed = (now - startRef.current) / 1000;
-      if (elapsed >= duration) {
-        setTime(duration);
-        setPlaying(false);
-        return;
-      }
-      setTime(elapsed);
-      rafRef.current = requestAnimationFrame(tick);
-    };
-    rafRef.current = requestAnimationFrame(tick);
-    return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
-  }, [playing, duration]);
-
-  return React.createElement('div', {
-    style: { width: '100vw', height: '100vh', background: '#000', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }
-  },
-    React.createElement(AnimationsContext.Provider, { value: { time, duration } },
-      React.createElement('div', {
-        style: { width: `${width}px`, height: `${height}px`, transform: `scale(${scale})`, transformOrigin: 'center center', position: 'relative', overflow: 'hidden' }
-      }, children)
-    ),
-    // Controls
-    React.createElement('div', {
-      style: { marginTop: '16px', display: 'flex', alignItems: 'center', gap: '12px', color: '#fff', fontFamily: 'system-ui, sans-serif', fontSize: '13px' }
+  const Easing = {
+    linear: t => t,
+    easeIn: t => t * t,
+    easeOut: t => 1 - (1 - t) * (1 - t),
+    easeInOut: t => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2,
+    // expoOut: Anthropic-level primary easing (cubic-bezier(0.16, 1, 0.3, 1))
+    // Fast start + gentle brake, gives numeric elements physical weight
+    expoOut: t => t === 1 ? 1 : 1 - Math.pow(2, -10 * t),
+    // overshoot: Elastic toggle/button pop (cubic-bezier(0.34, 1.56, 0.64, 1))
+    overshoot: t => {
+      const c1 = 1.70158, c3 = c1 + 1;
+      return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
     },
-      React.createElement('button', {
-        onClick: playing ? pause : play,
-        style: { padding: '6px 16px', borderRadius: '6px', border: '1px solid rgba(255,255,255,.3)', background: 'rgba(255,255,255,.1)', color: '#fff', cursor: 'pointer' }
-      }, playing ? '⏸ Pause' : '▶ Play'),
-      React.createElement('input', {
-        type: 'range', min: 0, max: duration, step: 0.01, value: time,
-        onChange: (e) => setTime(parseFloat(e.target.value)),
-        style: { width: '300px', accentColor: '#fff' }
-      }),
-      React.createElement('span', null, `${time.toFixed(2)}s / ${duration}s`)
-    )
-  );
-}
+    spring: t => {
+      const c = (2 * Math.PI) / 3;
+      return t === 0 ? 0 : t === 1 ? 1 : Math.pow(2, -10 * t) * Math.sin((t * 10 - 0.75) * c) + 1;
+    },
+    anticipation: t => {
+      if (t < 0.2) return -0.3 * (t / 0.2) * (t / 0.2);
+      const adjusted = (t - 0.2) / 0.8;
+      return -0.012 + 1.012 * adjusted * adjusted * (3 - 2 * adjusted);
+    },
+  };
 
-Object.assign(window, { Stage, Sprite, useTime, useSprite, Easing, interpolate, AnimationsContext });
+  function interpolate(t, input, output, easing) {
+    const [inStart, inEnd] = input;
+    const [outStart, outEnd] = output;
+
+    if (t <= inStart) return outStart;
+    if (t >= inEnd) return outEnd;
+
+    let progress = (t - inStart) / (inEnd - inStart);
+    if (easing) {
+      progress = easing(progress);
+    }
+
+    return outStart + (outEnd - outStart) * progress;
+  }
+
+  function useTime() {
+    const ctx = useContext(TimeContext);
+    return ctx.time;
+  }
+
+  function useSprite() {
+    const sprite = useContext(SpriteContext);
+    if (!sprite) {
+      return { t: 0, elapsed: 0, duration: 0 };
+    }
+    return sprite;
+  }
+
+  const stageStyles = {
+    wrapper: {
+      position: 'fixed',
+      inset: 0,
+      background: '#000',
+      display: 'flex',
+      flexDirection: 'column',
+      fontFamily: '-apple-system, sans-serif',
+    },
+    stageHolder: {
+      flex: 1,
+      position: 'relative',
+      overflow: 'hidden',
+    },
+    canvas: {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transformOrigin: 'center center',
+      background: '#111',
+      overflow: 'hidden',
+    },
+    controls: {
+      position: 'fixed',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      background: 'rgba(0, 0, 0, 0.8)',
+      backdropFilter: 'blur(10px)',
+      padding: '12px 20px',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 16,
+      color: '#fff',
+      fontSize: 12,
+      zIndex: 100,
+    },
+    button: {
+      background: 'none',
+      border: '1px solid rgba(255,255,255,0.3)',
+      color: '#fff',
+      padding: '6px 14px',
+      borderRadius: 4,
+      cursor: 'pointer',
+      fontSize: 12,
+    },
+    timeDisplay: {
+      fontFamily: 'ui-monospace, monospace',
+      fontVariantNumeric: 'tabular-nums',
+      minWidth: 90,
+    },
+    scrubber: {
+      flex: 1,
+      height: 4,
+      background: 'rgba(255,255,255,0.2)',
+      borderRadius: 2,
+      position: 'relative',
+      cursor: 'pointer',
+    },
+    scrubberFill: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      height: '100%',
+      background: '#fff',
+      borderRadius: 2,
+      pointerEvents: 'none',
+    },
+    scrubberHandle: {
+      position: 'absolute',
+      top: '50%',
+      width: 12,
+      height: 12,
+      background: '#fff',
+      borderRadius: '50%',
+      transform: 'translate(-50%, -50%)',
+      pointerEvents: 'none',
+    },
+  };
+
+  function Stage({ duration = 10, width = 1920, height = 1080, fps = 60, loop = true, children, bgColor = '#fff' }) {
+    const [time, setTime] = useState(0);
+    const [playing, setPlaying] = useState(true);
+    const [scale, setScale] = useState(1);
+    const rafRef = useRef(null);
+    const startTimeRef = useRef(performance.now());
+    const canvasRef = useRef(null);
+
+    // Recording mode: render-video.js injects window.__recording = true before goto.
+    // When set, force loop=false so the export ends on the final frame instead of
+    // wrapping back to t=0 and capturing the start of the next cycle.
+    // (Browsers viewing manually still loop because __recording is undefined there.)
+    const effectiveLoop = (typeof window !== 'undefined' && window.__recording) ? false : loop;
+
+    useEffect(() => {
+      function updateScale() {
+        const vw = window.innerWidth;
+        const vh = window.innerHeight - 56;
+        const s = Math.min(vw / width, vh / height);
+        setScale(s);
+      }
+      updateScale();
+      window.addEventListener('resize', updateScale);
+      return () => window.removeEventListener('resize', updateScale);
+    }, [width, height]);
+
+    useEffect(() => {
+      if (!playing) return;
+      let cancelled = false;
+      let last = null;
+
+      function tick(now) {
+        if (cancelled) return;
+        if (last === null) {
+          // First animation frame. Set last=now so delta starts at 0,
+          // AND announce readiness for video export.
+          // This pairing is critical: window.__ready must flip to true at
+          // the exact moment WebM captures frame 0 of the animation, so
+          // render-video.js's trim offset equals the pre-animation gap.
+          last = now;
+          if (typeof window !== 'undefined') window.__ready = true;
+        }
+        const delta = (now - last) / 1000;
+        last = now;
+        setTime(prev => {
+          const next = prev + delta;
+          if (next >= duration) {
+            // effectiveLoop honors window.__recording (forced non-loop during export).
+            // Stop just shy of duration so the final-frame state stays rendered
+            // (avoids exiting all Sprites that end exactly at `duration`).
+            return effectiveLoop ? 0 : duration - 0.001;
+          }
+          return next;
+        });
+        rafRef.current = requestAnimationFrame(tick);
+      }
+
+      // Wait for fonts before starting the clock — makes frame 0 the
+      // real "finished-loading" frame users see, not a fallback-font flash.
+      const startAfterFonts = () => {
+        if (cancelled) return;
+        rafRef.current = requestAnimationFrame(tick);
+      };
+      if (typeof document !== 'undefined' && document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(startAfterFonts);
+      } else {
+        startAfterFonts();
+      }
+
+      return () => {
+        cancelled = true;
+        cancelAnimationFrame(rafRef.current);
+      };
+    }, [playing, duration, effectiveLoop]);
+
+    const handleScrub = useCallback((e) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const ratio = (e.clientX - rect.left) / rect.width;
+      setTime(Math.max(0, Math.min(duration, ratio * duration)));
+    }, [duration]);
+
+    const handleSeek = useCallback((e) => {
+      handleScrub(e);
+      setPlaying(false);
+    }, [handleScrub]);
+
+    const progress = time / duration;
+
+    const ctx = {
+      time,
+      duration,
+      playing,
+      setPlaying,
+      setTime,
+    };
+
+    const canvasStyle = {
+      ...stageStyles.canvas,
+      width,
+      height,
+      background: bgColor,
+      transform: `translate(-50%, -50%) scale(${scale})`,
+    };
+
+    return (
+      <TimeContext.Provider value={ctx}>
+        <div style={stageStyles.wrapper}>
+          <div style={stageStyles.stageHolder}>
+            <div ref={canvasRef} style={canvasStyle}>
+              {children}
+            </div>
+          </div>
+
+          <div style={stageStyles.controls}>
+            <button
+              style={stageStyles.button}
+              onClick={() => setPlaying(p => !p)}
+            >
+              {playing ? '⏸ Pause' : '▶ Play'}
+            </button>
+
+            <button
+              style={stageStyles.button}
+              onClick={() => setTime(0)}
+            >
+              ⏮ Start
+            </button>
+
+            <div style={stageStyles.timeDisplay}>
+              {time.toFixed(2)}s / {duration.toFixed(2)}s
+            </div>
+
+            <div style={stageStyles.scrubber} onMouseDown={handleSeek}>
+              <div style={{ ...stageStyles.scrubberFill, width: `${progress * 100}%` }} />
+              <div style={{ ...stageStyles.scrubberHandle, left: `${progress * 100}%` }} />
+            </div>
+          </div>
+        </div>
+      </TimeContext.Provider>
+    );
+  }
+
+  function Sprite({ start = 0, end, children, style }) {
+    const { time } = useContext(TimeContext);
+    const actualEnd = end == null ? Infinity : end;
+
+    if (time < start || time >= actualEnd) {
+      return null;
+    }
+
+    const duration = actualEnd - start;
+    const elapsed = time - start;
+    const t = duration === 0 ? 1 : Math.max(0, Math.min(1, elapsed / duration));
+
+    const spriteValue = { t, elapsed, duration, start, end: actualEnd };
+
+    return (
+      <SpriteContext.Provider value={spriteValue}>
+        <div style={{ position: 'absolute', inset: 0, ...style }}>
+          {children}
+        </div>
+      </SpriteContext.Provider>
+    );
+  }
+
+  if (typeof window !== 'undefined') {
+    window.Animations = {
+      Stage,
+      Sprite,
+      useTime,
+      useSprite,
+      Easing,
+      interpolate,
+    };
+  }
+})();

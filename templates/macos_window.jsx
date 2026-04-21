@@ -1,69 +1,96 @@
 /**
- * macOS Window — React component for desktop window chrome with traffic lights.
- * Load via: <script type="text/babel" src="macos_window.jsx"></script>
+ * MacosWindow — macOS application window frame (with traffic lights)
  *
  * Usage:
- *   <MacOSWindow title="My App" width={800} height={600}>
- *     <div>Window content</div>
- *   </MacOSWindow>
+ *   <MacosWindow title="Finder">
+ *     <YourAppContent />
+ *   </MacosWindow>
  */
 
-function MacOSWindow({ children, title = 'Untitled', width = 800, height = 600, background = '#fff' }) {
-  const wrapperStyles = {
-    width: `${width}px`,
-    height: `${height}px`,
-    borderRadius: '10px',
+const macosWindowStyles = {
+  window: {
+    display: 'inline-block',
+    background: '#fff',
+    borderRadius: 10,
     overflow: 'hidden',
-    boxShadow: '0 20px 60px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.1)',
-    display: 'flex',
-    flexDirection: 'column',
-    background,
-  };
-
-  const titleBarStyles = {
-    height: '38px',
-    background: '#e8e8e8',
+    boxShadow: '0 30px 80px rgba(0,0,0,0.25), 0 0 0 0.5px rgba(0,0,0,0.15)',
+  },
+  titleBar: {
+    height: 38,
+    background: 'linear-gradient(to bottom, #e8e8e8, #d8d8d8)',
     display: 'flex',
     alignItems: 'center',
     padding: '0 14px',
-    gap: '8px',
-    borderBottom: '1px solid #d0d0d0',
-    flexShrink: 0,
-  };
-
-  const dotStyles = (color) => ({
-    width: '12px',
-    height: '12px',
-    borderRadius: '50%',
-    background: color,
-    border: '0.5px solid rgba(0,0,0,0.12)',
-  });
-
-  const titleTextStyles = {
-    flex: 1,
-    textAlign: 'center',
-    fontFamily: 'system-ui, -apple-system, sans-serif',
-    fontSize: '13px',
-    fontWeight: 500,
-    color: '#333',
-    paddingRight: '56px', // balance traffic lights
-  };
-
-  const contentStyles = {
-    flex: 1,
-    overflow: 'auto',
+    borderBottom: '0.5px solid rgba(0,0,0,0.1)',
     position: 'relative',
-  };
+    userSelect: 'none',
+  },
+  trafficLights: {
+    display: 'flex',
+    gap: 8,
+    alignItems: 'center',
+  },
+  light: {
+    width: 12,
+    height: 12,
+    borderRadius: '50%',
+    border: '0.5px solid rgba(0,0,0,0.15)',
+  },
+  close: { background: '#ff5f57' },
+  minimize: { background: '#febc2e' },
+  maximize: { background: '#28c840' },
+  title: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    textAlign: 'center',
+    fontSize: 13,
+    color: '#333',
+    fontWeight: 500,
+    fontFamily: '-apple-system, "SF Pro Text", sans-serif',
+    pointerEvents: 'none',
+  },
+  content: {
+    position: 'relative',
+    overflow: 'auto',
+  },
+  titleBarDark: {
+    background: 'linear-gradient(to bottom, #3c3c3c, #2c2c2c)',
+    borderBottom: '0.5px solid rgba(255,255,255,0.1)',
+  },
+  titleDark: {
+    color: '#ddd',
+  },
+};
 
-  return React.createElement('div', { style: wrapperStyles },
-    React.createElement('div', { style: titleBarStyles },
-      React.createElement('div', { style: dotStyles('#FF5F56') }),
-      React.createElement('div', { style: dotStyles('#FFBD2E') }),
-      React.createElement('div', { style: dotStyles('#27C93F') }),
-      React.createElement('div', { style: titleTextStyles }, title)
-    ),
-    React.createElement('div', { style: contentStyles }, children)
+function MacosWindow({ title = '', width = 900, height = 600, darkMode = false, children }) {
+  return (
+    <div style={{ ...macosWindowStyles.window, background: darkMode ? '#1e1e1e' : '#fff' }}>
+      <div style={{
+        ...macosWindowStyles.titleBar,
+        ...(darkMode ? macosWindowStyles.titleBarDark : {}),
+      }}>
+        <div style={macosWindowStyles.trafficLights}>
+          <div style={{ ...macosWindowStyles.light, ...macosWindowStyles.close }} />
+          <div style={{ ...macosWindowStyles.light, ...macosWindowStyles.minimize }} />
+          <div style={{ ...macosWindowStyles.light, ...macosWindowStyles.maximize }} />
+        </div>
+        {title && (
+          <div style={{
+            ...macosWindowStyles.title,
+            ...(darkMode ? macosWindowStyles.titleDark : {}),
+          }}>
+            {title}
+          </div>
+        )}
+      </div>
+      <div style={{ ...macosWindowStyles.content, width, height }}>
+        {children}
+      </div>
+    </div>
   );
 }
 
-Object.assign(window, { MacOSWindow });
+if (typeof window !== 'undefined') {
+  window.MacosWindow = MacosWindow;
+}
