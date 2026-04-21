@@ -415,6 +415,23 @@ Different output types require different design approaches.
 
 **Key metrics:** Task completion rate, time to complete, error rate
 
+**Information density strategy:** Choose based on product type:
+
+| Product Type | Density Approach | Rationale |
+|--------------|------------------|-----------|
+| **Restrained (default)** | One less container, one less border, one less decorative icon — give content breathing room | Most products benefit from clarity and focus |
+| **High-density (AI/data/context-aware)** | Each screen needs **at least 3 visible product differentiation points**: non-decorative data, conversation/reasoning snippets, state inference, contextual connections | When the product's core value is "intelligence / data / context awareness" (AI tools, dashboards, trackers, copilots, pomodoro timers, health monitors, expense trackers), information density is how you express that intelligence. A single button and clock doesn't show the AI's intelligence — it looks like any generic app |
+
+**Two principles apply simultaneously:**
+1. **Taste = one detail at 120%, others at 80%** — Not everything is refined everywhere, but refined enough in the right places
+2. **Subtraction is fallback, not universal law** — When product core value requires information density support (AI / data / context awareness), addition takes priority over restraint
+
+**Examples:**
+- Generic note app → Restrained (focus on content)
+- AI writing assistant → High-density (show suggestions, context, reasoning)
+- Simple timer → Restrained (just the time)
+- Smart productivity tracker → High-density (show patterns, insights, predictions)
+
 ### Creative Works
 
 **Goal:** Capture attention → evoke emotion → showcase craft

@@ -54,6 +54,24 @@ If you don't have real data, leave placeholders or ask the user for it.
 **❌ "Quote slop"**
 Fabricated user reviews or celebrity quotes decorating the page. Leave placeholders and ask the user for real quotes.
 
+**❌ "Feature slop" — 3-column benefits grid**
+Three cards with icon + bold title + 2-sentence description. Every SaaS landing page looks like this. Real products have distinct value propositions — if all three columns sound the same, the design is covering up that the copy has nothing to say.
+
+**❌ "Badge slop"**
+"New", "Popular", "Beta", "🔥", "Premium" badge stickers on everything. When everything is highlighted, nothing is highlighted. Badges are for genuine exceptions, not decoration.
+
+**❌ "Dark mode slop"**
+Dark background (`#0D1117`, `#111827`) + neon accent + glowing borders. This is GitHub Dark Mode copied badly. It signals "developer tool made by someone who copied a dark theme" rather than intentional design. Reserved only for products that genuinely target developers and have a reason for this aesthetic.
+
+**❌ "Glassmorphism slop"**
+Frosted glass cards stacked three layers deep, blur everywhere, gradients behind the blur. Glass as an accent can work; glass as the entire design language means there's no actual design language.
+
+**❌ "Illustration slop"**
+Flat vector figures with blob shapes, pastel colors, and characters waving at the viewer. These came from the same 3 Figma community illustration packs. There is no scenario where this improves a design. Use real photography, or use nothing.
+
+**❌ "Stats section slop"**
+Four numbers in a row: `10M+ Users`, `99.9% Uptime`, `150+ Countries`, `24/7 Support`. This pattern has zero credibility without sources and zero visual interest without context. If the numbers are real and meaningful, give them context. If they're fabricated, delete them.
+
 ### Typography Traps
 
 **❌ Avoid these overused fonts**:

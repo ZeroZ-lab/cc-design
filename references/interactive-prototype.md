@@ -5,6 +5,52 @@
 > **Why it matters:** Multi-screen prototypes need routing, state management, and transition patterns that single-screen templates don't provide
 > **Typical failure it prevents:** Hardcoding all screens visible at once, no navigation, broken state on screen switches, no transition feel
 
+## Delivery Format Decision (Ask First)
+
+Multi-screen app prototypes have two standard delivery formats. **Ask the user which one they want** before starting — don't default to one and build blindly.
+
+| Format | When to use | Implementation |
+|--------|-------------|----------------|
+| **Overview Tiled** (design review default) | User wants to see full picture / compare layouts / review design consistency / multiple screens side-by-side | **All screens tiled side-by-side**, each in its own independent iPhone frame, content complete, no clickability needed |
+| **Flow Demo Single-Device** | User wants to demonstrate a specific user flow (e.g., onboarding, purchase funnel) | Single iPhone, embedded `AppPhone` state manager, tab bar / buttons / annotation points all clickable |
+
+### Routing Keywords
+
+- Task contains "tiled / show all pages / overview / take a look / compare / all screens" → **Overview**
+- Task contains "demo flow / user path / walk through / clickable / interactive demo" → **Flow demo**
+- Not sure? Ask. Don't default to flow demo (it's more work, not all tasks need it)
+
+### Overview Tiled Skeleton
+
+Each screen is an independent IosFrame side-by-side:
+
+```jsx
+<div style={{display: 'flex', gap: 32, flexWrap: 'wrap', padding: 48, alignItems: 'flex-start'}}>
+  {screens.map(s => (
+    <div key={s.id}>
+      <div style={{fontSize: 13, color: '#666', marginBottom: 8, fontStyle: 'italic'}}>{s.label}</div>
+      <IosFrame>
+        <ScreenComponent data={s} />
+      </IosFrame>
+    </div>
+  ))}
+</div>
+```
+
+### Flow Demo Skeleton
+
+Single clickable state machine:
+
+```jsx
+function AppPhone({ initial = 'today' }) {
+  const [screen, setScreen] = React.useState(initial);
+  const [modal, setModal] = React.useState(null);
+  // Render different ScreenComponent based on screen, pass onEnter/onClose/onTabChange/onOpen props
+}
+```
+
+Screen components receive callback props (`onEnter`, `onClose`, `onTabChange`, `onOpen`, `onAnnotation`), don't hardcode state. TabBar, buttons, artwork cards get `cursor: pointer` + hover feedback.
+
 ## Navigation Patterns
 
 Choose based on the app type. Each pattern includes a React + Babel implementation snippet.
