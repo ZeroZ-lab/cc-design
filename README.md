@@ -26,10 +26,16 @@ A Claude Code skill for high-fidelity HTML design and prototype creation — sli
 cc-design embeds a structured design workflow into Claude Code, enabling it to operate as an expert product designer. Three core principles guide every task:
 
 - **Fact verification (P0)** — Never guess. Verify claims about design trends, brand aesthetics, or technology. Wrong facts are worse than no facts.
-- **Assumptions first (P1)** — When scope is unclear, propose concrete assumptions rather than asking open-ended questions. Let the user correct you.
+- **Batch questions first (P1)** — For new ambiguous design tasks, start with one batch of clarifying questions. Skip that only for minor fixes, follow-up iterations, explicit speed requests, or already-rich briefs.
 - **Anti-AI slop (P2)** — Aggressive gradients, emoji (unless brand), generic SaaS hero sections, and overused fonts are banned. Full rules in `references/content-guidelines.md`.
 
 Progressive disclosure keeps the main skill definition concise while 27+ technical references load on demand.
+
+The core product promise is behavioral, not just feature breadth:
+- new ambiguous tasks start with one batch of clarifying questions
+- richly specified briefs can skip straight to a first pass with explicit assumptions
+- explicit speed requests can skip straight to a first pass with explicit assumptions
+- small edits and follow-up iterations do not reopen the full discovery flow
 
 ## Features
 
@@ -255,13 +261,21 @@ Mention a brand name to load its design system from [getdesign.md](https://getde
 Understand → Route → Acquire Context → Design Intent → Build → Verify → Deliver
     │          │           │                │             │        │         │
     ▼          ▼           ▼                ▼             ▼        ▼         ▼
- Clarify    Load        Read            6-question    HTML +   3-phase    File
+ Batch      Load        Read            6-question    HTML +   3-phase    File
  questions  refs +      design          checklist     React    verify:    delivered
             templates   system          (focal,      comps    structural,
                                      tone, flow,             visual,
                                      spacing,               excellence
                                      color, type)
 ```
+
+First-turn behavior follows one default path:
+- **New ambiguous task** — ask one batched set of clarifying questions
+- **New rich brief** — begin with explicit assumptions, then build
+- **Explicit speed request** — begin with explicit assumptions, then build
+- **Follow-up iteration or minor fix** — act directly unless audience, scope, or output type changes
+
+`SKILL.md` is the runtime behavior contract. `references/workflow.md` supports execution and must not override it.
 
 Two mandatory checkpoints in the Build phase:
 - **Before animation** — load animation-best-practices + animation-pitfalls, verify 16 hard rules
@@ -284,6 +298,13 @@ Two mandatory checkpoints in the Build phase:
 6. Open a pull request
 
 When adding new reference documents, add a row to the routing table in SKILL.md so the model knows when to load it.
+
+If a pull request changes first-turn behavior, it must also update:
+- `SKILL.md`
+- `README.md`
+- `references/workflow.md`
+- `CLAUDE.md` if the release checklist changes
+- `VERSION`
 
 ## License
 

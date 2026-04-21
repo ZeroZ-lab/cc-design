@@ -1,20 +1,54 @@
-# Workflow: From Receiving a Task to Delivery
+# Workflow: Supporting Guide for Question-First Delivery
 
-You are the user's junior designer. The user is the manager. Following this workflow significantly increases the probability of producing good design.
+This file supports `SKILL.md`. It does not define an independent product workflow.
+
+The runtime contract lives in `SKILL.md`:
+- new ambiguous tasks start with one batch of clarifying questions
+- richly specified briefs can skip to explicit assumptions
+- follow-up iterations and minor fixes act directly unless scope changes
+
+Use this file to structure the question batch and the follow-through after that decision has already been made.
+
+## First-Turn Rule
+
+Treat this as supporting guidance, not an override:
+
+- **Ask a batch** for new tasks with missing audience, scope, output shape, hard constraints, or reference context
+- **Skip to assumptions** only when the brief is already rich, or the user explicitly asks to move fast
+- **Act directly** for follow-up iterations and minor fixes
+
+If you are unsure which path applies, default to the question batch. Do not invent a fourth path.
 
 ## The Art of Asking Questions
 
-In most cases, ask at least 10 questions before starting work. Not as a formality, but to truly understand the requirements.
+Ask one batch, not a back-and-forth drip.
 
-**When you must ask**: new tasks, ambiguous tasks, no design context, user only gave a vague one-line requirement.
+Default target:
+- 7 questions
 
-**When you can skip asking**: minor fixes, follow-up tasks, user already gave a clear PRD + screenshots + context.
+Allowed range:
+- 5 questions for narrow tasks
+- 10 questions for broad multi-surface tasks
 
-**How to ask**: most agent environments don't have a structured question UI, so ask using a markdown checklist in the conversation. **List all questions at once for the user to answer in batch**, don't go back and forth one by one -- that wastes the user's time and interrupts their thinking.
+After the batch:
+- ask at most one follow-up round
+- only ask follow-ups for critical blocking fields
+- if critical fields are still unknown after one follow-up round, proceed with explicit assumptions
+
+Critical blocking fields:
+- output shape
+- audience
+- scope
+- hard constraints that would materially change the direction
+
+Non-blocking fields:
+- optional refinements
+- tweak controls
+- secondary taste preferences
 
 ## Required Question Checklist
 
-Every design task must clarify these 5 categories of questions:
+When you are in the question-first path, clarify these 5 categories:
 
 ### 1. Design Context (Most Important)
 
@@ -96,49 +130,41 @@ Before starting, I want to align on a few questions. List them all at once, you 
 ...
 ```
 
-## Junior Designer Mode
+## After the Question Batch
 
-This is the most important part of the entire workflow. **Don't just dive in after receiving the task.** Steps:
+Once the question batch is answered, or once unanswered critical fields have been converted into explicit assumptions, move into delivery.
 
-### Pass 1: Assumptions + Placeholders (5-15 minutes)
+### Direction Memo (Only When Needed)
 
-At the top of the HTML file, write your **assumptions + reasoning comments**, like a junior reporting to a manager:
+If questions were skipped, or the user explicitly asked for speed, write a short direction memo before building:
 
 ```html
 <!--
-My assumptions:
+Direction memo:
 - This is for XX audience
-- The overall tone I interpret as XX (based on the user saying "professional but not serious")
+- Output shape: XX
+- Tone: XX
 - The main flow is A→B→C
-- For colors, I want to use brand blue + warm gray, not sure if you want an accent color
-
-Unresolved questions:
-- Where does the data for step 3 come from? Using placeholder first
-- Background image: abstract geometry or real photo? Placeholder first
-
-If you see this and feel the direction is wrong, now is the lowest-cost time to change.
+- Key constraints: XX
 -->
-
-<!-- Then the structure with placeholders -->
-<section class="hero">
-  <h1>[Main title placeholder - waiting for user to provide]</h1>
-  <p>[Subtitle placeholder]</p>
-  <div class="cta-placeholder">[CTA button]</div>
-</section>
 ```
 
-**Save → show the user → wait for feedback before proceeding to the next step**.
+Rules:
+- 3 to 6 bullets maximum
+- this is not a separate deliverable
+- this is only a bridge into the actual build
+- do not reopen the full question flow unless audience, scope, or output type changes
 
-### Pass 2: Real Components + Variations (Main Work)
+### Main Work
 
-After the user approves the direction, start filling in. At this point:
+After the direction is clear:
 - Write React components to replace placeholders
 - Create variations (using design_canvas or Tweaks)
 - If it's slides/animation, start with starter components
 
-**Show again halfway through** -- don't wait until everything is done. If the design direction is wrong, showing late means wasted work.
+Show again halfway through. If the design direction is wrong, showing late means wasted work.
 
-### Pass 3: Detail Polish
+### Detail Polish
 
 After the user is satisfied with the overall direction, polish:
 - Font size/spacing/contrast fine-tuning
@@ -146,7 +172,7 @@ After the user is satisfied with the overall direction, polish:
 - Edge cases
 - Tweaks panel refinement
 
-### Pass 4: Verification + Delivery
+### Verification + Delivery
 
 - Use Playwright to screenshot (see `references/verification.md`)
 - Open in browser and visually confirm

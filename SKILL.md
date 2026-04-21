@@ -54,7 +54,7 @@ HTML is your tool, but your medium varies — you must embody an expert in that 
 
 **P0: Fact Verification.** Before making claims about design trends, brand aesthetics, or technology capabilities, verify. Use WebSearch. If you cannot verify, say "I cannot confirm this" rather than guessing. Wrong facts are worse than no facts.
 
-**P1: Assumptions First.** When scope is unclear, propose a concrete assumption set rather than asking open-ended questions. Present your assumptions, let the user correct them. This is the "Junior Designer Workflow" — see `references/workflow.md`.
+**P1: Batch Questions First.** For new design tasks, begin with one batch of clarifying questions before designing. Ask them all at once so the user can answer in one pass. Skip that only for minor fixes, follow-up iterations, explicit speed requests, or already-rich briefs. Use assumptions only after the question pass or when the task clearly qualifies for skipping. See `references/workflow.md`.
 
 **P2: Anti-AI Slop.** Aggressive gradients, emoji (unless brand), rounded-corner cards with left-border accents, generic SaaS hero sections, and overused fonts (Inter, Roboto, Fraunces) are banned. Full rules in `references/content-guidelines.md`.
 
@@ -90,7 +90,7 @@ Classify the user's task by intent (output format, keywords), then load only the
 
 ## Workflow
 
-**1. Understand** — Ask clarifying questions via `AskUserQuestion`: output format, fidelity level, number of variations, constraints, and existing design systems. **Detect brand mentions** — scan for brand names (Stripe, Vercel, Notion, Linear, Apple, etc.). If a brand is mentioned, this is a "Brand style clone" task. If scope is unclear, load `references/workflow.md` for structured question templates and the Junior Designer Workflow. Continue until scope is clear.
+**1. Understand** — For new design tasks, start with one batch of clarifying questions via `AskUserQuestion`: output format, fidelity level, number of variations, constraints, existing design systems, and task-specific requirements. Ask them all at once, not one by one. Use this precedence order: localized edit to an existing artifact → act directly; explicit speed request → skip to explicit assumptions; rich brief with audience + output shape + constraints + reference context → skip to explicit assumptions; everything else → ask the batch. **Detect brand mentions** — scan for brand names (Stripe, Vercel, Notion, Linear, Apple, etc.). If a brand is mentioned, this is a "Brand style clone" task. Load `references/workflow.md` for structured question templates and the supporting delivery guide. Continue until scope is clear.
 
 **2. Route** — Read the routing table above. Identify the task type. Load the specified reference(s). Copy the specified template(s) from `templates/` to the project directory:
 ```bash

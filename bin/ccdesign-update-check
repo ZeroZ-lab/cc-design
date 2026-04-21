@@ -40,10 +40,9 @@ if [ -f "$CACHE_FILE" ]; then
         ;;
       UPGRADE_AVAILABLE*)
         CACHED_OLD="$(echo "$CACHED" | awk '{print $2}')"
-        if [ "$CACHED_OLD" = "$LOCAL" ]; then
-          echo "$CACHED"
-          exit 0
-        fi
+        # Always re-verify UPGRADE_AVAILABLE against the remote.
+        # A cached "upgrade" may be stale if the remote version was reverted.
+        # Skip the network call only for UP_TO_DATE (where local == remote).
         ;;
     esac
   fi
