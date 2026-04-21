@@ -1,25 +1,25 @@
 {
   "_meta": {
-    "description": "个人素材索引模板 — 复制此文件并填入你的真实数据",
-    "how_to_use": "1. 复制此文件到 ~/.claude/memory/personal-asset-index.json  2. 填入你的真实信息  3. design-philosophy skill 会自动读取",
-    "note": "真实数据文件不要放在 skill 目录内，避免随 skill 分发泄露隐私"
+    "description": "Personal asset index template — copy this file and fill in your real data",
+    "how_to_use": "1. Copy this file to ~/.claude/memory/personal-asset-index.json  2. Fill in your real information  3. design-philosophy skill will auto-read it",
+    "note": "Do not put real data files inside the skill directory, to avoid leaking privacy when the skill is distributed"
   },
 
   "identity": {
-    "real_name": "你的真名",
-    "pen_names": ["笔名1", "笔名2"],
+    "real_name": "Your real name",
+    "pen_names": ["Pen name 1", "Pen name 2"],
     "english_name": "English Name",
-    "title": "你的头衔/一句话介绍",
-    "bio_short": "50-100字简介",
-    "bio_long": "200-300字详细介绍",
-    "avatar_url": "头像URL",
-    "source": "数据来源备注"
+    "title": "Your title / one-line introduction",
+    "bio_short": "50-100 word short bio",
+    "bio_long": "200-300 word detailed introduction",
+    "avatar_url": "Avatar URL",
+    "source": "Data source notes"
   },
 
   "contact": {
     "email": "your@email.com",
-    "wechat_personal": "微信号",
-    "source": "数据来源备注"
+    "wechat_personal": "WeChat ID",
+    "source": "Data source notes"
   },
 
   "social_media": {
@@ -29,33 +29,33 @@
     },
     "youtube": {
       "url": "https://www.youtube.com/@YourChannel",
-      "channel_name": "频道名"
+      "channel_name": "Channel name"
     },
-    "source": "数据来源备注"
+    "source": "Data source notes"
   },
 
   "websites": {
     "main_site": {
       "url": "https://yoursite.com",
-      "description": "网站描述",
+      "description": "Website description",
       "local_path": "/path/to/local/project/"
     }
   },
 
   "products": {
     "product_1": {
-      "name": "产品名",
-      "type": "iOS App / Web App / CLI Tool / 电子书",
-      "achievement": "主要成就",
+      "name": "Product name",
+      "type": "iOS App / Web App / CLI Tool / Ebook",
+      "achievement": "Main achievement",
       "icon_path": "/path/to/icon.png",
       "project_path": "/path/to/project/"
     }
   },
 
   "stats": {
-    "social_followers": "粉丝数",
-    "product_users": "用户数",
-    "source": "数据来源备注"
+    "social_followers": "Followers count",
+    "product_users": "Users count",
+    "source": "Data source notes"
   },
 
   "design_assets": {
