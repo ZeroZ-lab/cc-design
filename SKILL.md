@@ -189,6 +189,13 @@ If the direction feels wrong, now is the cheapest moment to change it.
 
 **1. Understand** — For new design tasks, start with structured step-by-step confirmation via the platform's native question UI when available (`AskUserQuestion`, `request_user_input`, or equivalent). Use this precedence order: localized edit → act directly; explicit speed request → skip to assumptions; rich brief (audience + output shape + constraints + references) → skip to assumptions; everything else → ask the next blocking question. If structured UI is unavailable, send one compact text batch instead. **Detect brand mentions** — scan for brand names (Stripe, Vercel, Notion, Linear, Apple, etc.). If a brand is mentioned, load `references/getdesign-loader.md`.
 
+**Existing design contract rule** — if the project already has `DESIGN.md` (or an equivalent explicit design system file) and the current task would change it, do not silently rewrite it. Ask the user to choose one mode before editing:
+- **Append** — add a new section or extension, keep the existing contract intact
+- **Merge** — integrate the new direction into the existing contract, preserving compatible rules and rewriting conflicts
+- **Overwrite** — replace the current contract with the new one
+
+Default recommendation: **Merge**. Use **Append** when adding a bounded subsystem or feature-specific addendum. Use **Overwrite** only when the user clearly wants to reset the design system.
+
 **2. Route** — Read the routing table below. Load the specified reference(s). Copy the specified template(s):
 ```bash
 cp <skill-dir>/templates/<component>.<ext> ./<component>.<ext>

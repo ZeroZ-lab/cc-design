@@ -36,6 +36,7 @@ The core product promise is behavioral, not just feature breadth:
 - richly specified briefs can skip straight to a first pass with explicit assumptions
 - explicit speed requests can skip straight to a first pass with explicit assumptions
 - small edits and follow-up iterations do not reopen the full discovery flow
+- existing `DESIGN.md` files are never silently rewritten; the user confirms append / merge / overwrite first
 
 ## Features
 

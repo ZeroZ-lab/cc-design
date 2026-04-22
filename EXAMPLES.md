@@ -159,8 +159,9 @@ If your project already has a `DESIGN.md`:
 cc-design will:
 1. Read your existing DESIGN.md
 2. Fetch Stripe's design system
-3. Ask: "Should I merge Stripe's payment form patterns into your design system, or keep it isolated?"
-4. Generate HTML that respects your existing tokens while incorporating Stripe's payment UX patterns
+3. Ask how to update the existing contract: append, merge, or overwrite
+4. Recommend merge by default unless this is a bounded add-on or a full reset
+5. Generate HTML that respects your existing tokens while incorporating Stripe's payment UX patterns
 
 ---
 

@@ -1,11 +1,28 @@
 # Design System Creation
 
 > **Load when:** User asks to create a design system, CSS variable system, token structure, or wants to establish visual consistency across multiple artifacts
-> **Skip when:** Project already has a design system (DESIGN.md, tokens, CSS variables)
+> **Skip when:** Project already has a design system (DESIGN.md, tokens, CSS variables) unless the user explicitly wants to update it
 > **Why it matters:** Creating a design system from scratch requires structure. Without guidance, AI produces inconsistent token names, incomplete categories, and unusable variable systems.
 > **Typical failure it prevents:** Token names that don't follow a convention, missing categories (spacing but no shadows), variables that aren't actually used in the design
 
 ## Token Structure
+
+## Existing Contract Update Rule
+
+If the project already has `DESIGN.md` or another explicit design-system contract:
+
+1. Read the existing file first
+2. Ask the user which update mode they want:
+   - **Append** — add a bounded extension without rewriting the original contract
+   - **Merge** — integrate the new direction into the existing contract, preserving compatible rules and updating conflicts
+   - **Overwrite** — replace the current contract entirely
+3. Recommend **Merge** by default
+4. Do not silently replace the file
+
+Use cases:
+- **Append:** new subsystem, campaign page, temporary addendum, new feature module
+- **Merge:** evolving the design system while preserving identity
+- **Overwrite:** full rebrand, hard reset, prior contract is obsolete
 
 A minimal design system has 5 token categories. Each uses CSS custom properties.
 

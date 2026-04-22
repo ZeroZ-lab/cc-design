@@ -66,6 +66,7 @@ Critical blocking fields:
 - audience
 - scope
 - hard constraints that would materially change the direction
+- existing contract update mode (`DESIGN.md`: append / merge / overwrite) when relevant
 
 Non-blocking fields:
 - optional refinements
@@ -79,9 +80,16 @@ When you are in the question-first path, clarify these categories in order:
 ### 1. Design Context (Most Important)
 
 - Is there an existing design system, UI kit, or component library? Where?
+- Is there an existing `DESIGN.md` or equivalent contract file?
 - Is there a brand guideline, color spec, typography spec?
 - Are there screenshots of an existing product/page to reference?
 - Is there a codebase to read?
+
+**If there is already a `DESIGN.md`:**
+- Ask how to update it before touching it
+- Required mode selection: **Append / Merge / Overwrite**
+- Recommend **Merge** by default
+- Do not silently rewrite the file just because a new direction sounds better
 
 **If the user says "no"**:
 - Help them find it -- look through project directories, check for reference brands
@@ -138,18 +146,24 @@ Do you already have references I should match?
 - Existing codebase only
 - No references, work from scratch
 
-Step 2 — Exploration
+Step 2 — Existing contract
+If `DESIGN.md` already exists, how should I update it?
+- Append to it
+- Merge into it
+- Overwrite it
+
+Step 3 — Exploration
 How broad should I go?
 - One direction, close to expected
 - Three directions, conservative → bold
 
-Step 3 — Scope
+Step 4 — Scope
 What should I build first?
 - One screen
 - One flow
 - Wireframe pass before hi-fi
 
-Step 4 — Confirm
+Step 5 — Confirm
 I'll proceed with [summary]. Continue?
 ```
 
