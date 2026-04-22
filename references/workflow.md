@@ -33,7 +33,7 @@ This workflow is the **execution process**. The 8-layer framework (`design-think
 
 ## Runtime Load Announcements
 
-Treat runtime loading as visible work, not invisible thought. `load-manifest.json` is the source of truth for route bundles, checkpoint bundles, and optional inspiration bundles. `scripts/resolve-load-bundles.mjs` is the runtime consumer that turns the prompt plus explicit flags such as `question-first-delivery` into concrete bundle loads.
+Treat runtime loading as visible work, not invisible thought. `load-manifest.json` is the source of truth for route bundles, checkpoint bundles, and optional inspiration bundles. Bundle matching is done by an Agent subagent that reads the catalog from `scripts/generate-bundle-catalog.mjs` and semantically matches the user's prompt. `scripts/resolve-load-bundles.mjs` is kept as a keyword-based fallback.
 
 Rules:
 - announce before reading runtime references or copying templates

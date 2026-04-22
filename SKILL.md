@@ -210,19 +210,43 @@ If the direction feels wrong, now is the cheapest moment to change it.
 
 Default recommendation: **Merge**. Use **Append** when adding a bounded subsystem or feature-specific addendum. Use **Overwrite** only when the user clearly wants to reset the design system.
 
-**2. Route** — Run the resolver after classifying the task:
+**2. Route** — Match the user's request against the bundle catalog using an Agent subagent for semantic understanding.
+
+Use the **Agent** tool (subagent_type `general-purpose`) with a prompt like:
+```
+Read the bundle catalog by running:
+  node <skill-dir>/scripts/generate-bundle-catalog.mjs
+Then read <skill-dir>/load-manifest.json for bundle details (references/templates/scripts).
+
+Given the user's request: "<user request>"
+
+Match the request against the catalog. Return JSON:
+{
+  "taskTypes": ["matched-name", ...],
+  "optionalInspirations": ["matched-name", ...]
+}
+
+Rules:
+- Match semantic intent, not just keywords — consider Chinese equivalents, indirect intent, and paraphrases
+- Only use bundle names that appear in the catalog output — never invent names
+- A prompt can match 0 or more bundles in each category
+- Do NOT match checkpoints — those are set by the calling skill based on workflow context
+```
+
+**Set checkpoints explicitly** based on task context (not from the subagent result):
+- On the question-first path → include `question-first-delivery`
+- User asked for critique/review/audit/score → include `deep-design-review`
+- Task involves animation/motion → include `before-animation`
+- Task involves an iOS mockup → include `before-ios-mockup`
+- Before final delivery → include `before-delivery`
+- Before any export → include `before-export`
+
+If the Agent tool is unavailable, fall back to:
 ```bash
 node <skill-dir>/scripts/resolve-load-bundles.mjs --prompt "<user request>"
 ```
-If you are on the question-first path, include:
-```bash
---task-type new-ambiguous-task --checkpoint question-first-delivery
-```
-If the user explicitly asked for a critique, review, audit, or score, include:
-```bash
---checkpoint deep-design-review
-```
-Use the resolver output as authoritative. Load `defaults.all-design-tasks`, then every matched task type, then any relevant checkpoint/supporting bundle. Before reading or copying any runtime bundle, announce it using:
+
+Load `defaults.all-design-tasks`, then every matched task type, then any relevant checkpoint/supporting bundle. Before reading or copying any runtime bundle, announce it using:
 ```text
 Load: because=<reason> loaded=<comma-separated paths>
 ```

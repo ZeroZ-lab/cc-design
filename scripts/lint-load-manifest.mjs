@@ -126,6 +126,15 @@ const undocumentedCheckpoints = Object.keys(manifest.checkpoints ?? {}).filter(
   (checkpoint) => !skillText.includes(checkpoint)
 );
 
+const missingDescriptions = [];
+for (const group of ["taskTypes", "checkpoints", "optionalInspirations"]) {
+  for (const [name, config] of Object.entries(manifest[group] ?? {})) {
+    if (!config.description) {
+      missingDescriptions.push(`${group}.${name}`);
+    }
+  }
+}
+
 const uncoveredReferences = referencePaths.filter(
   (file) => !coveredRuntimePaths.has(file)
 );
@@ -138,7 +147,8 @@ if (
   uncoveredReferences.length === 0 &&
   uncoveredTemplates.length === 0 &&
   invalidSkillReferences.length === 0 &&
-  undocumentedCheckpoints.length === 0
+  undocumentedCheckpoints.length === 0 &&
+  missingDescriptions.length === 0
 ) {
   console.log("load-manifest OK");
   process.exit(0);
@@ -176,6 +186,13 @@ if (undocumentedCheckpoints.length > 0) {
   console.error("Checkpoint reasons missing from SKILL.md:");
   for (const checkpoint of undocumentedCheckpoints) {
     console.error(`- ${checkpoint}`);
+  }
+}
+
+if (missingDescriptions.length > 0) {
+  console.error("Bundles missing description field:");
+  for (const key of missingDescriptions) {
+    console.error(`- ${key}`);
   }
 }
 
