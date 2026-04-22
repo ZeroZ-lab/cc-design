@@ -45,6 +45,26 @@ Rules:
 - do not announce ordinary codebase reads that are not part of the skill runtime bundle
 - do not silently skip bundle loads; explicit dedupe is part of the contract
 
+Bundle classes:
+- **Base-required bundles (`基础必载`)** — always load for every design task
+- **Conditionally required bundles (`条件命中后必载`)** — load when a `taskType` or `checkpoint` is triggered
+- **Truly optional inspirations (`真正可选`)** — load only when case-study inspiration helps
+
+## Two-Stage Routing
+
+Use a two-stage route instead of loading every plausible reference up front.
+
+**Stage 1: Base-required load**
+- always load `all-design-tasks`
+- if the task is new or underspecified, also load `question-first-delivery`
+
+**Stage 2: Route-shaping questions**
+- ask the fixed question batch below
+- map those answers directly to `taskTypes` and `checkpoints`
+- only after explicit mapping, use semantic matching to supplement unresolved `taskTypes` or `optionalInspirations`
+
+This keeps typography, layout, and visual/color theory in the default context while preserving conditional loading for brand, interaction, export, animation, device mockups, and review work.
+
 ## First-Turn Rule
 
 Treat this as supporting guidance, not an override:
@@ -91,15 +111,35 @@ Non-blocking fields:
 
 ## Required Question Checklist
 
-When you are in the question-first path, clarify these categories in order:
+When you are in the question-first path, ask these **route-shaping questions first** and stop once bundle selection is clear:
 
-### 1. Design Context (Most Important)
+### 1. Output Type
 
-- Is there an existing design system, UI kit, or component library? Where?
+- What is the first artifact: page, deck, clickable prototype, animation, design system, critique, or export target?
+- Route mapping:
+  `page → landing-page`
+  `deck → slide-deck`
+  `clickable prototype → interactive-prototype`
+  `animation → animation-motion`
+  `design system → design-system-creation`
+  `critique/review/audit → deep-design-review`
+  `pdf/pptx/video target → pdf-export` / `editable-pptx-export` / `video-export`
+
+### 2. Task State
+
+- Is this a new task, a localized edit, or an approved follow-up iteration?
+- Route mapping:
+  `new or underspecified → question-first-delivery`
+  `localized edit / approved follow-up → skip question-first unless scope changed`
+
+### 3. Available Context
+
+- Is there an existing design system, UI kit, codebase, screenshots, or a brand reference?
 - Is there an existing `DESIGN.md` or equivalent contract file?
-- Is there a brand guideline, color spec, typography spec?
-- Are there screenshots of an existing product/page to reference?
-- Is there a codebase to read?
+- Route mapping:
+  `brand reference / clone → brand-style-clone`
+  `need real assets/logo sourcing → brand-asset-acquisition`
+  `no references → no-design-system`
 
 **If there is already a `DESIGN.md`:**
 - Ask how to update it before touching it
@@ -107,31 +147,28 @@ When you are in the question-first path, clarify these categories in order:
 - Recommend **Merge** by default
 - Do not silently rewrite the file just because a new direction sounds better
 
-**If the user says "no"**:
-- Help them find it -- look through project directories, check for reference brands
-- Still nothing? Say explicitly: "I'll work from general intuition, but this usually can't produce work that fits your brand. Would you consider providing some references first?"
-- If you must proceed, follow the fallback strategy in `references/design-context.md`
+### 4. Interaction, Device, and Export Constraints
 
-### 2. Variations Dimensions
+- Does the task need interaction, an iOS/Android frame, or export output?
+- Route mapping:
+  `interactive flow → interactive-prototype` or `interaction-design`
+  `iOS → mobile-mockup + before-ios-mockup`
+  `PDF / PPTX / video → matching export task type + before-export`
 
-- How many variations do you want? (Recommend 3+)
-- Which dimensions to vary on? Visual/interaction/color/layout/copy/animation?
-- Do you want all variations "close to the expected result" or "a map from conservative to wild"?
+### 5. Primary Design Risk
 
-### 3. Fidelity and Scope
+- What is most likely to go wrong: layout, typography, color, information hierarchy, interaction, or brand tone?
+- Route mapping:
+  `layout → layout-problems`
+  `typography → typography-problems`
+  `color → color-problems`
+  `information hierarchy → information-architecture`
+  `interaction → interaction-problems`
+  `brand tone → brand-tone`
 
-- How high fidelity? Wireframe / semi-finished / full hi-fi with real data?
-- How much flow to cover? One screen / one flow / entire product?
-- Are there specific "must include" elements?
+## After Routing Is Locked
 
-### 4. Tweaks
-
-- Which parameters should be adjustable in real time? (color/font size/spacing/layout/copy/feature flags)
-- Will the user want to continue tweaking after completion?
-
-### 5. Task-Specific Detail (Only If Still Blocking)
-
-Ask follow-up detail questions only if they still materially affect direction. For example:
+After bundle selection is clear, ask only the remaining blocking product questions. For example:
 
 **Building a landing page**:
 - What is the target conversion action?
@@ -156,30 +193,41 @@ Ask follow-up detail questions only if they still materially affect direction. F
 When encountering a new task, prefer this structure:
 
 ```markdown
-Step 1 — Context
-Do you already have references I should match?
-- Existing design system / screenshots
-- Existing codebase only
-- No references, work from scratch
+Step 1 — Output
+What is the first artifact?
+- Landing page / marketing page
+- Deck / presentation
+- Clickable prototype
+- Animation / motion study
 
-Step 2 — Existing contract
-If `DESIGN.md` already exists, how should I update it?
-- Append to it
-- Merge into it
-- Overwrite it
+Step 2 — Task state
+What kind of task is this?
+- New task
+- Localized edit
+- Approved follow-up
 
-Step 3 — Exploration
-How broad should I go?
-- One direction, close to expected
-- Three directions, conservative → bold
+Step 3 — Context
+What should I route around?
+- Existing design system / codebase
+- Brand reference or clone
+- Need asset sourcing
+- No references
 
-Step 4 — Scope
-What should I build first?
-- One screen
-- One flow
-- Wireframe pass before hi-fi
+Step 4 — Constraints
+Any special delivery or device constraints?
+- Interactive flow
+- iOS mockup
+- Export PDF / PPTX / video
+- No special constraints
 
-Step 5 — Plan
+Step 5 — Primary risk
+Where should I deepen theory?
+- Layout / information hierarchy
+- Typography
+- Color / tone
+- Interaction
+
+Step 6 — Plan
 Plan
 - Goal: ...
 - Confirmed facts: ...
@@ -241,7 +289,7 @@ After the plan is approved:
 - Create variations (using design_canvas or Tweaks)
 - If it's slides/animation, start with starter components
 - announce any newly loaded runtime bundle before reading it, even mid-task when a checkpoint triggers
-- if you chose the question-first path, route with `new-ambiguous-task` plus `question-first-delivery`
+- if you chose the question-first path, route with `question-first-delivery` plus the bundles locked by the route-shaping answers
 - if the user asked for critique/review/audit/score, route with `deep-design-review` before judging the work
 
 Show again halfway through. If the design direction is wrong, showing late means wasted work.

@@ -1,12 +1,15 @@
 {
   "defaults": {
     "all-design-tasks": {
-      "description": "Always loaded for every design task — core design quality references",
+      "description": "Always loaded for every design task — base-required (`基础必载`) design quality, typography, layout, and visual system references",
       "references": [
         "references/design-excellence.md",
         "references/content-guidelines.md",
         "references/typography-spacing-examples.md",
-        "references/design-philosophy.md"
+        "references/design-philosophy.md",
+        "references/typography-design-system.md",
+        "references/design-patterns.md",
+        "references/visual-design-theory.md"
       ]
     }
   },
@@ -48,7 +51,7 @@
       ]
     },
     "visual-composition": {
-      "description": "Visual composition, art direction, visual hierarchy, layout composition, 视觉构图, 艺术指导, 视觉层次, 排版构图",
+      "description": "Visual composition, art direction, visual hierarchy, layout composition, 视觉构图, 艺术指导, 视觉层次, 排版构图. Compatibility alias: `all-design-tasks` already loads `references/visual-design-theory.md`; route here when composition is the explicit focus or failure mode.",
       "detect": {
         "anyKeywords": ["visual composition", "art direction", "visual hierarchy", "composition", "layout composition"]
       },
@@ -103,7 +106,7 @@
       ]
     },
     "typography-system-design": {
-      "description": "Typography systems, type systems, modular scales, baseline grids, 字体系统, 模化比例, 基线网格",
+      "description": "Typography systems, type systems, modular scales, baseline grids, 字体系统, 模化比例, 基线网格. Compatibility alias: `all-design-tasks` already loads `references/typography-design-system.md`; route here when typography system work is the explicit focus.",
       "detect": {
         "anyKeywords": ["typography system", "type system", "font system", "modular scale", "baseline grid"]
       },
@@ -124,7 +127,7 @@
       ]
     },
     "high-quality-output": {
-      "description": "High quality, premium, polish, best-in-class, world-class output, 高质量, 精品, 打磨, 世界级, 专业级",
+      "description": "High quality, premium, polish, best-in-class, world-class output, 高质量, 精品, 打磨, 世界级, 专业级. Compatibility alias: `all-design-tasks` already loads `references/design-patterns.md`; route here when pattern quality or case-study reinforcement is the explicit goal.",
       "detect": {
         "anyKeywords": ["high quality", "premium", "polish", "best-in-class", "world-class"]
       },
@@ -242,7 +245,7 @@
     "mobile-mockup": {
       "description": "Mobile app mockups, iOS/Android app screens, app designs, 移动端原型, 手机APP界面, iOS应用, Android应用",
       "detect": {
-        "anyKeywords": ["mobile mockup", "ios app", "iphone", "android app", "mobile app", "app screen"]
+        "anyKeywords": ["mobile mockup", "ios app", "iphone", "android app", "mobile app", "app screen", "ios onboarding", "onboarding screen", "mobile onboarding", "mobile prototype", "app prototype"]
       },
       "references": [
         "references/starter-components.md",
@@ -269,7 +272,7 @@
     "interactive-prototype": {
       "description": "Interactive prototypes, clickable prototypes, prototype flows, clickthroughs, 交互原型, 可点击原型, 原型流程, 产品演示",
       "detect": {
-        "anyKeywords": ["interactive prototype", "clickthrough", "prototype flow", "interactive flow"]
+        "anyKeywords": ["interactive prototype", "clickthrough", "prototype flow", "interactive flow", "interactive mobile prototype", "interactive app prototype"]
       },
       "references": [
         "references/interactive-prototype.md",

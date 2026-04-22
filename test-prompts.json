@@ -2,8 +2,8 @@
   {
     "id": 1,
     "prompt": "I want to create a SaaS product login page, show me 3 style directions for comparison",
-    "expected": "Triggers clarifying questions about design context/brand; produces 3 variations in design_canvas; avoids purple gradients/emoji/Inter and other AI slop; provides specific reasoning for each variation's differentiation dimension",
-    "tests": "workflow questions + variations logic + anti-AI slop checklist + design_canvas usage"
+    "expected": "Loads the base-required bundle first; asks only the route-shaping questions still needed for context/constraints; routes to variant-exploration for 3 directions; avoids purple gradients/emoji/Inter and other AI slop; provides specific reasoning for each variation's differentiation dimension",
+    "tests": "base-required bundle + route-shaping questions + variations logic + anti-AI slop checklist + design_canvas usage"
   },
   {
     "id": 2,
@@ -38,13 +38,19 @@
   {
     "id": 7,
     "prompt": "Design a fintech landing page for SMB payroll automation",
-    "expected": "Asks only for missing blocking context; once enough context exists, outputs a visible execution plan with confirmed facts, assumptions, first artifact, variation axes, and verification approach; waits for approval before building HTML",
-    "tests": "planning gate + visible plan + approval before build"
+    "expected": "Loads the base-required bundle first; asks only the missing route-shaping questions that affect bundle choice; routes to landing-page; once enough context exists, outputs a visible execution plan with confirmed facts, assumptions, first artifact, variation axes, and verification approach; waits for approval before building HTML",
+    "tests": "two-stage routing + planning gate + visible plan + approval before build"
   },
   {
     "id": 8,
     "prompt": "Build a polished onboarding flow for a B2B AI sales assistant. Audience is RevOps managers. Three screens. Use a restrained enterprise tone. Just move fast.",
     "expected": "Skips most clarification because the brief is rich and speed is requested, but still produces a compressed mini-plan before building; does not jump directly into HTML unless the user explicitly says to skip planning",
     "tests": "rich-brief path + speed path + mini-plan still required"
+  },
+  {
+    "id": 9,
+    "prompt": "Create a Stripe-style pricing page and export it as PDF",
+    "expected": "Loads the base-required bundle first; routes to brand-style-clone + landing-page; includes before-export for the PDF target; asks only for missing brand/context details before planning; keeps export constraints visible before build",
+    "tests": "brand clone + landing page + export checkpoint + two-stage routing"
   }
 ]

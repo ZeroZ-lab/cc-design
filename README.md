@@ -34,8 +34,15 @@ cc-design embeds a structured design workflow into Claude Code, enabling it to o
 Progressive disclosure keeps the main skill definition concise while 27+ technical references load on demand.
 `load-manifest.json` is the machine-readable source of truth for bundle contents, `scripts/generate-bundle-catalog.mjs` generates the bundle catalog for AI matching, and `scripts/lint-load-manifest.mjs` checks that every reference/template is accounted for. Routing prefers a semantic-matching subagent when the platform provides one, and falls back to `scripts/resolve-load-bundles.mjs` when it does not.
 
+Runtime bundles are organized into three groups:
+- **Base-required bundles (`基础必载`)** — always loaded for every design task, including typography, layout patterns, and visual/color theory
+- **Conditionally required bundles (`条件命中后必载`)** — loaded when a task type or checkpoint is triggered
+- **Truly optional inspirations (`真正可选`)** — case studies and reference material only
+
 The core product promise is behavioral, not just feature breadth:
+- every design task starts with the base-required bundle
 - new ambiguous tasks start with structured step-by-step confirmation
+- new tasks use a short route-shaping question batch before loading additional task bundles
 - richly specified briefs can skip most clarification, but still require a visible plan before build
 - explicit speed requests compress clarification, but still produce a mini-plan unless the user explicitly says to skip planning
 - first-pass work stops for approval after the plan
@@ -276,18 +283,24 @@ Mention a brand name to load its design system from [getdesign.md](https://getde
 Understand → Route → Acquire Context → Plan → Approval → Build → Verify → Deliver
     │          │           │                │        │           │        │         │
     ▼          ▼           ▼                ▼        ▼           ▼        ▼         ▼
- Stepwise   Announce +  Read            Visible   Manager     HTML +   3-phase    File
- confirm    refs +      design          plan      signoff     React    verify:    delivered
-            templates   system          with      before      comps    structural,
-                                      facts +    full build           visual,
-                                      assumptions                        excellence
+ Stepwise   Base bundle + Read          Visible   Manager     HTML +   3-phase    File
+ confirm    route-shaping design        plan      signoff     React    verify:    delivered
+            questions +  system         with      before      comps    structural,
+            semantic     context        facts +   full build           visual,
+            supplement                  assumptions                      excellence
 ```
 
 First-turn behavior follows one default path:
-- **New ambiguous task** — ask structured confirmation questions step by step
+- **New ambiguous task** — load the base-required bundle, ask route-shaping questions step by step, then select conditionally required bundles
 - **New rich brief** — skip most clarification, then produce a visible plan before build
 - **Explicit speed request** — compress clarification, then produce a mini-plan before build unless the user explicitly says to skip planning
 - **Follow-up iteration or minor fix** — act directly unless audience, scope, or output type changes
+
+Bundle selection follows a two-stage route:
+- load the base-required bundle first
+- if the task is new or underspecified, ask the route-shaping questions that change bundle choice
+- map answers to conditionally required task bundles and checkpoints
+- use semantic matching only to supplement unresolved task types or optional inspirations
 
 The core behavioral contract is:
 - gather enough context before building
@@ -296,7 +309,7 @@ The core behavioral contract is:
 - only then start the full build
 
 `SKILL.md` is the runtime behavior contract. `references/workflow.md` supports execution and must not override it.
-`load-manifest.json` is the runtime routing manifest, and `scripts/generate-bundle-catalog.mjs` generates the compact catalog consumed by the AI matcher. Route selection prefers a semantic-matching subagent and falls back to `scripts/resolve-load-bundles.mjs` if that subagent path is unavailable. Every runtime bundle load should be announced before it is read or copied.
+`load-manifest.json` is the runtime routing manifest, and `scripts/generate-bundle-catalog.mjs` generates the compact catalog consumed by the AI matcher. Route selection now uses a two-stage model: base-required bundles first, route-shaping questions second, semantic supplement last. If the subagent path is unavailable, fallback routing still goes through `scripts/resolve-load-bundles.mjs`. Every runtime bundle load should be announced before it is read or copied.
 
 Two mandatory checkpoints in the Build phase:
 - **Before animation** — load animation-best-practices + animation-pitfalls, verify 16 hard rules

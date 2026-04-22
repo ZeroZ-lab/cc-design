@@ -162,17 +162,17 @@ If the same bundle is already in context, do not silently skip it. Say:
 Load: because=<reason> already_loaded=<comma-separated paths>
 ```
 
-Use short, stable reasons such as `all-design-tasks`, `react-prototype`, `question-first-delivery`, `before-animation`, `before-delivery`. `load-manifest.json` is the machine-readable source of truth for bundle contents, `scripts/generate-bundle-catalog.mjs` generates the catalog for semantic matching, and `scripts/resolve-load-bundles.mjs` remains the keyword-based fallback. The routing table below is the human summary.
+Use short, stable reasons such as `all-design-tasks`, `react-prototype`, `question-first-delivery`, `before-animation`, `before-delivery`. `load-manifest.json` is the machine-readable source of truth for bundle contents, `scripts/generate-bundle-catalog.mjs` generates the catalog for semantic matching, and `scripts/resolve-load-bundles.mjs` remains the keyword-based fallback. Organize runtime bundles into three groups: base-required bundles (`基础必载`) for every design task, conditionally required bundles (`条件命中后必载`) for matched `taskTypes` and `checkpoints`, and truly optional inspirations (`真正可选`) for case-study-only reference. The routing table below is the human summary.
 
 ---
 
 ## Routing Table
 
-Classify the user's task by intent (output format, keywords), then match it against the bundle catalog backed by `load-manifest.json`. Use semantic matching first; if that path is unavailable, fall back to `scripts/resolve-load-bundles.mjs`. For multi-type tasks, combine all matching rows. For tasks not in the table, default to `all-design-tasks` and the closest matching component reference, and set the `question-first-delivery` checkpoint.
+Use a two-stage route. Stage 1: always load `all-design-tasks` (`基础必载`) for every design task. If the task is new or underspecified, also load `question-first-delivery` and ask the route-shaping questions below before selecting more bundles. Stage 2: map those answers to conditionally required bundles (`条件命中后必载`), then use semantic matching only to supplement any remaining unlocked `taskTypes` or `optionalInspirations`. For tasks not in the table, default to `all-design-tasks`, ask the route-shaping questions, and set the `question-first-delivery` checkpoint when the task is still ambiguous.
 
 | Task type | Load reference | Copy template | Verify focus |
 |-----------|---------------|---------------|-------------|
-| **ANY design task** | `references/design-excellence.md` + `references/content-guidelines.md` + `references/typography-spacing-examples.md` + `references/design-philosophy.md` | — | Design quality + anti-slop + typography/spacing + philosophy |
+| **ANY design task** | `references/design-excellence.md` + `references/content-guidelines.md` + `references/typography-spacing-examples.md` + `references/design-philosophy.md` + `references/typography-design-system.md` + `references/design-patterns.md` + `references/visual-design-theory.md` | — | Design quality + anti-slop + typography/spacing + type system + layout patterns + visual/color theory |
 | Design philosophy / why questions | `references/design-principles.md` | — | Worldview + decision framework |
 | Complex multi-screen flow | `references/design-thinking-framework.md` | — | 8-layer decision tree |
 | Information architecture | `references/information-design-theory.md` | — | Cognitive load + hierarchy |
@@ -206,6 +206,24 @@ Classify the user's task by intent (output format, keywords), then match it agai
 | PDF export | `references/platform-tools.md` | — | File generated |
 | Scene output specs | `references/scene-templates.md` | — | Dimensions + format match |
 
+### Route-Shaping Questions
+
+Ask only until routing is locked. These questions change bundle selection:
+
+1. **Output type** — page / deck / clickable prototype / animation / design system / critique / export target
+2. **Task state** — new task / localized edit / approved follow-up
+3. **Available context** — design system / codebase / screenshots / brand reference / no reference
+4. **Interaction or delivery constraints** — interactive / iOS / Android / PDF / PPTX / video / none
+5. **Primary design risk** — layout / typography / color / information hierarchy / interaction / brand tone
+
+Map answers explicitly before semantic matching:
+
+- **Output type** → `landing-page`, `slide-deck`, `interactive-prototype`, `animation-motion`, `design-system-creation`, `deep-design-review`, `editable-pptx-export`, `pdf-export`, `video-export`
+- **Task state** → new or underspecified work includes `question-first-delivery`; localized edits and approved follow-ups skip it unless scope changes
+- **Available context** → brand reference/clone adds `brand-style-clone`; asset sourcing adds `brand-asset-acquisition`; no references adds `no-design-system`
+- **Interaction/device/export constraints** → interactive adds `interactive-prototype` or `interaction-design`; iOS adds `mobile-mockup` + `before-ios-mockup`; PDF/PPTX/video adds the matching export task type + `before-export`
+- **Primary design risk** → layout adds `layout-problems`; typography adds `typography-problems`; color adds `color-problems`; information hierarchy adds `information-architecture`; interaction adds `interaction-problems`; brand tone adds `brand-tone`
+
 ## Workflow
 
 **0. Junior Designer Mode — Always start here for new tasks.**
@@ -228,7 +246,7 @@ Approve this plan before I continue into the full build.
 
 **Save → show → wait for approval before continuing.** Skip only for minor edits, approved follow-up iterations, or when the user explicitly says to skip planning.
 
-**1. Understand** — For new design tasks, start with structured step-by-step confirmation via the platform's native question UI when available (`AskUserQuestion`, `request_user_input`, or equivalent). Use this precedence order: localized edit → act directly; approved follow-up iteration → act directly; explicit speed request → ask only the missing blocking questions, then produce a mini-plan; rich brief (audience + output shape + constraints + references) → skip most questions, then produce a visible plan; everything else → ask the next blocking question. If structured UI is unavailable, send one compact text batch instead. **Detect brand mentions** — scan for brand names (Stripe, Vercel, Notion, Linear, Apple, etc.). If a brand is mentioned, load `references/getdesign-loader.md`.
+**1. Understand** — For every design task, start by loading `all-design-tasks`. For new or underspecified work, also load `question-first-delivery` and use the platform's native question UI when available (`AskUserQuestion`, `request_user_input`, or equivalent). Ask the fixed route-shaping questions in this order until routing is locked: output type, task state, available context, interaction/device/export constraints, primary design risk. After routing is locked, ask only the remaining blocking product questions. Use this precedence order: localized edit → act directly; approved follow-up iteration → act directly; explicit speed request → ask only the missing blocking route/product questions, then produce a mini-plan; rich brief (audience + output shape + constraints + references) → skip most questioning, but still confirm any unresolved route-shaping facts before planning; everything else → ask the next blocking route-shaping question. If structured UI is unavailable, send one compact text batch instead. **Detect brand mentions** — scan for brand names (Stripe, Vercel, Notion, Linear, Apple, etc.) and route to `brand-style-clone` when the user wants that aesthetic.
 
 **Existing design contract rule** — if the project already has `DESIGN.md` (or an equivalent explicit design system file) and the current task would change it, do not silently rewrite it. Ask the user to choose one mode before editing:
 - **Append** — add a new section or extension, keep the existing contract intact
@@ -237,7 +255,7 @@ Approve this plan before I continue into the full build.
 
 Default recommendation: **Merge**. Use **Append** when adding a bounded subsystem or feature-specific addendum. Use **Overwrite** only when the user clearly wants to reset the design system.
 
-**2. Route** — Match the user's request against the bundle catalog using an Agent subagent for semantic understanding.
+**2. Route** — Use a two-stage route: base-required bundles first, explicit question-driven mapping second, semantic matching last.
 
 Use the **Agent** tool (subagent_type `general-purpose`) with a prompt like:
 ```
@@ -246,8 +264,14 @@ Read the bundle catalog by running:
 Then read <skill-dir>/load-manifest.json for bundle details (references/templates/scripts).
 
 Given the user's request: "<user request>"
+Confirmed routing facts (include only what you know):
+- output_type: ...
+- task_state: ...
+- context: ...
+- constraints: ...
+- primary_risk: ...
 
-Match the request against the catalog. Return JSON:
+Match only the remaining unresolved intent against the catalog. Return JSON:
 {
   "taskTypes": ["matched-name", ...],
   "optionalInspirations": ["matched-name", ...]
@@ -255,6 +279,7 @@ Match the request against the catalog. Return JSON:
 
 Rules:
 - Match semantic intent, not just keywords — consider Chinese equivalents, indirect intent, and paraphrases
+- Do not repeat bundles already locked by the confirmed routing facts
 - Only use bundle names that appear in the catalog output — never invent names
 - A prompt can match 0 or more bundles in each category
 - Do NOT match checkpoints — those are set by the calling skill based on workflow context
@@ -273,7 +298,7 @@ If the Agent tool is unavailable, fall back to:
 node <skill-dir>/scripts/resolve-load-bundles.mjs --prompt "<user request>"
 ```
 
-Load `defaults.all-design-tasks`, then every matched task type, then any relevant checkpoint/supporting bundle. Before reading or copying any runtime bundle, announce it using:
+Load `defaults.all-design-tasks`, then every task type locked by the route-shaping answers, then any semantic supplement task type, then any relevant checkpoint/supporting bundle. Before reading or copying any runtime bundle, announce it using:
 ```text
 Load: because=<reason> loaded=<comma-separated paths>
 ```
