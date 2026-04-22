@@ -6,8 +6,10 @@ const scriptPath = fileURLToPath(import.meta.url);
 const scriptDir = path.dirname(scriptPath);
 const rootDir = path.resolve(scriptDir, "..");
 const manifestPath = path.join(rootDir, "load-manifest.json");
+const skillPath = path.join(rootDir, "SKILL.md");
 
 const manifest = JSON.parse(await fs.readFile(manifestPath, "utf8"));
+const skillText = await fs.readFile(skillPath, "utf8");
 
 function collectPaths(node, acc = new Set()) {
   if (typeof node === "string") {
@@ -63,6 +65,32 @@ async function walkFiles(relativeDir) {
   return results.sort();
 }
 
+function collectSkillPathReferences(text) {
+  const candidates = new Set();
+  const backtickPattern = /`([^`]+)`/g;
+
+  for (const match of text.matchAll(backtickPattern)) {
+    const value = match[1].trim();
+    if (
+      !value ||
+      value.includes("<") ||
+      value.includes(">") ||
+      value.includes("://") ||
+      value.startsWith("__")
+    ) {
+      continue;
+    }
+
+    if (
+      /(^|\/)[A-Za-z0-9._-]+\.(md|jsx|js|css|mjs|sh|yaml|json)$/.test(value)
+    ) {
+      candidates.add(value);
+    }
+  }
+
+  return [...candidates].sort();
+}
+
 const manifestPaths = collectPaths(manifest);
 const referencePaths = (await walkFiles("references")).filter((file) =>
   file.endsWith(".md")
@@ -84,6 +112,20 @@ const coveredRuntimePaths = new Set(
   )
 );
 
+const skillPathReferences = collectSkillPathReferences(skillText);
+const invalidSkillReferences = [];
+for (const relativePath of skillPathReferences) {
+  try {
+    await fs.access(path.join(rootDir, relativePath));
+  } catch {
+    invalidSkillReferences.push(relativePath);
+  }
+}
+
+const undocumentedCheckpoints = Object.keys(manifest.checkpoints ?? {}).filter(
+  (checkpoint) => !skillText.includes(checkpoint)
+);
+
 const uncoveredReferences = referencePaths.filter(
   (file) => !coveredRuntimePaths.has(file)
 );
@@ -94,7 +136,9 @@ const uncoveredTemplates = templatePaths.filter(
 if (
   missingPaths.length === 0 &&
   uncoveredReferences.length === 0 &&
-  uncoveredTemplates.length === 0
+  uncoveredTemplates.length === 0 &&
+  invalidSkillReferences.length === 0 &&
+  undocumentedCheckpoints.length === 0
 ) {
   console.log("load-manifest OK");
   process.exit(0);
@@ -118,6 +162,20 @@ if (uncoveredTemplates.length > 0) {
   console.error("Untracked template files:");
   for (const file of uncoveredTemplates) {
     console.error(`- ${file}`);
+  }
+}
+
+if (invalidSkillReferences.length > 0) {
+  console.error("Invalid SKILL.md file references:");
+  for (const file of invalidSkillReferences) {
+    console.error(`- ${file}`);
+  }
+}
+
+if (undocumentedCheckpoints.length > 0) {
+  console.error("Checkpoint reasons missing from SKILL.md:");
+  for (const checkpoint of undocumentedCheckpoints) {
+    console.error(`- ${checkpoint}`);
   }
 }
 

@@ -4,6 +4,7 @@
   "description": "Export utility scripts for cc-design skill",
   "scripts": {
     "lint:load-manifest": "node lint-load-manifest.mjs",
+    "resolve:load-bundles": "node resolve-load-bundles.mjs",
     "pdf": "node export_deck_pdf.mjs",
     "pdf-stage": "node export_deck_stage_pdf.mjs",
     "pptx": "node export_deck_pptx.mjs",

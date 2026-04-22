@@ -33,13 +33,13 @@ This workflow is the **execution process**. The 8-layer framework (`design-think
 
 ## Runtime Load Announcements
 
-Treat runtime loading as visible work, not invisible thought. `load-manifest.json` is the source of truth for route bundles, checkpoint bundles, and optional inspiration bundles.
+Treat runtime loading as visible work, not invisible thought. `load-manifest.json` is the source of truth for route bundles, checkpoint bundles, and optional inspiration bundles. `scripts/resolve-load-bundles.mjs` is the runtime consumer that turns the prompt plus explicit flags such as `question-first-delivery` into concrete bundle loads.
 
 Rules:
 - announce before reading runtime references or copying templates
 - use the exact line format: `Load: because=<reason> loaded=<comma-separated paths>`
 - if the bundle is already loaded, say `Load: because=<reason> already_loaded=<comma-separated paths>`
-- use stable reasons from `load-manifest.json` such as `all-design-tasks`, `question-first-delivery`, `react-prototype`, `before-animation`, `before-delivery`
+- use stable reasons from `load-manifest.json` such as `all-design-tasks`, `question-first-delivery`, `deep-design-review`, `react-prototype`, `before-animation`, `before-delivery`
 - do not announce ordinary codebase reads that are not part of the skill runtime bundle
 - do not silently skip bundle loads; explicit dedupe is part of the contract
 
@@ -213,6 +213,8 @@ After the direction is clear:
 - Create variations (using design_canvas or Tweaks)
 - If it's slides/animation, start with starter components
 - announce any newly loaded runtime bundle before reading it, even mid-task when a checkpoint triggers
+- if you chose the question-first path, route with `new-ambiguous-task` plus `question-first-delivery`
+- if the user asked for critique/review/audit/score, route with `deep-design-review` before judging the work
 
 Show again halfway through. If the design direction is wrong, showing late means wasted work.
 

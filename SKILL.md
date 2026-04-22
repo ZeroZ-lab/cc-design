@@ -131,13 +131,13 @@ If the same bundle is already in context, do not silently skip it. Say:
 Load: because=<reason> already_loaded=<comma-separated paths>
 ```
 
-Use short, stable reasons such as `all-design-tasks`, `react-prototype`, `before-animation`, `before-delivery`. `load-manifest.json` is the machine-readable source of truth for these bundles. The routing table below is the human summary.
+Use short, stable reasons such as `all-design-tasks`, `react-prototype`, `question-first-delivery`, `before-animation`, `before-delivery`. `load-manifest.json` is the machine-readable source of truth for bundle contents, and `scripts/resolve-load-bundles.mjs` is the runtime consumer that resolves prompt text plus explicit checkpoints into concrete bundle loads. The routing table below is the human summary.
 
 ---
 
 ## Routing Table
 
-Classify the user's task by intent (output format, keywords), then read `load-manifest.json` and load only the bundles you need. For multi-type tasks, combine all matching rows. For tasks not in the table, default to `all-design-tasks` plus `new-ambiguous-task` and the closest matching component reference.
+Classify the user's task by intent (output format, keywords), then resolve bundles through `scripts/resolve-load-bundles.mjs`, which reads `load-manifest.json`. For multi-type tasks, combine all matching rows. For tasks not in the table, default to `all-design-tasks` plus `new-ambiguous-task` and the closest matching component reference.
 
 | Task type | Load reference | Copy template | Verify focus |
 |-----------|---------------|---------------|-------------|
@@ -154,7 +154,7 @@ Classify the user's task by intent (output format, keywords), then read `load-ma
 | Typography problems | `references/anti-patterns/typography.md` + `references/typography-spacing-examples.md` | — | Anti-pattern check + spacing verification |
 | Typography system design | `references/typography-design-system.md` | — | Complete theory + modular scale + baseline grid |
 | Interaction problems | `references/anti-patterns/interaction.md` | — | Anti-pattern check |
-| High-quality output needed | `references/design-patterns.md` + `case-studies/README.md` | — | Pattern application |
+| High-quality output needed | `references/design-patterns.md` + `references/case-studies/README.md` | — | Pattern application |
 | Brand style clone | `references/getdesign-loader.md` + `references/design-context.md` | Choose template as needed | Brand aesthetic match |
 | Brand asset acquisition | `references/asset-acquisition.md` + `references/design-context.md` | — | Real assets used, no CSS silhouettes |
 | Choose design style/direction | `references/design-styles.md` | — | Philosophy alignment |
@@ -166,8 +166,8 @@ Classify the user's task by intent (output format, keywords), then read `load-ma
 | Landing page | `references/starter-components.md` + `references/design-patterns.md` | `templates/browser_window.jsx` (optional) | Responsive layout |
 | Animation / motion | `references/animation-best-practices.md` + `references/animations.md` | `templates/animations.jsx` | Timeline playback + __ready signal |
 | Animation pitfalls | `references/animation-pitfalls.md` | — | No common failures |
-| Mobile mockup | `references/starter-components.md` + `react-setup.md` | `templates/ios_frame.jsx` or `android_frame.jsx` | Bezel rendering — **MUST use template, never handwrite Dynamic Island/status bar** |
-| Interactive prototype | `references/interactive-prototype.md` + `react-setup.md` | Choose frame template | Navigation works |
+| Mobile mockup | `references/starter-components.md` + `references/react-setup.md` | `templates/ios_frame.jsx` or `android_frame.jsx` | Bezel rendering — **MUST use template, never handwrite Dynamic Island/status bar** |
+| Interactive prototype | `references/interactive-prototype.md` + `references/react-setup.md` | Choose frame template | Navigation works |
 | Wireframe / low-fi | `references/frontend-design.md` | `templates/design_canvas.jsx` | Layout structure visible |
 | Design system creation | `references/design-system-creation.md` | — | Tokens apply + coherence |
 | No design system provided | `references/frontend-design.md` + `references/design-excellence.md` | Choose template | Aesthetic coherence |
@@ -210,7 +210,19 @@ If the direction feels wrong, now is the cheapest moment to change it.
 
 Default recommendation: **Merge**. Use **Append** when adding a bounded subsystem or feature-specific addendum. Use **Overwrite** only when the user clearly wants to reset the design system.
 
-**2. Route** — Read `load-manifest.json` after classifying the task. Load `defaults.all-design-tasks`, then every matched task type, then any relevant checkpoint/supporting bundle. Before reading or copying any runtime bundle, announce it using:
+**2. Route** — Run the resolver after classifying the task:
+```bash
+node <skill-dir>/scripts/resolve-load-bundles.mjs --prompt "<user request>"
+```
+If you are on the question-first path, include:
+```bash
+--task-type new-ambiguous-task --checkpoint question-first-delivery
+```
+If the user explicitly asked for a critique, review, audit, or score, include:
+```bash
+--checkpoint deep-design-review
+```
+Use the resolver output as authoritative. Load `defaults.all-design-tasks`, then every matched task type, then any relevant checkpoint/supporting bundle. Before reading or copying any runtime bundle, announce it using:
 ```text
 Load: because=<reason> loaded=<comma-separated paths>
 ```
@@ -244,9 +256,11 @@ If no context exists: say so clearly — "I'll work from general intuition, whic
 
 **Checkpoint: Before saying "done"** — after your final edit, render the artifact yourself. Do not stop at code inspection. For multi-section pages, inspect every section you touched — not just the first screen or hero. For responsive work, inspect at least one desktop viewport and one narrow/mobile viewport. Use full-page screenshots plus targeted section screenshots when needed.
 
+**Checkpoint: Deep critique / audit** — If the user asked for a critique, review, audit, or score, announce `because=deep-design-review`, then load `references/design-checklist.md`, `references/principle-review.md`, `references/verification.md`, and `references/typography-spacing-quick-ref.md` before judging the work.
+
 **Checkpoint: Before animation** — Announce `because=before-animation`, then load `references/animation-best-practices.md` AND `references/animation-pitfalls.md`. Verify the 16 hard rules before writing any motion code.
 
-**Checkpoint: Before export** — Announce the export reason, then load the relevant export reference. For editable PPTX, verify the 4 hard constraints in `references/editable-pptx.md` BEFORE starting HTML.
+**Checkpoint: Before export** — Announce `because=before-export`, then load the relevant export reference. For editable PPTX, verify the 4 hard constraints in `references/editable-pptx.md` BEFORE starting HTML.
 
 **Checkpoint: Before iOS mockup** — Announce `because=before-ios-mockup`, then **MUST use `templates/ios_frame.jsx`**. Never handwrite Dynamic Island (124×36px, top:12), status bar, or home indicator. 99% of handwritten attempts have positioning bugs. Read the template, copy the entire `iosFrameStyles` + `IosFrame` component into your HTML, wrap your screen content in `<IosFrame>`. Do not write `.dynamic-island`, `.status-bar`, or `.home-indicator` classes yourself.
 

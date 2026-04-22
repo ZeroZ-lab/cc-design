@@ -31,7 +31,7 @@ cc-design embeds a structured design workflow into Claude Code, enabling it to o
 - **Audible loading (P3)** — Runtime bundles are never loaded silently. cc-design announces every reference/template bundle with `Load: because=... loaded=...` before using it.
 
 Progressive disclosure keeps the main skill definition concise while 27+ technical references load on demand.
-`load-manifest.json` is the machine-readable source of truth for those bundles, and `scripts/lint-load-manifest.mjs` checks that every reference/template is accounted for.
+`load-manifest.json` is the machine-readable source of truth for bundle contents, `scripts/resolve-load-bundles.mjs` is the runtime consumer, and `scripts/lint-load-manifest.mjs` checks that every reference/template is accounted for.
 
 The core product promise is behavioral, not just feature breadth:
 - new ambiguous tasks start with structured step-by-step confirmation
@@ -185,6 +185,7 @@ cc-design/
 │   └── animations.jsx                    # Timeline animation engine (signals)
 └── scripts/                              # Export utility scripts
     ├── lint-load-manifest.mjs           # Checks refs/templates are all routed or tagged
+    ├── resolve-load-bundles.mjs         # Runtime resolver for manifest-backed bundle selection
     ├── package.json                      # Dependencies and npm scripts
     ├── export_deck_pdf.mjs              # Multi-file deck → PDF
     ├── export_deck_stage_pdf.mjs        # Single-file deck → PDF
@@ -288,7 +289,7 @@ First-turn behavior follows one default path:
 - **Follow-up iteration or minor fix** — act directly unless audience, scope, or output type changes
 
 `SKILL.md` is the runtime behavior contract. `references/workflow.md` supports execution and must not override it.
-`load-manifest.json` is the runtime routing manifest. Every runtime bundle load should be announced before it is read or copied.
+`load-manifest.json` is the runtime routing manifest, and `scripts/resolve-load-bundles.mjs` is the executable resolver that consumes it. Every runtime bundle load should be announced before it is read or copied.
 
 Two mandatory checkpoints in the Build phase:
 - **Before animation** — load animation-best-practices + animation-pitfalls, verify 16 hard rules
@@ -316,7 +317,7 @@ Verification is a required maker self-check:
 6. Open a pull request
 
 When adding new reference documents, add a row to the routing table in SKILL.md so the model knows when to load it.
-Also update `load-manifest.json` and run `node scripts/lint-load-manifest.mjs`.
+Also update `load-manifest.json`, keep `scripts/resolve-load-bundles.mjs` behavior aligned, and run `node scripts/lint-load-manifest.mjs`.
 
 If a pull request changes first-turn behavior, it must also update:
 - `SKILL.md`
