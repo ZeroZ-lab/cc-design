@@ -121,10 +121,10 @@ Classify the user's task by intent (output format, keywords), then load only the
 
 | Task type | Load reference | Copy template | Verify focus |
 |-----------|---------------|---------------|-------------|
-| **ANY design task** | `references/design-excellence.md` + `references/content-guidelines.md` | — | Design quality + anti-slop |
+| **ANY design task** | `references/design-excellence.md` + `references/content-guidelines.md` + `references/typography-spacing-examples.md` | — | Design quality + anti-slop + typography/spacing |
 | Layout problems | `references/anti-patterns/layout.md` | — | Anti-pattern check |
 | Color problems | `references/anti-patterns/color.md` | — | Anti-pattern check |
-| Typography problems | `references/anti-patterns/typography.md` | — | Anti-pattern check |
+| Typography problems | `references/anti-patterns/typography.md` + `references/typography-spacing-examples.md` | — | Anti-pattern check + spacing verification |
 | Interaction problems | `references/anti-patterns/interaction.md` | — | Anti-pattern check |
 | High-quality output needed | `references/design-patterns.md` + `case-studies/README.md` | — | Pattern application |
 | Brand style clone | `references/getdesign-loader.md` + `references/design-context.md` | Choose template as needed | Brand aesthetic match |
@@ -209,6 +209,18 @@ If no context exists: say so clearly — "I'll work from general intuition, whic
 
 **Checkpoint: Before iOS mockup** — **MUST use `templates/ios_frame.jsx`**. Never handwrite Dynamic Island (124×36px, top:12), status bar, or home indicator. 99% of handwritten attempts have positioning bugs. Read the template, copy the entire `iosFrameStyles` + `IosFrame` component into your HTML, wrap your screen content in `<IosFrame>`. Do not write `.dynamic-island`, `.status-bar`, or `.home-indicator` classes yourself.
 
+**Checkpoint: Typography & Spacing** — Before taking screenshot, verify:
+- [ ] Body text: 16-18px (web) or 24-32px (slides) — never smaller
+- [ ] Line height: 1.5+ for body text, 1.2-1.3 for headings
+- [ ] Heading → body gap: 12-16px
+- [ ] Paragraph → paragraph: 16-24px
+- [ ] Image top margin: 24-32px (after text)
+- [ ] Image bottom margin: 12-16px (before caption)
+- [ ] Section breaks: 48-64px minimum
+- [ ] All spacing from scale: 4/8/12/16/24/32/48/64/96/128
+- [ ] All vertical spacing is multiple of 8px
+- [ ] Using only 2-3 font weights (400/600/700)
+
 **6. Verify** — Load `references/verification-protocol.md`. Run three-phase verification:
 - **Structural:** console errors, layout, responsiveness
 - **Visual:** screenshot review, design quality
@@ -243,6 +255,80 @@ Every delivered artifact must satisfy:
 - **Placeholder > bad asset.** A clean placeholder beats a bad attempt.
 - **Use colors from the design system.** If too restrictive, use oklch.
 - **Only use emoji if the design system uses them.**
+
+## Typography & Spacing System
+
+**Critical:** These rules prevent the most common visual quality issues. Apply them to every design.
+
+### Font Size Scale
+
+**Web/Mobile:**
+- Display (Hero): 48-72px — landing hero, major titles
+- H1: 36-48px — page titles
+- H2: 28-36px — section headings
+- H3: 20-24px — subsection headings
+- Body Large: 18-20px — intro text, emphasis
+- Body: 16-18px — default body text (never smaller than 16px)
+- Small: 14-16px — captions, metadata
+- UI: 14-16px — buttons, labels
+
+**Slides/Presentations:**
+- Title: 80-120px — title slide
+- Section: 56-72px — section dividers
+- Heading: 36-48px — slide headings
+- Body: 24-32px — main content (never smaller than 24px)
+- Caption: 18-20px — footnotes
+
+### Line Height Rules
+
+Match line-height to font size:
+- **48px+**: 1.1-1.2 (tight for impact)
+- **24-48px**: 1.2-1.3 (headings)
+- **16-20px**: 1.5-1.6 (body text — never less than 1.5)
+- **14px**: 1.6-1.7 (small text needs more space)
+- **CJK text**: Add +0.1 to all values
+
+### Font Weight Hierarchy
+
+Use only 2-3 weights:
+- **400 (Regular)**: Body text, paragraphs
+- **500 (Medium)**: UI elements (optional)
+- **600 (Semibold)**: Subheadings, buttons
+- **700 (Bold)**: Main headings
+
+Never use 100/300/900 unless brand-specific.
+
+### Spacing Scale & Application
+
+**Base scale:** 4, 8, 12, 16, 24, 32, 48, 64, 96, 128
+
+**Text block spacing:**
+- Heading → Body: 12-16px
+- Paragraph → Paragraph: 16-24px
+- Section → Section: 48-64px
+
+**Image spacing (critical for vertical rhythm):**
+- Text → Image (top margin): 24-32px
+- Image → Caption (bottom margin): 12-16px
+- Caption → Next element: 32-48px
+- Image in hero: 48-64px margins
+
+**Container padding:**
+- Cards: 24-32px
+- Sections: 48-64px (vertical), 24-48px (horizontal)
+- Slides: 64-96px (all sides)
+- Buttons: 12px (vertical) × 24px (horizontal)
+
+**Component gaps:**
+- Form fields: 16-24px
+- List items: 12-16px
+- Grid items: 24-32px
+
+### Vertical Rhythm Rule
+
+All vertical spacing must be multiples of 8px. This creates visual consistency.
+
+**Quick check:** Measure any two elements — the gap should be 8, 16, 24, 32, 48, 64, 96, or 128px. Never 20px, 36px, or random values.
 
 ## Slide and Screen Labels
 
