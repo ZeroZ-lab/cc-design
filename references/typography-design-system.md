@@ -10,13 +10,22 @@
 
 ### 1.1 Modular Scale (Musical Harmony in Type)
 
+**Theory source:** Ancient Greek music theory (Pythagoras, 6th century BC) + Renaissance architecture (Palladio, 16th century)
+
 Typography borrowed from music: harmonious intervals create visual rhythm.
 
-**Common Scales:**
-- **Minor Third (1.200)** — Subtle, elegant, conservative
-- **Major Third (1.250)** — Balanced, versatile, most common
-- **Perfect Fourth (1.333)** — Strong contrast, editorial
-- **Golden Ratio (1.618)** — Natural, organic, luxury
+**Musical intervals as ratios:**
+- Minor Third: 1.200 (6:5 ratio)
+- Major Third: 1.250 (5:4 ratio) ← **We use this**
+- Perfect Fourth: 1.333 (4:3 ratio)
+- Perfect Fifth: 1.500 (3:2 ratio)
+- Golden Ratio: 1.618 (φ)
+
+**Why Major Third (1.25)?**
+- In music: C to E, a pleasant, balanced interval
+- Not too subtle (1.2 is hard to perceive)
+- Not too extreme (1.618 creates huge jumps)
+- Versatile across all design types
 
 **Formula:**
 ```
@@ -31,50 +40,123 @@ Example (Major Third, base 16px):
 16 × 1.25^5 = 49px   (display)
 ```
 
-**Why it works:** Mathematical relationships create visual harmony. Eyes perceive consistent ratios as "balanced."
+**Why it works:** Mathematical relationships create visual harmony. Eyes perceive consistent ratios as "balanced" — same reason music sounds harmonious.
+
+**Historical precedent:**
+- Renaissance architects used musical ratios for building proportions
+- Le Corbusier's Modulor system (1940s) applied golden ratio to architecture
+- Jan Tschichold applied these to typography in "The New Typography" (1928)
+
+**References:**
+- Tschichold, J. (1928). "Die neue Typographie"
+- Brown, T. (2011). "More Meaningful Typography" (A List Apart)
+- https://www.modularscale.com/
 
 ### 1.2 Vertical Rhythm (Baseline Grid)
 
+**Theory source:** 15th century movable type printing (Gutenberg) + Swiss typography (1950s)
+
 All text sits on an invisible grid, like music on staff lines.
+
+**Why 8px baseline grid?**
+
+1. **Mathematical divisibility:**
+   - 8 ÷ 2 = 4
+   - 8 ÷ 4 = 2
+   - 8 ÷ 8 = 1
+   - Works with all common spacing needs
+
+2. **Screen density compatibility:**
+   - 1x displays: 8px = 8 physical pixels
+   - 2x displays (Retina): 8px = 16 physical pixels
+   - 3x displays (iPhone): 8px = 24 physical pixels
+   - 4x displays: 8px = 32 physical pixels
+   - Always renders crisply, no sub-pixel rendering
+
+3. **Platform standards:**
+   - iOS: 8pt base unit
+   - Android: 8dp base unit
+   - Material Design: 8dp grid
+   - Apple HIG: 8pt grid
 
 **Baseline Grid Formula:**
 ```
 Baseline = Body font-size × Line-height
 
 Example:
-16px × 1.5 = 24px baseline grid
+16px × 1.5 = 24px baseline grid (3 × 8px)
 ```
 
 **Rules:**
-1. All line-heights should result in multiples of baseline
-2. All vertical spacing should be multiples of baseline
+1. All line-heights should result in multiples of 8px
+2. All vertical spacing should be multiples of 8px
 3. This creates consistent "beats" in the layout
 
-**Why it works:** Consistent vertical rhythm reduces cognitive load. Eyes can predict where next line starts.
+**Why it works:** Consistent vertical rhythm reduces cognitive load. Eyes can predict where next line starts. Like a metronome in music — predictable rhythm is easier to follow.
+
+**Historical context:**
+- Gutenberg's 42-line Bible (1455): First use of consistent baseline
+- Josef Müller-Brockmann (1960s): Formalized grid systems
+- Mark Boulton (2007): "Five simple steps to designing grid systems"
+
+**References:**
+- Müller-Brockmann, J. (1981). "Grid Systems in Graphic Design"
+- Material Design: "Understanding layout" (8dp grid)
+- Apple HIG: "Layout" (8pt grid)
 
 ### 1.3 Line Length (Measure)
 
+**Theory source:** Reading psychology research (1920s-2000s) + Eye-tracking studies
+
 Optimal reading: 45-75 characters per line (CPL).
 
-**Science:**
-- Too short (<40 CPL): Eye jumps too often, choppy
-- Too long (>80 CPL): Eye loses track of next line
-- Sweet spot: 60-65 CPL
+**Scientific evidence:**
+
+1. **Tinker's Research (1929-1963):**
+   - Tested thousands of readers
+   - Found optimal line length: 52 characters
+   - Range: 45-75 characters maintains reading speed
+   - Outside this range: comprehension drops
+
+2. **Dyson's Studies (2004-2005):**
+   - Eye-tracking technology
+   - Confirmed 45-75 CPL optimal
+   - Too short (<40 CPL): Eye jumps too often, choppy reading
+   - Too long (>80 CPL): Eye loses track of next line, re-reading increases
+
+3. **Physiological basis:**
+   - Human eye makes "saccades" (rapid jumps) when reading
+   - Each saccade covers 7-9 characters
+   - Optimal line = 6-8 saccades
+   - More saccades = fatigue; fewer = loss of place
+
+**Why 60-65 CPL is the sweet spot:**
+- Balances reading speed and comprehension
+- Minimizes eye fatigue
+- Works across most font sizes (16-18px)
 
 **Implementation:**
 ```css
 p {
-  max-width: 65ch; /* 65 characters */
+  max-width: 65ch; /* ch = character width unit */
 }
 ```
 
-**Why it works:** Based on eye-tracking studies. 60-65 CPL minimizes saccades (eye movements) while maintaining comprehension.
+**Why `ch` unit:** 1ch = width of "0" character in current font. Automatically adapts to font changes.
+
+**References:**
+- Tinker, M. A. (1963). "Legibility of Print"
+- Dyson, M. C. (2004). "How physical text layout affects reading from screen"
+- Rayner, K. (1998). "Eye movements in reading and information processing"
+- Bringhurst, R. (2004). "The Elements of Typographic Style" (recommends 45-75 CPL)
 
 ### 1.4 Line Height (Leading)
 
+**Theory source:** Robert Bringhurst's empirical research + Traditional typography
+
 Relationship between font size and line height:
 
-**Formula (Bringhurst):**
+**Bringhurst's Formula:**
 ```
 Line-height = 1 + (0.5 / Characters-per-line)
 
@@ -85,32 +167,90 @@ For 40 CPL (narrow column):
 Line-height = 1 + (0.5 / 40) ≈ 1.5125
 ```
 
-**Practical rules:**
-- Display (48px+): 1.0-1.2 (tight for impact)
-- Headings (24-48px): 1.2-1.3
-- Body (16-20px): 1.5-1.6
-- Small (12-14px): 1.6-1.8 (needs more space)
+**Why this formula works:**
+- Narrower columns need slightly more leading (more line breaks = more eye jumps)
+- Wider columns can use tighter leading (fewer line breaks)
+- Formula balances readability across different measures
 
-**Why it works:** Larger text has more internal whitespace, needs less leading. Smaller text needs more leading to prevent descenders/ascenders collision.
+**Practical rules (simplified from Bringhurst):**
+- **Display (48px+)**: 1.0-1.2 (tight for impact)
+  - Large text has more internal whitespace
+  - Doesn't need extra leading
+  - Tight leading creates visual impact
+  
+- **Headings (24-48px)**: 1.2-1.3
+  - Medium internal whitespace
+  - Moderate leading for clarity
+  
+- **Body (16-20px)**: 1.5-1.6 (never less than 1.5)
+  - Optimal for sustained reading
+  - Prevents descenders/ascenders collision
+  - WCAG 2.1 recommends minimum 1.5 for accessibility
+  
+- **Small (12-14px)**: 1.6-1.8 (needs more space)
+  - Less internal whitespace
+  - Needs extra leading to prevent cramping
+  - Improves legibility at small sizes
+
+**Why it works:** 
+1. **Physiological:** Larger text has more internal whitespace, needs less leading
+2. **Optical:** Small text letters are closer together, need more separation between lines
+3. **Accessibility:** WCAG 2.1 Success Criterion 1.4.8 requires 1.5 minimum for body text
+
+**Historical context:**
+- Traditional metal type: Leading = physical strips of lead between lines
+- Optimal leading discovered through 500 years of printing
+- Bringhurst codified these empirical findings into formulas
+
+**References:**
+- Bringhurst, R. (2004). "The Elements of Typographic Style" (3rd ed.), pp. 25-30
+- WCAG 2.1: Success Criterion 1.4.8 (Visual Presentation)
+- Legge, G. E. (2007). "Psychophysics of Reading in Normal and Low Vision"
 
 ### 1.5 Font Weight Hierarchy
+
+**Theory source:** Weber's Law (Ernst Heinrich Weber, 1834) + Miller's Law (George Miller, 1956)
+
+**Weber's Law — Perceptual Psychology:**
+```
+ΔI / I = k (constant)
+
+Humans perceive relative differences, not absolute differences.
+```
+
+Applied to font weights:
+- 400 → 500: 25% increase — barely noticeable
+- 400 → 600: 50% increase — clear difference ✓
+- 400 → 700: 75% increase — strong contrast ✓
+
+**Why it works:** Our brains detect ratios, not absolute values. A 100-unit jump from 400→500 feels smaller than 600→700, even though both are 100 units.
+
+**Miller's Law — Cognitive Load:**
+```
+Humans can hold 7±2 items in working memory.
+For visual hierarchy: 3-4 levels maximum.
+```
 
 **Perceptual weight differences:**
 - 100 → 200: Barely noticeable
 - 200 → 300: Subtle
 - 300 → 400: Noticeable
-- 400 → 600: Clear difference
-- 600 → 700: Strong difference
+- 400 → 600: Clear difference ✓
+- 600 → 700: Strong difference ✓
 - 700 → 900: Extreme
 
 **Rule:** Use weights with ≥200 difference for clear hierarchy.
 
-**Optimal set:**
+**Optimal set (3 weights):**
 - 400 (Regular): Body text
 - 600 (Semibold): Subheadings, UI
 - 700 (Bold): Main headings
 
-**Why it works:** Weber's Law — humans perceive relative differences, not absolute. Need ~50% increase for noticeable change.
+**Why only 2-3 weights:** More than 3 levels = cognitive overload. Users can't distinguish 5+ weight levels, creating false hierarchy.
+
+**References:**
+- Weber, E. H. (1834). "De Pulsu, Resorptione, Auditu et Tactu"
+- Miller, G. A. (1956). "The Magical Number Seven, Plus or Minus Two"
 
 ---
 
@@ -605,11 +745,30 @@ Before delivery, verify:
 
 ## References
 
-1. **Bringhurst, Robert.** "The Elements of Typographic Style" (4th ed.)
-2. **Müller-Brockmann, Josef.** "Grid Systems in Graphic Design"
-3. **Material Design Typography:** https://m3.material.io/styles/typography
-4. **Apple Human Interface Guidelines:** Typography section
-5. **Modular Scale:** https://www.modularscale.com/
-6. **Type Scale:** https://typescale.com/
-7. **Weber's Law:** Perceptual psychology of weight differences
-8. **CSS Text Module Level 4:** text-wrap, hanging-punctuation
+### Core Texts
+1. **Bringhurst, Robert.** "The Elements of Typographic Style" (4th ed., 2012) — The typographer's Bible. Modular scale, line height formulas, line length.
+2. **Müller-Brockmann, Josef.** "Grid Systems in Graphic Design" (1981) — Foundation of baseline grid and systematic layout.
+3. **Tschichold, Jan.** "The New Typography" (1928) — Modern typography principles, proportion systems.
+
+### Research Papers
+4. **Tinker, M. A.** "Legibility of Print" (1963) — Foundational study on optimal line length (45-75 CPL).
+5. **Dyson, M. C.** "How physical text layout affects reading from screen" (2004) — Eye-tracking confirmation of Tinker.
+6. **Rayner, K.** "Eye movements in reading and information processing: 20 years of research" (1998) — Saccade mechanics.
+7. **Miller, G. A.** "The Magical Number Seven, Plus or Minus Two" (1956) — Cognitive load limits, why 3-4 hierarchy levels.
+8. **Weber, E. H.** "De Pulsu, Resorptione, Auditu et Tactu" (1834) — Perceptual difference threshold (Weber's Law).
+9. **Legge, G. E.** "Psychophysics of Reading in Normal and Low Vision" (2007) — Scientific basis for minimum text sizes.
+
+### Modern Design Systems
+10. **Material Design Typography:** https://m3.material.io/styles/typography — Google's 8dp grid system.
+11. **Apple Human Interface Guidelines:** Typography section — iOS/macOS type standards.
+12. **WCAG 2.1:** Success Criterion 1.4.8 — Accessibility requirements for line height (≥1.5).
+
+### Tools
+13. **Modular Scale:** https://www.modularscale.com/ — Calculator for type scales.
+14. **Type Scale:** https://typescale.com/ — Visual type scale tool.
+15. **Fluid Type Scale:** https://utopia.fyi/type/calculator — Fluid responsive type calculator.
+
+### Historical Context
+16. **Frutiger, Adrian.** "Signs and Symbols: Their Design and Meaning" (1998) — Letter spacing and optical adjustment.
+17. **Le Corbusier.** "The Modulor" (1948) — Application of golden ratio to design proportions.
+18. **Marcotte, Ethan.** "Responsive Web Design" (2010) — Fluid typography for multiple screens.
