@@ -32,7 +32,7 @@ cc-design embeds a structured design workflow into Claude Code, enabling it to o
 - **Audible loading (P3)** — Runtime bundles are never loaded silently. cc-design announces every reference/template bundle with `Load: because=... loaded=...` before using it.
 
 Progressive disclosure keeps the main skill definition concise while 27+ technical references load on demand.
-`load-manifest.json` is the machine-readable source of truth for bundle contents, `scripts/generate-bundle-catalog.mjs` generates the bundle catalog for AI matching, and `scripts/lint-load-manifest.mjs` checks that every reference/template is accounted for.
+`load-manifest.json` is the machine-readable source of truth for bundle contents, `scripts/generate-bundle-catalog.mjs` generates the bundle catalog for AI matching, and `scripts/lint-load-manifest.mjs` checks that every reference/template is accounted for. Routing prefers a semantic-matching subagent when the platform provides one, and falls back to `scripts/resolve-load-bundles.mjs` when it does not.
 
 The core product promise is behavioral, not just feature breadth:
 - new ambiguous tasks start with structured step-by-step confirmation
@@ -296,7 +296,7 @@ The core behavioral contract is:
 - only then start the full build
 
 `SKILL.md` is the runtime behavior contract. `references/workflow.md` supports execution and must not override it.
-`load-manifest.json` is the runtime routing manifest, and `scripts/generate-bundle-catalog.mjs` generates the compact catalog consumed by the AI matcher. Every runtime bundle load should be announced before it is read or copied.
+`load-manifest.json` is the runtime routing manifest, and `scripts/generate-bundle-catalog.mjs` generates the compact catalog consumed by the AI matcher. Route selection prefers a semantic-matching subagent and falls back to `scripts/resolve-load-bundles.mjs` if that subagent path is unavailable. Every runtime bundle load should be announced before it is read or copied.
 
 Two mandatory checkpoints in the Build phase:
 - **Before animation** — load animation-best-practices + animation-pitfalls, verify 16 hard rules

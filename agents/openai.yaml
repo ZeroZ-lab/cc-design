@@ -1,4 +1,4 @@
 interface:
   display_name: "CC Design"
   short_description: "High-fidelity HTML design with context gathering, visible planning, and approval before build"
-  default_prompt: "Use $cc-design to gather missing design context step by step. Once blocking uncertainty is resolved, produce a short visible execution plan and wait for approval before building the HTML artifact. Skip this only for minor edits, approved follow-up iterations, or explicit user instruction to skip planning."
+  default_prompt: "Use $cc-design to gather missing design context step by step. Route the request through the bundle catalog with a semantic-matching subagent when available, or fall back to scripts/resolve-load-bundles.mjs. Once blocking uncertainty is resolved, produce a short visible execution plan and wait for approval before building the HTML artifact. Skip this only for minor edits, approved follow-up iterations, or explicit user instruction to skip planning."
