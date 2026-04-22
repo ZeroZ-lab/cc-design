@@ -211,6 +211,8 @@ If no context exists: say so clearly — "I'll work from general intuition, whic
 
 **5. Build** — Write the HTML file. Show at halfway — don't wait until done. Use tweaks for variants rather than separate files.
 
+**Checkpoint: Before saying "done"** — after your final edit, render the artifact yourself. Do not stop at code inspection. For multi-section pages, inspect every section you touched — not just the first screen or hero. For responsive work, inspect at least one desktop viewport and one narrow/mobile viewport. Use full-page screenshots plus targeted section screenshots when needed.
+
 **Checkpoint: Before animation** — Load `references/animation-best-practices.md` AND `references/animation-pitfalls.md`. Verify the 16 hard rules before writing any motion code.
 
 **Checkpoint: Before export** — Load the relevant export reference. For editable PPTX, verify the 4 hard constraints in `references/editable-pptx.md` BEFORE starting HTML.
@@ -229,10 +231,12 @@ If no context exists: say so clearly — "I'll work from general intuition, whic
 - [ ] All vertical spacing is multiple of 8px
 - [ ] Using only 2-3 font weights (400/600/700)
 
-**6. Verify** — Load `references/verification-protocol.md`. Run three-phase verification:
+**6. Verify (Mandatory self-check)** — Load `references/verification-protocol.md`. Run three-phase verification yourself after the final edit:
 - **Structural:** console errors, layout, responsiveness
 - **Visual:** screenshot review, design quality
 - **Design excellence:** hierarchy, spacing, color harmony, emotional fit
+
+Never deliver based on "it should be fine" reasoning. Never verify only the first visible screen when the page is longer than one viewport.
 
 **7. Deliver** — Minimal summary only:
 ```markdown
@@ -246,7 +250,10 @@ Don't list every page. Don't explain the tech stack. Don't self-praise.
 
 Every delivered artifact must satisfy:
 - **No console errors** — check before delivery
-- **Screenshot verified** — you have seen it rendered correctly
+- **Screenshot verified** — you have seen it rendered correctly after the final edit
+- **Maker self-check completed** — you personally opened/rendered the artifact; code review alone is insufficient
+- **Touched areas covered** — every changed section/state reviewed; not just the hero or first viewport
+- **Viewport coverage** — responsive pages checked on desktop + narrow/mobile; decks checked slide-by-slide
 - **Descriptive filename** — e.g., `Landing Page.html`, not `untitled.html`
 - **Fixed-size content scales** — slide decks use the deck_stage template for proper letterboxing
 - **Tweaks panel present** — if multiple variants exist, exposed as tweaks
@@ -269,6 +276,21 @@ Every delivered artifact must satisfy:
 **Critical:** These rules prevent the most common visual quality issues. Apply them to every design.
 
 **Theory foundation:** Based on modular scale (1.25 ratio), 8px baseline grid, and optimal line length (45-75 characters). See `references/typography-design-system.md` for complete theory and mathematical foundation.
+
+### Typography Guardrails
+
+Treat typography as a system, not decoration. The primary language of the page determines the typography system.
+
+- **Primary script wins.** If the page is mostly Chinese, build the typography system around Chinese first. If mostly Latin, build around Latin first.
+- **Role-based fonts only.** Assign fonts by role: body/UI, CJK headings, Latin display, mono. Do not swap fonts section by section for novelty.
+- **Maximum font families:** 2 core families + 1 mono. Example: one sans for body/UI, one serif/display family for headings or brand, one mono for code.
+- **Decorative Latin display is limited.** Use Latin display faces for logos, short English brand words, or isolated labels — not for mixed CJK body copy.
+- **No mixed-script headline trap.** If a heading is primarily Chinese, set the entire heading with the CJK headline font. Do not let a Latin display face control the same line and force Chinese fallback.
+- **No fake weights.** Only use weights that are actually loaded. Do not rely on browser-synthesized bold/italic for headline typography.
+- **CJK tracking defaults to neutral.** Do not apply negative letter-spacing to Chinese headings by default. Keep tracking at `0` unless screenshot review proves a tighter value works.
+- **Metadata is still readable text.** For CJK-heavy docs/products, avoid a sea of 12-13px labels. Most metadata/UI copy should remain 14-16px.
+- **Display fonts are accent, not structure.** Decorative type should cover a small minority of total text area. If removing the display face breaks the page, the system is over-dependent on it.
+- **Verify mixed-script headlines visually.** Any heading that mixes Chinese + English must be screenshot-checked for line breaks, weight mismatch, and rhythm before delivery.
 
 ### Font Size Scale
 

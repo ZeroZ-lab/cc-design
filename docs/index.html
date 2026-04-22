@@ -1,0 +1,2247 @@
+<!DOCTYPE html>
+<!--
+My assumptions:
+- This is for users and contributors who want to understand cc-design quickly through a browsable manual.
+- Overall tone: editorial technical manual, not a generic SaaS landing page.
+- Main flow: positioning -> principles -> routing -> workflow -> asset map -> prompts -> gallery.
+- Color direction: warm paper, terracotta accent, forest support color.
+
+Unresolved questions:
+- Whether this should later split into multi-page docs — using a robust single-page manual for now.
+- Whether the final site should be fully bilingual — using Chinese guidance with English file identifiers for now.
+
+If the direction feels wrong, now is the cheapest moment to change it.
+-->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cc-design 说明书网站</title>
+    <meta
+      name="description"
+      content="基于当前 cc-design skill 仓库生成的说明书网站，整理 skill 定义、工作流、routing table、references、templates、scripts、prompts 与预览图库。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=IBM+Plex+Mono:wght@400;500&amp;family=Noto+Sans+SC:wght@400;500;700&amp;family=Noto+Serif+SC:wght@500;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --paper: oklch(0.972 0.012 84);
+        --paper-strong: oklch(0.942 0.02 82);
+        --surface: oklch(0.989 0.004 85);
+        --surface-alt: oklch(0.962 0.009 78);
+        --ink: oklch(0.24 0.028 38);
+        --ink-soft: oklch(0.42 0.018 42);
+        --ink-muted: oklch(0.58 0.016 46);
+        --line: oklch(0.84 0.02 75);
+        --line-strong: oklch(0.72 0.025 60);
+        --accent: oklch(0.64 0.14 38);
+        --accent-soft: oklch(0.91 0.05 40);
+        --forest: oklch(0.48 0.05 154);
+        --forest-soft: oklch(0.93 0.03 151);
+        --shadow-soft: 0 16px 40px rgba(51, 33, 21, 0.08);
+        --shadow-card: 0 24px 80px rgba(51, 33, 21, 0.10);
+        --radius-sm: 10px;
+        --radius-md: 18px;
+        --radius-lg: 30px;
+        --content-width: 1280px;
+        --nav-width: 300px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        font-family: "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", sans-serif;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        background:
+          radial-gradient(circle at 12% 0%, rgba(196, 133, 88, 0.12), transparent 28%),
+          radial-gradient(circle at 100% 0%, rgba(89, 124, 95, 0.1), transparent 24%),
+          linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 20%),
+          var(--paper);
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+          repeating-linear-gradient(
+            0deg,
+            rgba(117, 95, 78, 0.045) 0,
+            rgba(117, 95, 78, 0.045) 1px,
+            transparent 1px,
+            transparent 36px
+          ),
+          linear-gradient(
+            90deg,
+            rgba(117, 95, 78, 0.04) 0,
+            rgba(117, 95, 78, 0.04) 1px,
+            transparent 1px
+          );
+        background-size: 100% 36px, 24px 100%;
+        opacity: 0.35;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      code,
+      pre {
+        font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
+      }
+
+      .app-shell {
+        width: min(calc(100% - 32px), var(--content-width));
+        margin: 0 auto;
+        padding: 28px 0 80px;
+        display: grid;
+        grid-template-columns: minmax(240px, var(--nav-width)) minmax(0, 1fr);
+        gap: 28px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .nav-toggle {
+        display: none;
+        position: sticky;
+        top: 16px;
+        z-index: 40;
+        margin: 0 0 12px auto;
+        min-height: 48px;
+        padding: 0 16px;
+        border-radius: 999px;
+        border: 1px solid var(--line-strong);
+        background: rgba(255, 252, 247, 0.94);
+        color: var(--ink);
+        font: inherit;
+        box-shadow: var(--shadow-soft);
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 20px;
+        align-self: start;
+        height: calc(100vh - 40px);
+        padding: 26px 22px 24px;
+        border: 1px solid rgba(132, 109, 92, 0.18);
+        border-radius: 28px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.66), rgba(255, 255, 255, 0.44)),
+          var(--surface);
+        box-shadow: var(--shadow-soft);
+        backdrop-filter: blur(14px);
+        overflow: auto;
+      }
+
+      .brand-block {
+        display: grid;
+        gap: 10px;
+        padding-bottom: 18px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        width: fit-content;
+        padding: 6px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(132, 109, 92, 0.2);
+        background: rgba(255, 252, 247, 0.74);
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: var(--accent);
+      }
+
+      .brand-title {
+        font-family: "Instrument Serif", "Noto Serif SC", serif;
+        font-size: clamp(34px, 4vw, 44px);
+        line-height: 0.94;
+        letter-spacing: -0.03em;
+      }
+
+      .brand-copy {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.82;
+        color: var(--ink-soft);
+      }
+
+      .nav-section {
+        margin-top: 20px;
+      }
+
+      .nav-section-label {
+        margin: 0 0 10px;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+      }
+
+      .nav-list {
+        display: grid;
+        gap: 6px;
+      }
+
+      .nav-link {
+        display: grid;
+        grid-template-columns: 34px minmax(0, 1fr);
+        gap: 12px;
+        align-items: center;
+        min-height: 46px;
+        padding: 10px 12px;
+        border-radius: 16px;
+        text-decoration: none;
+        color: var(--ink-soft);
+        transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
+      }
+
+      .nav-link:hover,
+      .nav-link.is-active {
+        background: rgba(196, 133, 88, 0.08);
+        color: var(--ink);
+        transform: translateX(2px);
+      }
+
+      .nav-index {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 12px;
+        color: var(--accent);
+      }
+
+      .nav-text {
+        font-size: 15px;
+        line-height: 1.5;
+      }
+
+      .sidebar-stats {
+        margin-top: 20px;
+        display: grid;
+        gap: 10px;
+      }
+
+      .sidebar-stat {
+        padding: 14px 14px 12px;
+        border-radius: 18px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.48)),
+          var(--surface-alt);
+        border: 1px solid rgba(132, 109, 92, 0.16);
+      }
+
+      .sidebar-stat strong {
+        display: block;
+        font-family: "Instrument Serif", "Noto Serif SC", serif;
+        font-size: 28px;
+        font-weight: 400;
+        letter-spacing: -0.03em;
+      }
+
+      .sidebar-stat span {
+        font-size: 14px;
+        color: var(--ink-soft);
+      }
+
+      .sidebar-source {
+        margin-top: 18px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        display: grid;
+        gap: 10px;
+      }
+
+      .sidebar-source a {
+        color: var(--ink-soft);
+        text-decoration: none;
+        font-size: 15px;
+      }
+
+      .sidebar-source a:hover {
+        color: var(--ink);
+      }
+
+      .content {
+        min-width: 0;
+      }
+
+      .hero {
+        position: relative;
+        padding: 34px;
+        border: 1px solid rgba(132, 109, 92, 0.18);
+        border-radius: 34px;
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.62)),
+          var(--surface);
+        box-shadow: var(--shadow-card);
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(130deg, rgba(196, 133, 88, 0.12), transparent 35%),
+          linear-gradient(320deg, rgba(89, 124, 95, 0.12), transparent 35%);
+        pointer-events: none;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
+        gap: 30px;
+        position: relative;
+      }
+
+      .hero-copy {
+        display: grid;
+        gap: 18px;
+        align-content: start;
+      }
+
+      .section-kicker {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: 13px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+      }
+
+      .section-kicker::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, rgba(132, 109, 92, 0.3), transparent);
+      }
+
+      .hero h1 {
+        margin: 0;
+        display: grid;
+        gap: 14px;
+      }
+
+      .hero-brand {
+        display: block;
+        font-family: "Instrument Serif", "Noto Serif SC", serif;
+        font-size: clamp(72px, 7.2vw, 104px);
+        line-height: 0.9;
+        letter-spacing: -0.05em;
+        font-weight: 400;
+      }
+
+      .hero-title-main {
+        display: block;
+        font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+        font-size: clamp(46px, 4.4vw, 66px);
+        line-height: 1.14;
+        letter-spacing: -0.02em;
+        font-weight: 700;
+        text-wrap: balance;
+      }
+
+      .hero-lead {
+        max-width: 38ch;
+        margin: 0;
+        font-size: clamp(17px, 1.55vw, 20px);
+        line-height: 1.9;
+        color: var(--ink-soft);
+        text-wrap: pretty;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        margin-top: 6px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 0 18px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        font-size: 16px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: transform 180ms ease, background-color 180ms ease, border-color 180ms ease;
+      }
+
+      .button:hover {
+        transform: translateY(-1px);
+      }
+
+      .button-primary {
+        background: var(--accent);
+        color: #fff7f2;
+        border-color: transparent;
+      }
+
+      .button-secondary {
+        background: rgba(255, 252, 247, 0.8);
+        color: var(--ink);
+        border-color: rgba(132, 109, 92, 0.22);
+      }
+
+      .fact-strip {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .fact-card {
+        padding: 14px 16px;
+        border-radius: 18px;
+        background: rgba(255, 252, 247, 0.72);
+        border: 1px solid rgba(132, 109, 92, 0.14);
+      }
+
+      .fact-card strong {
+        display: block;
+        font-family: "Instrument Serif", "Noto Serif SC", serif;
+        font-size: clamp(28px, 3vw, 34px);
+        font-weight: 400;
+        letter-spacing: -0.03em;
+      }
+
+      .fact-card span {
+        font-size: 14px;
+        line-height: 1.7;
+        color: var(--ink-soft);
+      }
+
+      .hero-visual {
+        display: grid;
+        gap: 14px;
+        align-content: start;
+      }
+
+      .hero-note {
+        justify-self: end;
+        width: min(100%, 280px);
+        padding: 16px 18px;
+        border-radius: 18px;
+        background: rgba(255, 252, 247, 0.78);
+        border: 1px solid rgba(132, 109, 92, 0.16);
+        box-shadow: var(--shadow-soft);
+        font-size: 15px;
+        line-height: 1.82;
+        color: var(--ink-soft);
+      }
+
+      .hero-collage {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        grid-template-rows: auto auto;
+        gap: 12px;
+        min-height: 420px;
+      }
+
+      .hero-shot {
+        position: relative;
+        border-radius: 24px;
+        overflow: hidden;
+        border: 1px solid rgba(132, 109, 92, 0.16);
+        box-shadow: var(--shadow-card);
+        background: #efe7dc;
+      }
+
+      .hero-shot img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .hero-shot figcaption {
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        padding: 10px 12px;
+        border-radius: 999px;
+        background: rgba(18, 15, 13, 0.68);
+        color: rgba(255, 247, 242, 0.92);
+        font-size: 12px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        backdrop-filter: blur(10px);
+      }
+
+      .hero-shot-large {
+        grid-row: span 2;
+      }
+
+      .panel-grid,
+      .section-grid {
+        display: grid;
+        gap: 18px;
+      }
+
+      .section {
+        margin-top: 22px;
+        padding: 28px;
+        border-radius: 30px;
+        border: 1px solid rgba(132, 109, 92, 0.16);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.52)),
+          var(--surface);
+        box-shadow: var(--shadow-soft);
+        scroll-margin-top: 20px;
+      }
+
+      .section-header {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+        align-items: start;
+        margin-bottom: 24px;
+      }
+
+      .section-header > :first-child {
+        min-width: 0;
+      }
+
+      .section-number {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .section-title {
+        margin: 8px 0 0;
+        font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", serif;
+        font-size: clamp(30px, 2.7vw, 44px);
+        line-height: 1.24;
+        letter-spacing: 0;
+        text-wrap: pretty;
+      }
+
+      .section-summary {
+        max-width: 44ch;
+        margin: 12px 0 0;
+        font-size: 16px;
+        line-height: 1.9;
+        color: var(--ink-soft);
+        text-wrap: pretty;
+      }
+
+      .section-meta {
+        justify-self: end;
+        width: min(100%, 240px);
+        padding-top: 10px;
+        border-top: 1px solid rgba(132, 109, 92, 0.18);
+        text-align: right;
+        font-size: 14px;
+        line-height: 1.8;
+        color: var(--ink-muted);
+      }
+
+      .manifest-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .manifest-card,
+      .principle-card,
+      .resource-card,
+      .template-card,
+      .script-card,
+      .prompt-card,
+      .gallery-card,
+      .route-card,
+      .workflow-card {
+        border-radius: 24px;
+        border: 1px solid rgba(132, 109, 92, 0.14);
+        background:
+          linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.54)),
+          rgba(255, 252, 247, 0.82);
+      }
+
+      .manifest-card {
+        padding: 18px;
+        display: grid;
+        gap: 10px;
+        min-height: 220px;
+      }
+
+      .manifest-tag {
+        width: fit-content;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 12px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .manifest-card h3,
+      .principle-card h3,
+      .route-card h3,
+      .resource-card h3,
+      .template-card h3,
+      .script-card h3,
+      .prompt-card h3,
+      .workflow-card h3 {
+        margin: 0;
+        font-size: 24px;
+        line-height: 1.38;
+        text-wrap: balance;
+      }
+
+      .manifest-card p,
+      .principle-card p,
+      .resource-card p,
+      .template-card p,
+      .script-card p,
+      .prompt-card p,
+      .route-card p,
+      .workflow-card p {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.9;
+        color: var(--ink-soft);
+      }
+
+      .manifest-list,
+      .link-cloud,
+      .bullet-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .pill-link {
+        display: inline-flex;
+        align-items: center;
+        min-height: 34px;
+        padding: 0 12px;
+        border-radius: 999px;
+        background: rgba(255, 252, 247, 0.82);
+        border: 1px solid rgba(132, 109, 92, 0.14);
+        color: var(--ink-soft);
+        font-size: 14px;
+        line-height: 1;
+        text-decoration: none;
+      }
+
+      .pill-link:hover {
+        border-color: rgba(196, 133, 88, 0.34);
+        color: var(--ink);
+      }
+
+      .principle-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .principle-card {
+        padding: 22px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .principle-index {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .principle-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .mini-badge {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 0 10px;
+        border-radius: 999px;
+        background: rgba(89, 124, 95, 0.1);
+        color: var(--forest);
+        font-size: 13px;
+      }
+
+      .warning-list {
+        display: grid;
+        gap: 8px;
+      }
+
+      .warning-item {
+        padding: 10px 12px;
+        border-radius: 14px;
+        background: rgba(196, 133, 88, 0.07);
+        font-size: 14px;
+        line-height: 1.75;
+        color: var(--ink-soft);
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .chip {
+        min-height: 42px;
+        padding: 0 14px;
+        border-radius: 999px;
+        border: 1px solid rgba(132, 109, 92, 0.2);
+        background: rgba(255, 252, 247, 0.8);
+        color: var(--ink-soft);
+        font: inherit;
+        cursor: pointer;
+        transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+      }
+
+      .chip:hover,
+      .chip.is-active {
+        background: var(--accent-soft);
+        border-color: rgba(196, 133, 88, 0.25);
+        color: var(--ink);
+      }
+
+      .route-toolbar {
+        display: grid;
+        gap: 14px;
+        margin-bottom: 18px;
+      }
+
+      .route-groups {
+        display: grid;
+        gap: 18px;
+      }
+
+      .route-group {
+        display: grid;
+        gap: 14px;
+      }
+
+      .route-group-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        gap: 10px 14px;
+      }
+
+      .route-group-header h3 {
+        margin: 0;
+        font-size: 20px;
+      }
+
+      .route-group-header p {
+        margin: 0;
+        font-size: 15px;
+        color: var(--ink-soft);
+      }
+
+      .route-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .route-card {
+        padding: 18px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .route-meta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .route-chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 28px;
+        padding: 0 10px;
+        border-radius: 999px;
+        background: rgba(89, 124, 95, 0.1);
+        color: var(--forest);
+        font-size: 13px;
+      }
+
+      .route-card .pill-link {
+        min-height: 30px;
+        font-size: 13px;
+      }
+
+      .workflow-grid {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .workflow-card {
+        padding: 18px;
+        display: grid;
+        gap: 10px;
+        min-height: 240px;
+      }
+
+      .workflow-step {
+        font-family: "IBM Plex Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+      }
+
+      .workflow-card ul,
+      .prompt-card ul {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--ink-soft);
+        font-size: 14px;
+        line-height: 1.9;
+      }
+
+      .resource-groups {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .resource-card {
+        padding: 20px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .resource-card header {
+        display: grid;
+        gap: 6px;
+      }
+
+      .resource-card header span {
+        font-size: 13px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink-muted);
+      }
+
+      .utility-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .utility-column {
+        display: grid;
+        gap: 16px;
+      }
+
+      .utility-column-header {
+        display: grid;
+        gap: 6px;
+      }
+
+      .utility-column-header h3 {
+        margin: 0;
+        font-size: 22px;
+      }
+
+      .utility-column-header p {
+        margin: 0;
+        font-size: 15px;
+        color: var(--ink-soft);
+      }
+
+      .template-card,
+      .script-card,
+      .prompt-card,
+      .gallery-card {
+        padding: 18px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .template-card code,
+      .script-card code {
+        display: inline-block;
+        padding: 5px 8px;
+        border-radius: 8px;
+        background: rgba(196, 133, 88, 0.08);
+        color: var(--ink);
+        font-size: 13px;
+      }
+
+      .command-block {
+        padding: 18px;
+        border-radius: 22px;
+        background: rgba(29, 20, 15, 0.95);
+        color: rgba(255, 247, 242, 0.94);
+        overflow: auto;
+      }
+
+      .command-block pre {
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.75;
+      }
+
+      .prompt-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .prompt-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .prompt-card blockquote {
+        margin: 0;
+        padding: 0 0 0 14px;
+        border-left: 2px solid rgba(196, 133, 88, 0.4);
+        font-size: 16px;
+        line-height: 1.9;
+        color: var(--ink);
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .gallery-card {
+        gap: 0;
+        overflow: hidden;
+        padding: 0;
+      }
+
+      .gallery-card img {
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+      }
+
+      .gallery-card figcaption {
+        padding: 14px 16px 16px;
+        display: grid;
+        gap: 4px;
+      }
+
+      .gallery-card strong {
+        font-size: 16px;
+      }
+
+      .gallery-card span {
+        font-size: 14px;
+        color: var(--ink-soft);
+      }
+
+      .footer {
+        margin-top: 20px;
+        padding: 22px 24px;
+        border-radius: 24px;
+        border: 1px solid rgba(132, 109, 92, 0.16);
+        background: rgba(255, 252, 247, 0.7);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px 20px;
+        font-size: 15px;
+        color: var(--ink-soft);
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      @media (max-width: 1200px) {
+        .app-shell {
+          grid-template-columns: 1fr;
+        }
+
+        .nav-toggle {
+          display: inline-flex;
+        }
+
+        .sidebar {
+          position: static;
+          height: auto;
+          display: none;
+        }
+
+        .sidebar.is-open {
+          display: block;
+        }
+
+        .hero-grid,
+        .resource-groups,
+        .utility-grid,
+        .prompt-grid,
+        .gallery-grid,
+        .manifest-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .workflow-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 900px) {
+        .hero {
+          padding: 24px;
+        }
+
+        .hero-grid,
+        .hero-collage,
+        .route-grid,
+        .resource-groups,
+        .utility-grid,
+        .prompt-grid,
+        .gallery-grid,
+        .manifest-grid,
+        .principle-grid,
+        .workflow-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-collage {
+          min-height: 0;
+        }
+
+        .hero-shot-large {
+          grid-row: span 1;
+        }
+
+        .fact-strip {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .section {
+          padding: 22px;
+        }
+
+        .section-header {
+          grid-template-columns: 1fr;
+        }
+
+        .section-meta {
+          text-align: left;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .app-shell {
+          width: min(calc(100% - 18px), var(--content-width));
+          padding-top: 16px;
+        }
+
+        .hero-brand {
+          font-size: 60px;
+        }
+
+        .hero-title-main {
+          font-size: 36px;
+        }
+
+        .fact-strip {
+          grid-template-columns: 1fr;
+        }
+
+        .button,
+        .chip,
+        .nav-toggle {
+          width: 100%;
+        }
+
+        .hero-actions {
+          display: grid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <button class="nav-toggle" type="button" data-nav-toggle>展开目录 / Sections</button>
+
+      <aside class="sidebar" data-sidebar>
+        <div class="brand-block">
+          <div class="eyebrow">Skill Manual</div>
+          <div class="brand-title">cc-design</div>
+          <p class="brand-copy">
+            当前仓库 skill 的浏览式说明书。把 `SKILL.md`、`README.md`、`references/`、
+            `templates/`、`scripts/` 和预览素材整理成一份可直接阅读的站点入口。
+          </p>
+        </div>
+
+        <div class="nav-section">
+          <p class="nav-section-label">Sections</p>
+          <nav class="nav-list">
+            <a class="nav-link" href="#overview"><span class="nav-index">00</span><span class="nav-text">概览 / Overview</span></a>
+            <a class="nav-link" href="#positioning"><span class="nav-index">01</span><span class="nav-text">定位与能力</span></a>
+            <a class="nav-link" href="#principles"><span class="nav-index">02</span><span class="nav-text">核心原则</span></a>
+            <a class="nav-link" href="#routing"><span class="nav-index">03</span><span class="nav-text">Routing Table</span></a>
+            <a class="nav-link" href="#workflow"><span class="nav-index">04</span><span class="nav-text">工作流</span></a>
+            <a class="nav-link" href="#atlas"><span class="nav-index">05</span><span class="nav-text">参考资料地图</span></a>
+            <a class="nav-link" href="#utilities"><span class="nav-index">06</span><span class="nav-text">Templates &amp; Scripts</span></a>
+            <a class="nav-link" href="#prompts"><span class="nav-index">07</span><span class="nav-text">Prompts 与测试</span></a>
+            <a class="nav-link" href="#gallery"><span class="nav-index">08</span><span class="nav-text">预览图库</span></a>
+          </nav>
+        </div>
+
+        <div class="sidebar-stats">
+          <div class="sidebar-stat">
+            <strong>52</strong>
+            <span>`references/` 文档文件</span>
+          </div>
+          <div class="sidebar-stat">
+            <strong>8</strong>
+            <span>`templates/` 模板文件</span>
+          </div>
+          <div class="sidebar-stat">
+            <strong>11</strong>
+            <span>`scripts/` 导出工具</span>
+          </div>
+          <div class="sidebar-stat">
+            <strong>13</strong>
+            <span>预览图素材</span>
+          </div>
+        </div>
+
+        <div class="sidebar-source">
+          <a href="../SKILL.md">打开 `SKILL.md`</a>
+          <a href="../README.md">打开 `README.md`</a>
+          <a href="../EXAMPLES.md">打开 `EXAMPLES.md`</a>
+          <a href="../test-prompts.json">打开 `test-prompts.json`</a>
+        </div>
+      </aside>
+
+      <main class="content">
+        <header class="hero" id="overview">
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <div class="section-kicker">Current Project Skill / Documentation Portal</div>
+              <h1>
+                <span class="hero-brand">cc-design</span>
+                <span class="hero-title-main">把 skill 仓库本体，整理成一个可浏览、可索引、可继续扩展的说明书网站</span>
+              </h1>
+              <p class="hero-lead">
+                这个页面不重写项目，而是把当前仓库里已经存在的 skill 定义、路由策略、工作流、参考文档、
+                模板组件、导出脚本、测试提示词和截图预览，按“先理解，再落地”的顺序重新组织起来。
+              </p>
+              <div class="hero-actions">
+                <a class="button button-primary" href="#routing">先看 Routing Table</a>
+                <a class="button button-secondary" href="../README.md">打开源 README</a>
+              </div>
+              <div class="fact-strip">
+                <div class="fact-card">
+                  <strong>1</strong>
+                  <span>核心 skill 定义文件</span>
+                </div>
+                <div class="fact-card">
+                  <strong>6</strong>
+                  <span>测试 prompt 样例</span>
+                </div>
+                <div class="fact-card">
+                  <strong>3</strong>
+                  <span>核心原则 P0 / P1 / P2</span>
+                </div>
+                <div class="fact-card">
+                  <strong>∞</strong>
+                  <span>可继续接入更多页面与内容</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-visual">
+              <div class="hero-note">
+                站点风格采用“设计手册 / studio dossier”方向：暖纸张背景、偏编辑式排版、强目录感，
+                避免把说明书做成又一个默认 SaaS 首页。
+              </div>
+              <div class="hero-collage">
+                <figure class="hero-shot hero-shot-large">
+                  <img src="../screenshots/previews/cc-design-home-preview.png" alt="cc-design home preview" />
+                  <figcaption>Home Preview</figcaption>
+                </figure>
+                <figure class="hero-shot">
+                  <img src="../screenshots/previews/cc-design-enterprise-preview.png" alt="enterprise preview" />
+                  <figcaption>Enterprise Hero</figcaption>
+                </figure>
+                <figure class="hero-shot">
+                  <img src="../screenshots/previews/cc-design-scifi-preview.png" alt="scifi preview" />
+                  <figcaption>Sci-Fi Website</figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="section" id="positioning">
+          <div class="section-header">
+            <div>
+              <div class="section-number">01 / Positioning</div>
+              <h2 class="section-title">这不是“介绍页”，而是 skill 的工作台索引</h2>
+              <p class="section-summary">
+                当前仓库的价值，不只是一个 `SKILL.md` 文件，而是一整套设计工作流。下面这组模块把它拆成可浏览的能力面：
+                你可以先看定位，再进到具体 reference、template、script 和 prompt。
+              </p>
+            </div>
+            <div class="section-meta">
+              Content source:
+              <br />
+              `README.md` / `SKILL.md` / `EXAMPLES.md`
+            </div>
+          </div>
+
+          <div class="manifest-grid">
+            <article class="manifest-card">
+              <div class="manifest-tag">Outputs</div>
+              <h3>从网页到原型，再到动画与幻灯片</h3>
+              <p>
+                项目覆盖 landing page、interactive prototype、slide deck、mobile mockup、animation、
+                design system exploration 等典型设计交付面。
+              </p>
+              <div class="manifest-list">
+                <a class="pill-link" href="../README.md">landing pages</a>
+                <a class="pill-link" href="../README.md">interactive prototypes</a>
+                <a class="pill-link" href="../README.md">slide decks</a>
+                <a class="pill-link" href="../README.md">animations</a>
+              </div>
+            </article>
+
+            <article class="manifest-card">
+              <div class="manifest-tag">Method</div>
+              <h3>Skill 不是模板，而是一个被约束过的设计流程</h3>
+              <p>
+                它首先强调事实核验、批量澄清问题和 anti-AI slop，然后才进入设计与实现，这让输出更稳定，也更能解释为什么这样做。
+              </p>
+              <div class="manifest-list">
+                <a class="pill-link" href="#principles">P0 Fact Verification</a>
+                <a class="pill-link" href="#principles">P1 Batch Questions</a>
+                <a class="pill-link" href="#principles">P2 Anti-AI Slop</a>
+              </div>
+            </article>
+
+            <article class="manifest-card">
+              <div class="manifest-tag">Production</div>
+              <h3>不是概念稿，直接连到模板、脚本和验证链</h3>
+              <p>
+                `templates/` 提供骨架，`scripts/` 负责导出，`verification` 文档负责验收，说明书站里也保留了这些路径入口。
+              </p>
+              <div class="manifest-list">
+                <a class="pill-link" href="#utilities">templates</a>
+                <a class="pill-link" href="#utilities">scripts</a>
+                <a class="pill-link" href="../references/verification.md">verification</a>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="principles">
+          <div class="section-header">
+            <div>
+              <div class="section-number">02 / Core Principles</div>
+              <h2 class="section-title">先把三条原则读懂，才能理解为什么这个 skill 不会滑向 AI slop</h2>
+              <p class="section-summary">
+                `cc-design` 最重要的不是生成速度，而是生成前后的约束条件。项目把这三条原则写进了 skill 顶层，所以整个网站也把它们放到最前面。
+              </p>
+            </div>
+            <div class="section-meta">
+              Source:
+              <br />
+              `SKILL.md` → Core Principles
+            </div>
+          </div>
+
+          <div class="principle-grid">
+            <article class="principle-card">
+              <div class="principle-index">P0</div>
+              <h3>Fact Verification</h3>
+              <p>
+                对品牌、产品、价格、规格、发布状态等任何可核验事实，先查再说。它明确禁止“凭印象”输出看起来合理但可能错误的内容。
+              </p>
+              <div class="principle-badges">
+                <span class="mini-badge">WebSearch first</span>
+                <span class="mini-badge">No guessing</span>
+              </div>
+            </article>
+
+            <article class="principle-card">
+              <div class="principle-index">P1</div>
+              <h3>Batch Questions First</h3>
+              <p>
+                对新设计任务，优先一次性把上下文、变体、保真度、可调参数和任务特定问题问全；不是边做边猜，而是先把输入质量补齐。
+              </p>
+              <div class="principle-badges">
+                <span class="mini-badge">Context</span>
+                <span class="mini-badge">Variations</span>
+                <span class="mini-badge">Fidelity</span>
+              </div>
+            </article>
+
+            <article class="principle-card">
+              <div class="principle-index">P2</div>
+              <h3>Anti-AI Slop</h3>
+              <p>
+                项目把一整套常见“AI 味设计”列成禁区，从配色、字体、布局到假数据和装饰元素都有明确黑名单。
+              </p>
+              <div class="warning-list">
+                <div class="warning-item">禁用全屏紫粉蓝渐变、Bento 过载、3 栏功能卡套路。</div>
+                <div class="warning-item">禁用 Inter / Roboto / Arial 等过度默认化字体组合。</div>
+                <div class="warning-item">禁用假数据、假评价、假指标和“看起来像事实”的占位装饰。</div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="routing">
+          <div class="section-header">
+            <div>
+              <div class="section-number">03 / Routing Table</div>
+              <h2 class="section-title">任务如何被路由到不同 reference / template / verify 组合</h2>
+              <p class="section-summary">
+                这是 `cc-design` 的核心操作系统。用户说“做一个 landing page”和说“做一个 iOS mockup”，加载的资料和模板完全不同。下面按类别重新排成可筛选的索引。
+              </p>
+            </div>
+            <div class="section-meta">
+              Source:
+              <br />
+              `SKILL.md` → Routing Table
+            </div>
+          </div>
+
+          <div class="route-toolbar">
+            <div class="chips" data-route-filters>
+              <button class="chip is-active" type="button" data-filter="all">全部</button>
+              <button class="chip" type="button" data-filter="foundation">基础判断</button>
+              <button class="chip" type="button" data-filter="surface">页面与原型</button>
+              <button class="chip" type="button" data-filter="system">系统与风格</button>
+              <button class="chip" type="button" data-filter="motion">动效与媒体</button>
+              <button class="chip" type="button" data-filter="review">评审与导出</button>
+            </div>
+          </div>
+
+          <div class="route-groups" id="route-groups"></div>
+        </section>
+
+        <section class="section" id="workflow">
+          <div class="section-header">
+            <div>
+              <div class="section-number">04 / Workflow</div>
+              <h2 class="section-title">从假设到验证，skill 的默认执行顺序</h2>
+              <p class="section-summary">
+                `cc-design` 把一轮设计任务拆成几个固定节点。说明书站保留这种时序结构，便于你从“用户怎么提需求”一路看到“页面怎么验收”。
+              </p>
+            </div>
+            <div class="section-meta">
+              Source:
+              <br />
+              `SKILL.md` / `references/workflow.md`
+            </div>
+          </div>
+
+          <div class="workflow-grid">
+            <article class="workflow-card">
+              <div class="workflow-step">Step 0</div>
+              <h3>Junior Designer Mode</h3>
+              <p>先写 assumptions comment，把受众、语气、主流程、颜色方向和未决问题放到台面上。</p>
+              <ul>
+                <li>用最便宜的成本暴露方向风险</li>
+                <li>让用户在大改前就能纠偏</li>
+              </ul>
+            </article>
+
+            <article class="workflow-card">
+              <div class="workflow-step">Step 1</div>
+              <h3>Understand</h3>
+              <p>对新任务先批量提问；对已有 rich brief 或快速迭代，可跳过到 assumptions。</p>
+              <ul>
+                <li>设计上下文</li>
+                <li>变体数量</li>
+                <li>保真度与范围</li>
+              </ul>
+            </article>
+
+            <article class="workflow-card">
+              <div class="workflow-step">Step 2</div>
+              <h3>Route</h3>
+              <p>根据任务类型决定读哪些 reference、复制哪些 template、重点验证什么。</p>
+              <ul>
+                <li>Landing page → patterns</li>
+                <li>iOS mockup → `ios_frame.jsx`</li>
+                <li>Animation → pitfalls + signals</li>
+              </ul>
+            </article>
+
+            <article class="workflow-card">
+              <div class="workflow-step">Step 3</div>
+              <h3>Acquire Context</h3>
+              <p>上下文优先级从设计系统、代码库、官网、素材，再到 fallback system，一层层收束。</p>
+              <ul>
+                <li>先找真实 tokens</li>
+                <li>再说风格判断</li>
+              </ul>
+            </article>
+
+            <article class="workflow-card">
+              <div class="workflow-step">Step 4</div>
+              <h3>Design Intent</h3>
+              <p>在编码前明确 focal point、情绪语调、视觉流、颜色与排版层级，避免边写边漂移。</p>
+              <ul>
+                <li>信息重心</li>
+                <li>节奏与留白</li>
+                <li>视觉路径</li>
+              </ul>
+            </article>
+
+            <article class="workflow-card">
+              <div class="workflow-step">Step 5</div>
+              <h3>Build &amp; Verify</h3>
+              <p>写 HTML / JSX 只是中段动作；最后还要经过结构、视觉与设计卓越度三层验证。</p>
+              <ul>
+                <li>Playwright 截图</li>
+                <li>可导出 PDF / PPTX / MP4</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="section" id="atlas">
+          <div class="section-header">
+            <div>
+              <div class="section-number">05 / Reference Atlas</div>
+              <h2 class="section-title">参考资料地图：不是散文件，而是一个分层知识库</h2>
+              <p class="section-summary">
+                `references/` 目录本质上是 skill 的知识底盘。这里按主题把常用文档重新聚类，你可以从任何一个卡片点进去继续读原文。
+              </p>
+            </div>
+            <div class="section-meta">
+              Source:
+              <br />
+              `references/` + `references/case-studies/`
+            </div>
+          </div>
+
+          <div class="resource-groups" id="resource-groups"></div>
+        </section>
+
+        <section class="section" id="utilities">
+          <div class="section-header">
+            <div>
+              <div class="section-number">06 / Templates &amp; Scripts</div>
+              <h2 class="section-title">把“做设计”真正变成“能交付”的那部分工具链</h2>
+              <p class="section-summary">
+                左侧是模板骨架，右侧是导出与转换脚本。说明书站保留了它们的使用时机，方便你判断什么时候应该复制模板，什么时候应该直接走脚本链。
+              </p>
+            </div>
+            <div class="section-meta">
+              Source:
+              <br />
+              `templates/` / `scripts/`
+            </div>
+          </div>
+
+          <div class="utility-grid">
+            <div class="utility-column">
+              <div class="utility-column-header">
+                <h3>Templates</h3>
+                <p>直接复制进任务目录的 UI / frame / animation 骨架。</p>
+              </div>
+              <div class="section-grid" id="template-grid"></div>
+            </div>
+
+            <div class="utility-column">
+              <div class="utility-column-header">
+                <h3>Scripts</h3>
+                <p>用于导出 PDF / PPTX / 视频、单文件内联和格式转换。</p>
+              </div>
+              <div class="section-grid" id="script-grid"></div>
+            </div>
+          </div>
+
+          <div class="section-grid" style="margin-top: 18px;">
+            <div class="command-block">
+              <pre><code>git clone https://github.com/ZeroZ-lab/claritas-design.git ~/.codex/skills/cc-design
+cd ~/.codex/skills/cc-design/scripts &amp;&amp; npm install
+npx playwright install chromium
+npx skills update cc-design</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="prompts">
+          <div class="section-header">
+            <div>
+              <div class="section-number">07 / Prompts &amp; Tests</div>
+              <h2 class="section-title">示例 prompt 不只是展示，也是在校验 skill 行为</h2>
+              <p class="section-summary">
+                `test-prompts.json` 给出 6 条测试样本，`EXAMPLES.md` 则补充了品牌克隆和传统用法。这里把两部分做成可快速浏览的 prompt 板。
+              </p>
+            </div>
+            <div class="section-meta">
+              Source:
+              <br />
+              `test-prompts.json` / `EXAMPLES.md`
+            </div>
+          </div>
+
+          <div class="prompt-grid" id="prompt-grid"></div>
+        </section>
+
+        <section class="section" id="gallery">
+          <div class="section-header">
+            <div>
+              <div class="section-number">08 / Gallery</div>
+              <h2 class="section-title">当前仓库自带预览截图，直接作为说明书网站的视觉证据</h2>
+              <p class="section-summary">
+                这些图不是装饰，是项目已经落过地的视觉样例。页面里保留了预览和文件名，方便回溯对应素材。
+              </p>
+            </div>
+            <div class="section-meta">
+              Source:
+              <br />
+              `screenshots/previews/`
+            </div>
+          </div>
+
+          <div class="gallery-grid" id="gallery-grid"></div>
+        </section>
+
+        <footer class="footer">
+          <span>cc-design manual site, generated from the current repository structure.</span>
+          <div class="footer-links">
+            <a class="pill-link" href="../SKILL.md">`SKILL.md`</a>
+            <a class="pill-link" href="../README.md">`README.md`</a>
+            <a class="pill-link" href="../references/workflow.md">`references/workflow.md`</a>
+            <a class="pill-link" href="../templates/browser_window.jsx">`templates/browser_window.jsx`</a>
+          </div>
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      const routingGroups = [
+        {
+          key: "foundation",
+          title: "基础判断",
+          description: "几乎任何任务都会先经过这些文件。",
+          items: [
+            {
+              task: "任何设计任务",
+              refs: ["../references/design-excellence.md", "../references/content-guidelines.md", "../references/typography-spacing-examples.md", "../references/design-philosophy.md"],
+              refLabels: ["design-excellence", "content-guidelines", "typography-spacing-examples", "design-philosophy"],
+              template: null,
+              focus: "设计质量、反 slop、排版节奏、总体哲学",
+              badge: "Core"
+            },
+            {
+              task: "设计哲学 / 为什么这样做",
+              refs: ["../references/design-philosophy.md", "../references/design-principles.md"],
+              refLabels: ["design-philosophy", "design-principles"],
+              template: null,
+              focus: "世界观、决策框架、原则解释",
+              badge: "Reasoning"
+            },
+            {
+              task: "高质量输出要求",
+              refs: ["../references/design-patterns.md", "../references/case-studies/README.md"],
+              refLabels: ["design-patterns", "case-studies/README"],
+              template: null,
+              focus: "从 pattern 到 case study 的应用迁移",
+              badge: "Quality"
+            },
+            {
+              task: "没有现成设计系统",
+              refs: ["../references/frontend-design.md", "../references/design-excellence.md"],
+              refLabels: ["frontend-design", "design-excellence"],
+              template: null,
+              focus: "建立最小可用视觉系统，避免默认化",
+              badge: "Fallback"
+            }
+          ]
+        },
+        {
+          key: "surface",
+          title: "页面与原型",
+          description: "落到具体页面、原型、wireframe 的任务入口。",
+          items: [
+            {
+              task: "Landing page / 产品官网",
+              refs: ["../references/starter-components.md", "../references/design-patterns.md"],
+              refLabels: ["starter-components", "design-patterns"],
+              template: "../templates/browser_window.jsx",
+              templateLabel: "browser_window.jsx",
+              focus: "响应式布局、版式层级、信息路径",
+              badge: "Web"
+            },
+            {
+              task: "React Prototype",
+              refs: ["../references/react-setup.md"],
+              refLabels: ["react-setup"],
+              template: null,
+              focus: "无 console error 的 React + Babel 原型底座",
+              badge: "React"
+            },
+            {
+              task: "Interactive Prototype",
+              refs: ["../references/interactive-prototype.md", "../references/react-setup.md"],
+              refLabels: ["interactive-prototype", "react-setup"],
+              template: "../templates/browser_window.jsx",
+              templateLabel: "browser_window.jsx",
+              focus: "导航、状态切换、可点击 flow",
+              badge: "Flow"
+            },
+            {
+              task: "Mobile Mockup",
+              refs: ["../references/starter-components.md", "../references/react-setup.md"],
+              refLabels: ["starter-components", "react-setup"],
+              template: "../templates/ios_frame.jsx",
+              templateLabel: "ios_frame.jsx",
+              focus: "必须复用 frame，不手写刘海/状态栏",
+              badge: "Mobile"
+            },
+            {
+              task: "Wireframe / Low-fi",
+              refs: ["../references/frontend-design.md"],
+              refLabels: ["frontend-design"],
+              template: "../templates/design_canvas.jsx",
+              templateLabel: "design_canvas.jsx",
+              focus: "先看结构，不急着做视觉装饰",
+              badge: "Wireframe"
+            },
+            {
+              task: "Variant Exploration",
+              refs: ["../references/tweaks-system.md"],
+              refLabels: ["tweaks-system"],
+              template: "../templates/design_canvas.jsx",
+              templateLabel: "design_canvas.jsx",
+              focus: "多个方向并排比较，可调参数持久化",
+              badge: "Variants"
+            }
+          ]
+        },
+        {
+          key: "system",
+          title: "系统与风格",
+          description: "从信息架构到品牌语气，再到设计系统架构。",
+          items: [
+            {
+              task: "复杂多屏流程",
+              refs: ["../references/design-thinking-framework.md"],
+              refLabels: ["design-thinking-framework"],
+              template: null,
+              focus: "8-layer decision tree",
+              badge: "Flow System"
+            },
+            {
+              task: "Information Architecture",
+              refs: ["../references/information-design-theory.md", "../references/design-excellence.md"],
+              refLabels: ["information-design-theory", "design-excellence"],
+              template: null,
+              focus: "降低认知负荷，建立分组与优先级",
+              badge: "IA"
+            },
+            {
+              task: "Brand / Emotional Tone",
+              refs: ["../references/brand-emotion-theory.md", "../references/design-styles.md"],
+              refLabels: ["brand-emotion-theory", "design-styles"],
+              template: null,
+              focus: "定义情绪语调、品牌人格和视觉倾向",
+              badge: "Brand"
+            },
+            {
+              task: "Brand Style Clone",
+              refs: ["../references/getdesign-loader.md", "../references/design-context.md"],
+              refLabels: ["getdesign-loader", "design-context"],
+              template: "../templates/browser_window.jsx",
+              templateLabel: "browser_window.jsx",
+              focus: "品牌风格加载与真实资产上下文对齐",
+              badge: "Clone"
+            },
+            {
+              task: "Design System Architecture",
+              refs: ["../references/system-design-theory.md", "../references/design-system-creation.md"],
+              refLabels: ["system-design-theory", "design-system-creation"],
+              template: null,
+              focus: "tokens、组件边界、扩展性",
+              badge: "System"
+            },
+            {
+              task: "Typography System Design",
+              refs: ["../references/typography-design-system.md"],
+              refLabels: ["typography-design-system"],
+              template: null,
+              focus: "完整排版理论、基线网格与响应式比例",
+              badge: "Type"
+            }
+          ]
+        },
+        {
+          key: "motion",
+          title: "动效与媒体",
+          description: "动画、音频、视频和输出规格相关。",
+          items: [
+            {
+              task: "Animation / Motion",
+              refs: ["../references/animation-best-practices.md", "../references/animations.md"],
+              refLabels: ["animation-best-practices", "animations"],
+              template: "../templates/animations.jsx",
+              templateLabel: "animations.jsx",
+              focus: "timeline playback、signals、motion rhythm",
+              badge: "Motion"
+            },
+            {
+              task: "Animation Pitfalls",
+              refs: ["../references/animation-pitfalls.md"],
+              refLabels: ["animation-pitfalls"],
+              template: null,
+              focus: "16 个真实踩坑规则，防止录制与时间轴失败",
+              badge: "Pitfalls"
+            },
+            {
+              task: "Audio Design",
+              refs: ["../references/audio-design-rules.md", "../references/sfx-library.md"],
+              refLabels: ["audio-design-rules", "sfx-library"],
+              template: null,
+              focus: "Dual-track 音频系统与音效选择",
+              badge: "Audio"
+            },
+            {
+              task: "Video Export",
+              refs: ["../references/video-export.md"],
+              refLabels: ["video-export"],
+              template: null,
+              focus: "HTML → MP4 输出规格与 pre-flight 检查",
+              badge: "Video"
+            },
+            {
+              task: "Scene Output Specs",
+              refs: ["../references/scene-templates.md"],
+              refLabels: ["scene-templates"],
+              template: null,
+              focus: "针对不同交付形态的尺寸与格式规范",
+              badge: "Scenes"
+            }
+          ]
+        },
+        {
+          key: "review",
+          title: "评审与导出",
+          description: "最后一段路：评审、验证、PPTX / PDF / 问题诊断。",
+          items: [
+            {
+              task: "Design Review / Critique",
+              refs: ["../references/critique-guide.md"],
+              refLabels: ["critique-guide"],
+              template: null,
+              focus: "5 维评分，明确问题位置而不是泛泛而谈",
+              badge: "Review"
+            },
+            {
+              task: "Verification",
+              refs: ["../references/verification.md", "../references/verification-protocol.md"],
+              refLabels: ["verification", "verification-protocol"],
+              template: null,
+              focus: "结构、视觉、设计卓越度三阶段检查",
+              badge: "Verify"
+            },
+            {
+              task: "Editable PPTX Export",
+              refs: ["../references/slide-decks.md", "../references/editable-pptx.md"],
+              refLabels: ["slide-decks", "editable-pptx"],
+              template: "../templates/deck_stage.js",
+              templateLabel: "deck_stage.js",
+              focus: "PPTX 约束先行，避免做完再发现不可编辑",
+              badge: "PPTX"
+            },
+            {
+              task: "PDF Export",
+              refs: ["../references/platform-tools.md"],
+              refLabels: ["platform-tools"],
+              template: null,
+              focus: "本地工具与导出检查",
+              badge: "PDF"
+            },
+            {
+              task: "局部问题诊断",
+              refs: ["../references/anti-patterns/layout.md", "../references/anti-patterns/color.md", "../references/anti-patterns/typography.md", "../references/anti-patterns/interaction.md"],
+              refLabels: ["anti-layout", "anti-color", "anti-typography", "anti-interaction"],
+              template: null,
+              focus: "按问题类别快速定位反模式",
+              badge: "Diagnostics"
+            }
+          ]
+        }
+      ];
+
+      const resourceGroups = [
+        {
+          label: "Foundations",
+          title: "核心观念层",
+          description: "理解 cc-design 的 worldview、品质标准和内容边界。",
+          links: [
+            ["../references/design-philosophy.md", "design-philosophy.md"],
+            ["../references/design-excellence.md", "design-excellence.md"],
+            ["../references/content-guidelines.md", "content-guidelines.md"],
+            ["../references/workflow.md", "workflow.md"],
+            ["../references/design-principles.md", "design-principles.md"]
+          ]
+        },
+        {
+          label: "Theory",
+          title: "设计理论层",
+          description: "信息设计、视觉理论、交互理论、品牌情绪和系统架构都在这一层。",
+          links: [
+            ["../references/information-design-theory.md", "information-design-theory.md"],
+            ["../references/visual-design-theory.md", "visual-design-theory.md"],
+            ["../references/interaction-design-theory.md", "interaction-design-theory.md"],
+            ["../references/brand-emotion-theory.md", "brand-emotion-theory.md"],
+            ["../references/system-design-theory.md", "system-design-theory.md"],
+            ["../references/typography-design-system.md", "typography-design-system.md"]
+          ]
+        },
+        {
+          label: "Build",
+          title: "落地执行层",
+          description: "真正写 HTML / JSX 时最常用的文档入口。",
+          links: [
+            ["../references/react-setup.md", "react-setup.md"],
+            ["../references/starter-components.md", "starter-components.md"],
+            ["../references/interactive-prototype.md", "interactive-prototype.md"],
+            ["../references/frontend-design.md", "frontend-design.md"],
+            ["../references/tweaks-system.md", "tweaks-system.md"],
+            ["../references/scene-templates.md", "scene-templates.md"]
+          ]
+        },
+        {
+          label: "Motion",
+          title: "动效与媒体层",
+          description: "动画时间轴、坑位规避、视频导出、音频编排。",
+          links: [
+            ["../references/animation-best-practices.md", "animation-best-practices.md"],
+            ["../references/animation-pitfalls.md", "animation-pitfalls.md"],
+            ["../references/animations.md", "animations.md"],
+            ["../references/video-export.md", "video-export.md"],
+            ["../references/audio-design-rules.md", "audio-design-rules.md"],
+            ["../references/sfx-library.md", "sfx-library.md"]
+          ]
+        },
+        {
+          label: "Review",
+          title: "评审与验证层",
+          description: "最后交付前的自检、评分和验证协议。",
+          links: [
+            ["../references/critique-guide.md", "critique-guide.md"],
+            ["../references/verification.md", "verification.md"],
+            ["../references/verification-protocol.md", "verification-protocol.md"],
+            ["../references/design-checklist.md", "design-checklist.md"],
+            ["../references/principle-review.md", "principle-review.md"]
+          ]
+        },
+        {
+          label: "Brand & Cases",
+          title: "品牌上下文与案例层",
+          description: "用于风格克隆、真实资产获取和案例逆向分析。",
+          links: [
+            ["../references/design-context.md", "design-context.md"],
+            ["../references/getdesign-loader.md", "getdesign-loader.md"],
+            ["../references/asset-acquisition.md", "asset-acquisition.md"],
+            ["../references/case-studies/README.md", "case-studies/README.md"],
+            ["../references/case-studies/product-pages/stripe-homepage.md", "stripe-homepage.md"],
+            ["../references/case-studies/product-pages/linear-features.md", "linear-features.md"]
+          ]
+        }
+      ];
+
+      const templateItems = [
+        {
+          title: "design_canvas.jsx",
+          path: "../templates/design_canvas.jsx",
+          use: "对比多个设计方向，支持 lightbox 和 side-by-side 展示。",
+          note: "最适合 variants / low-fi / exploration"
+        },
+        {
+          title: "deck_stage.js",
+          path: "../templates/deck_stage.js",
+          use: "单文件 deck 的 stage 与前后切换基础设施。",
+          note: "幻灯片或小型演示稿"
+        },
+        {
+          title: "ios_frame.jsx",
+          path: "../templates/ios_frame.jsx",
+          use: "iPhone 框架，带 Dynamic Island 和系统边距。",
+          note: "移动端 mockup 必用"
+        },
+        {
+          title: "android_frame.jsx",
+          path: "../templates/android_frame.jsx",
+          use: "Android 设备框架，用于 punch-hole / keyboard 场景。",
+          note: "Android prototype"
+        },
+        {
+          title: "browser_window.jsx",
+          path: "../templates/browser_window.jsx",
+          use: "浏览器窗口壳，适合网页展示和产品官网镜头。",
+          note: "Landing page / docs / web demo"
+        },
+        {
+          title: "macos_window.jsx",
+          path: "../templates/macos_window.jsx",
+          use: "桌面窗口 chrome，用于 desktop app 或编辑器场景。",
+          note: "Desktop product UI"
+        },
+        {
+          title: "animations.jsx",
+          path: "../templates/animations.jsx",
+          use: "Stage + Sprite 时间轴动画引擎。",
+          note: "动画视频和可录制动效"
+        },
+        {
+          title: "typography-system.css",
+          path: "../templates/typography-system.css",
+          use: "排版系统样板，可作为全站 text rhythm 的起点。",
+          note: "排版与设计系统"
+        }
+      ];
+
+      const scriptItems = [
+        {
+          title: "export_deck_pdf.mjs",
+          path: "../scripts/export_deck_pdf.mjs",
+          use: "多文件 deck 导出 PDF。",
+          note: "适合多页独立 HTML 幻灯片"
+        },
+        {
+          title: "export_deck_stage_pdf.mjs",
+          path: "../scripts/export_deck_stage_pdf.mjs",
+          use: "单文件 stage deck 导出 PDF。",
+          note: "配合 deck_stage.js"
+        },
+        {
+          title: "export_deck_pptx.mjs",
+          path: "../scripts/export_deck_pptx.mjs",
+          use: "HTML deck 导出为 PPTX。",
+          note: "支持 image / editable 路径"
+        },
+        {
+          title: "html2pptx.js",
+          path: "../scripts/html2pptx.js",
+          use: "HTML to PPTX 转换核心逻辑。",
+          note: "PPTX 转换引擎"
+        },
+        {
+          title: "render-video.js",
+          path: "../scripts/render-video.js",
+          use: "Playwright + ffmpeg 渲染 HTML 动画视频。",
+          note: "MP4 导出"
+        },
+        {
+          title: "convert-formats.sh",
+          path: "../scripts/convert-formats.sh",
+          use: "MP4 转 60fps / GIF 的格式转换脚本。",
+          note: "视频后处理"
+        },
+        {
+          title: "add-music.sh",
+          path: "../scripts/add-music.sh",
+          use: "给导出视频加 BGM / SFX。",
+          note: "音频混合"
+        },
+        {
+          title: "super_inline_html.js",
+          path: "../scripts/super_inline_html.js",
+          use: "把 HTML 和资源尽量打平为单文件。",
+          note: "便于单文件交付"
+        }
+      ];
+
+      const promptItems = [
+        {
+          kind: "test",
+          title: "SaaS 登录页，给 3 个方向",
+          prompt: "I want to create a SaaS product login page, show me 3 style directions for comparison",
+          checks: ["先问上下文和 brand", "生成 variations", "避免紫粉渐变 / emoji / Inter", "使用 design_canvas"],
+          tag: "Variations"
+        },
+        {
+          kind: "test",
+          title: "10 页 AI 工具创业 pitch deck",
+          prompt: "Help me make a 10-page product pitch deck for an AI tool startup",
+          checks: ["先 verbalize 设计系统", "使用 deck_stage.js", "字号达标", "有视觉节奏"],
+          tag: "Slides"
+        },
+        {
+          kind: "test",
+          title: "30 秒神经网络解释动画",
+          prompt: "Create a 30-second HTML animation explaining how neural networks work",
+          checks: ["用 Stage + Sprite", "先写 timeline", "ease in / out 合理", "文字停留足够"],
+          tag: "Animation"
+        },
+        {
+          kind: "test",
+          title: "Habit Tracker App Prototype",
+          prompt: "Create a Habit Tracker App prototype",
+          checks: ["默认 overview flat layout", "必须使用 ios_frame.jsx", "屏幕信息密度足够", "至少 5-7 个 screen"],
+          tag: "Mobile"
+        },
+        {
+          kind: "example",
+          title: "Stripe 风格定价页",
+          prompt: "/cc-design \"Create a pricing page with Stripe's aesthetic\"",
+          checks: ["检测品牌名", "加载 getdesign context", "把品牌 tokens 落到 HTML", "再做风格验证"],
+          tag: "Brand Clone"
+        },
+        {
+          kind: "example",
+          title: "Notion 风格看板",
+          prompt: "/cc-design \"Notion-style kanban board\"",
+          checks: ["干净排版", "中性色系", "品牌式样映射到组件级表达"],
+          tag: "Case"
+        }
+      ];
+
+      const galleryItems = [
+        ["../screenshots/previews/cc-design-home-preview.png", "Home", "主说明页 / 展示型入口"],
+        ["../screenshots/previews/cc-design-enterprise-preview.png", "Enterprise", "企业级 hero 场景"],
+        ["../screenshots/previews/cc-design-scifi-preview.png", "Sci-Fi", "科幻语气网站"],
+        ["../screenshots/previews/cc-design-tesla-preview.png", "Tesla", "高对比产品发布感"],
+        ["../screenshots/previews/cc-design-aether-preview.png", "AETHER", "品牌化产品界面"],
+        ["../screenshots/previews/cc-design-glass-preview.png", "Glass Dashboard", "玻璃质感实验"],
+        ["../screenshots/previews/cc-design-banking-preview.png", "Banking", "金融场景 UI"],
+        ["../screenshots/previews/cc-design-spacex-preview.png", "SpaceX", "强叙事视觉 landing"],
+        ["../screenshots/previews/cc-design-retro-preview.png", "Retro", "复古语言实验"]
+      ];
+
+      const routeContainer = document.getElementById("route-groups");
+      const resourceContainer = document.getElementById("resource-groups");
+      const templateContainer = document.getElementById("template-grid");
+      const scriptContainer = document.getElementById("script-grid");
+      const promptContainer = document.getElementById("prompt-grid");
+      const galleryContainer = document.getElementById("gallery-grid");
+
+      function renderLinks(links, labels) {
+        return links
+          .map((href, index) => `<a class="pill-link" href="${href}">${labels[index]}</a>`)
+          .join("");
+      }
+
+      function renderRoutes(filter = "all") {
+        routeContainer.innerHTML = routingGroups
+          .filter((group) => filter === "all" || group.key === filter)
+          .map(
+            (group) => `
+              <section class="route-group">
+                <div class="route-group-header">
+                  <h3>${group.title}</h3>
+                  <p>${group.description}</p>
+                </div>
+                <div class="route-grid">
+                  ${group.items
+                    .map(
+                      (item) => `
+                        <article class="route-card">
+                          <div class="route-meta-row">
+                            <span class="route-chip">${item.badge}</span>
+                            ${item.template ? `<span class="route-chip">Template</span>` : `<span class="route-chip">Reference-only</span>`}
+                          </div>
+                          <h3>${item.task}</h3>
+                          <p>${item.focus}</p>
+                          <div class="link-cloud">
+                            ${renderLinks(item.refs, item.refLabels)}
+                            ${
+                              item.template
+                                ? `<a class="pill-link" href="${item.template}">${item.templateLabel}</a>`
+                                : ""
+                            }
+                          </div>
+                        </article>
+                      `
+                    )
+                    .join("")}
+                </div>
+              </section>
+            `
+          )
+          .join("");
+      }
+
+      function renderResources() {
+        resourceContainer.innerHTML = resourceGroups
+          .map(
+            (group) => `
+              <article class="resource-card">
+                <header>
+                  <span>${group.label}</span>
+                  <h3>${group.title}</h3>
+                </header>
+                <p>${group.description}</p>
+                <div class="link-cloud">
+                  ${group.links
+                    .map(([href, label]) => `<a class="pill-link" href="${href}">${label}</a>`)
+                    .join("")}
+                </div>
+              </article>
+            `
+          )
+          .join("");
+      }
+
+      function renderTemplates() {
+        templateContainer.innerHTML = templateItems
+          .map(
+            (item) => `
+              <article class="template-card">
+                <h3>${item.title}</h3>
+                <p>${item.use}</p>
+                <code>${item.note}</code>
+                <a class="pill-link" href="${item.path}">${item.path.replace("../", "")}</a>
+              </article>
+            `
+          )
+          .join("");
+      }
+
+      function renderScripts() {
+        scriptContainer.innerHTML = scriptItems
+          .map(
+            (item) => `
+              <article class="script-card">
+                <h3>${item.title}</h3>
+                <p>${item.use}</p>
+                <code>${item.note}</code>
+                <a class="pill-link" href="${item.path}">${item.path.replace("../", "")}</a>
+              </article>
+            `
+          )
+          .join("");
+      }
+
+      function renderPrompts() {
+        promptContainer.innerHTML = promptItems
+          .map(
+            (item) => `
+              <article class="prompt-card">
+                <div class="prompt-meta">
+                  <span class="route-chip">${item.kind === "test" ? "Test Prompt" : "Example"}</span>
+                  <span class="route-chip">${item.tag}</span>
+                </div>
+                <h3>${item.title}</h3>
+                <blockquote>${item.prompt}</blockquote>
+                <ul>
+                  ${item.checks.map((check) => `<li>${check}</li>`).join("")}
+                </ul>
+              </article>
+            `
+          )
+          .join("");
+      }
+
+      function renderGallery() {
+        galleryContainer.innerHTML = galleryItems
+          .map(
+            ([src, title, desc]) => `
+              <figure class="gallery-card">
+                <img src="${src}" alt="${title}" />
+                <figcaption>
+                  <strong>${title}</strong>
+                  <span>${desc}</span>
+                </figcaption>
+              </figure>
+            `
+          )
+          .join("");
+      }
+
+      renderRoutes();
+      renderResources();
+      renderTemplates();
+      renderScripts();
+      renderPrompts();
+      renderGallery();
+
+      document.querySelectorAll("[data-filter]").forEach((button) => {
+        button.addEventListener("click", () => {
+          document.querySelectorAll("[data-filter]").forEach((node) => node.classList.remove("is-active"));
+          button.classList.add("is-active");
+          renderRoutes(button.dataset.filter);
+        });
+      });
+
+      const sidebar = document.querySelector("[data-sidebar]");
+      const navToggle = document.querySelector("[data-nav-toggle]");
+      navToggle.addEventListener("click", () => {
+        sidebar.classList.toggle("is-open");
+        navToggle.textContent = sidebar.classList.contains("is-open")
+          ? "收起目录 / Close"
+          : "展开目录 / Sections";
+      });
+
+      const sections = Array.from(document.querySelectorAll("main [id]"));
+      const navLinks = Array.from(document.querySelectorAll(".nav-link"));
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (!visible) return;
+          navLinks.forEach((link) => {
+            link.classList.toggle("is-active", link.getAttribute("href") === `#${visible.target.id}`);
+          });
+        },
+        {
+          rootMargin: "-20% 0px -55% 0px",
+          threshold: [0.1, 0.25, 0.5]
+        }
+      );
+
+      sections.forEach((section) => observer.observe(section));
+    </script>
+  </body>
+</html>

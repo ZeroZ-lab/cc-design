@@ -6,6 +6,8 @@ Some design-agent native environments (like Claude.ai Artifacts) have a built-in
 
 Run through this checklist after every HTML output:
 
+**Critical rule:** verification is the maker's job. After the final edit, you must inspect the rendered result yourself. Do not declare completion from code inspection alone.
+
 ### 1. Browser Rendering Check (Required)
 
 The most basic check: **can the HTML open?** On macOS:
@@ -32,7 +34,16 @@ This script will:
 
 See `scripts/verify.py` for details.
 
-### 3. Multi-Viewport Check
+### 3. Changed-Region Check
+
+For edits to an existing page, the most common failure mode is only checking the hero or first viewport.
+
+After your final edit:
+- Capture one full-page screenshot
+- Capture targeted screenshots for every section/component you changed
+- Review those screenshots yourself before delivery
+
+### 4. Multi-Viewport Check
 
 For responsive designs, capture multiple viewports:
 
@@ -40,7 +51,7 @@ For responsive designs, capture multiple viewports:
 python verify.py design.html --viewports 1920x1080,1440x900,768x1024,375x667
 ```
 
-### 4. Interaction Check
+### 5. Interaction Check
 
 Tweaks, animations, button toggles — static screenshots can't capture these. **Recommend users open the browser and click through themselves**, or use Playwright screen recording:
 
@@ -48,7 +59,7 @@ Tweaks, animations, button toggles — static screenshots can't capture these. *
 page.video.record('interaction.mp4')
 ```
 
-### 5. Slide-by-Slide Check
+### 6. Slide-by-Slide Check
 
 For deck-type HTML, capture each slide:
 
@@ -94,6 +105,8 @@ page.screenshot(path='viewport.png')  # Default: only visible area
 element = page.query_selector('.hero-section')
 element.screenshot(path='hero.png')
 ```
+
+Use this for **changed section verification** on long pages. If you edited `#pricing`, `#prompts`, or a footer block, capture that specific region instead of assuming the full-page screenshot is enough.
 
 ### High-DPI Screenshot
 
@@ -157,6 +170,7 @@ Console will always have errors. Check first:
 
 - Looks correct but has interaction bugs
 - Static screenshot looks good but scroll breaks layout
+- Hero looks good but a later section is broken
 - Looks great on wide screens but collapses on narrow
 - Forgot to test dark mode
 - Some components don't respond to Tweaks changes

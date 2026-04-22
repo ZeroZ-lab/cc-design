@@ -252,6 +252,130 @@ For visual hierarchy: 3-4 levels maximum.
 - Weber, E. H. (1834). "De Pulsu, Resorptione, Auditu et Tactu"
 - Miller, G. A. (1956). "The Magical Number Seven, Plus or Minus Two"
 
+### 1.6 Script-First Typography (Critical for Mixed CJK + Latin Work)
+
+**Core idea:** typography must follow the dominant script of the page, not the most expressive font in the palette.
+
+This is the most common failure mode in modern AI-assisted design:
+- choose a stylish Latin display face
+- apply it to a mixed Chinese/English headline
+- let Chinese glyphs fall back to a different font
+- end up with mismatched weight, x-height, rhythm, and awkward line breaks
+
+The result often looks "designed" at first glance but feels wrong on second reading.
+
+### Primary Script Rule
+
+Determine which writing system carries most of the semantic load:
+
+- **Mostly Chinese page:** CJK typography system leads
+- **Mostly Latin page:** Latin typography system leads
+- **Truly bilingual marketing page:** define separate headline behaviors for each script and verify them independently
+
+**Rule:** The dominant script determines body font, default heading font, spacing calibration, and acceptable tracking.
+
+### Role-Based Font Model
+
+Assign fonts by role, not by section mood:
+
+1. **Body/UI Sans**
+   - Used for paragraphs, UI copy, metadata, labels, buttons
+   - Must be the most stable and readable family in the system
+
+2. **Primary Heading Font**
+   - Used for the main language of headings
+   - On CJK-heavy pages, this should be a CJK-capable heading family
+
+3. **Latin Display Accent**
+   - Optional
+   - Reserved for logos, isolated English brand words, short overlines, or very short hero fragments
+   - Not allowed to govern mixed-script CJK headings by default
+
+4. **Mono**
+   - Reserved for code, labels, tiny technical annotations
+
+**Practical limit:** 2 core families + 1 mono.
+
+If you need more than this to make the page feel designed, the hierarchy is under-specified.
+
+### Mixed-Script Headline Rule
+
+**Bad pattern:**
+```css
+h1 {
+  font-family: "Fancy Latin Display", "Noto Serif SC", serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+```
+
+Why this fails:
+- Latin face may only ship one real weight (e.g. 400)
+- Chinese falls back to a different family with a real 700 weight
+- Browser synthesizes bold for Latin but not for Chinese
+- One line now contains two unrelated weight systems
+
+**Preferred approach:**
+- If Chinese dominates the headline, set the whole line in the CJK headline font
+- If the English brand word must be expressive, split it into its own element
+
+Example:
+```html
+<h1>
+  <span class="brand-word">cc-design</span>
+  <span class="title-main">示例 prompt 不只是展示，也是在校验 skill 行为</span>
+</h1>
+```
+
+```css
+.brand-word {
+  font-family: "Instrument Serif", serif;
+  font-weight: 400;
+}
+
+.title-main {
+  font-family: "Noto Serif SC", "Songti SC", serif;
+  font-weight: 700;
+}
+```
+
+### Tracking and Weight Guardrails for CJK
+
+Latin display typography often benefits from tighter tracking. Chinese usually does not.
+
+**Defaults:**
+- Latin display 48px+: `letter-spacing: -0.02em` to `-0.05em`
+- CJK heading: `letter-spacing: 0` by default
+- CJK body: `letter-spacing: 0`
+
+**Do not:**
+- apply negative tracking to Chinese headings by default
+- use browser fake bold as part of the visual identity
+- compress Chinese headline spacing until characters visually collide
+
+### Readability Thresholds for CJK-Heavy Interfaces
+
+CJK text becomes visually cramped faster than Latin text at the same pixel size.
+
+Recommended floors:
+- Body: **16px minimum**
+- Metadata / UI labels: **14px minimum**
+- Long-form explanation text: 16-18px with 1.7-1.9 line height
+- Chinese headings: prefer slightly looser line-height than Latin at the same size
+
+If a design needs lots of 12-13px Chinese copy to fit, the layout is too dense.
+
+### Verification Rule
+
+Mixed-script typography must be verified visually, not inferred from CSS.
+
+For any page with Chinese + English headline mixing:
+1. Capture a screenshot after final edit
+2. Check line breaks
+3. Check whether Latin and CJK weights look like the same hierarchy
+4. Check that metadata did not drift into unreadable tiny sizes
+5. If in doubt, reduce font variety rather than increasing it
+
 ---
 
 ## Part 2: Complete Design System

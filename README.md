@@ -282,6 +282,11 @@ Two mandatory checkpoints in the Build phase:
 - **Before animation** — load animation-best-practices + animation-pitfalls, verify 16 hard rules
 - **Before export** — load the relevant export reference, check tool availability and constraints
 
+Verification is a required maker self-check:
+- after the final edit, open/render the artifact yourself
+- inspect full page plus every changed section, not just the first screen
+- for responsive work, inspect at least desktop + one narrow/mobile viewport
+
 ## Compatibility
 
 | Platform | Status | Notes |
