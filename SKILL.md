@@ -125,6 +125,7 @@ Classify the user's task by intent (output format, keywords), then load only the
 | Layout problems | `references/anti-patterns/layout.md` | — | Anti-pattern check |
 | Color problems | `references/anti-patterns/color.md` | — | Anti-pattern check |
 | Typography problems | `references/anti-patterns/typography.md` + `references/typography-spacing-examples.md` | — | Anti-pattern check + spacing verification |
+| Typography system design | `references/typography-design-system.md` | — | Complete theory + modular scale + baseline grid |
 | Interaction problems | `references/anti-patterns/interaction.md` | — | Anti-pattern check |
 | High-quality output needed | `references/design-patterns.md` + `case-studies/README.md` | — | Pattern application |
 | Brand style clone | `references/getdesign-loader.md` + `references/design-context.md` | Choose template as needed | Brand aesthetic match |
@@ -259,6 +260,8 @@ Every delivered artifact must satisfy:
 ## Typography & Spacing System
 
 **Critical:** These rules prevent the most common visual quality issues. Apply them to every design.
+
+**Theory foundation:** Based on modular scale (1.25 ratio), 8px baseline grid, and optimal line length (45-75 characters). See `references/typography-design-system.md` for complete theory and mathematical foundation.
 
 ### Font Size Scale
 
