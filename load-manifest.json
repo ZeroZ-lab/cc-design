@@ -1,0 +1,311 @@
+{
+  "defaults": {
+    "all-design-tasks": {
+      "references": [
+        "references/design-excellence.md",
+        "references/content-guidelines.md",
+        "references/typography-spacing-examples.md",
+        "references/design-philosophy.md"
+      ]
+    }
+  },
+  "taskTypes": {
+    "design-philosophy": {
+      "references": [
+        "references/design-philosophy.md",
+        "references/design-principles.md"
+      ]
+    },
+    "complex-multi-screen-flow": {
+      "references": [
+        "references/design-thinking-framework.md"
+      ]
+    },
+    "information-architecture": {
+      "references": [
+        "references/information-design-theory.md",
+        "references/design-excellence.md"
+      ]
+    },
+    "interaction-design": {
+      "references": [
+        "references/interaction-design-theory.md",
+        "references/interactive-prototype.md"
+      ]
+    },
+    "visual-composition": {
+      "references": [
+        "references/visual-design-theory.md",
+        "references/design-excellence.md"
+      ]
+    },
+    "brand-tone": {
+      "references": [
+        "references/brand-emotion-theory.md",
+        "references/design-styles.md"
+      ]
+    },
+    "design-system-architecture": {
+      "references": [
+        "references/system-design-theory.md",
+        "references/design-system-creation.md"
+      ]
+    },
+    "layout-problems": {
+      "references": [
+        "references/anti-patterns/layout.md"
+      ]
+    },
+    "color-problems": {
+      "references": [
+        "references/anti-patterns/color.md"
+      ]
+    },
+    "typography-problems": {
+      "references": [
+        "references/anti-patterns/typography.md",
+        "references/typography-spacing-examples.md"
+      ]
+    },
+    "typography-system-design": {
+      "references": [
+        "references/typography-design-system.md"
+      ],
+      "templates": [
+        "templates/typography-system.css"
+      ]
+    },
+    "interaction-problems": {
+      "references": [
+        "references/anti-patterns/interaction.md"
+      ]
+    },
+    "high-quality-output": {
+      "references": [
+        "references/design-patterns.md",
+        "references/case-studies/README.md"
+      ]
+    },
+    "brand-style-clone": {
+      "references": [
+        "references/getdesign-loader.md",
+        "references/design-context.md"
+      ]
+    },
+    "brand-asset-acquisition": {
+      "references": [
+        "references/asset-acquisition.md",
+        "references/design-context.md"
+      ]
+    },
+    "choose-design-style": {
+      "references": [
+        "references/design-styles.md"
+      ]
+    },
+    "design-review": {
+      "references": [
+        "references/critique-guide.md"
+      ]
+    },
+    "react-prototype": {
+      "references": [
+        "references/react-setup.md"
+      ],
+      "templates": [
+        "templates/ios_frame.jsx",
+        "templates/android_frame.jsx",
+        "templates/browser_window.jsx",
+        "templates/macos_window.jsx"
+      ]
+    },
+    "slide-deck": {
+      "references": [
+        "references/slide-decks.md",
+        "references/starter-components.md"
+      ],
+      "templates": [
+        "templates/deck_stage.js"
+      ]
+    },
+    "editable-pptx-export": {
+      "references": [
+        "references/slide-decks.md",
+        "references/editable-pptx.md"
+      ]
+    },
+    "variant-exploration": {
+      "references": [
+        "references/tweaks-system.md"
+      ],
+      "templates": [
+        "templates/design_canvas.jsx"
+      ]
+    },
+    "landing-page": {
+      "references": [
+        "references/starter-components.md",
+        "references/design-patterns.md"
+      ],
+      "templates": [
+        "templates/browser_window.jsx"
+      ]
+    },
+    "animation-motion": {
+      "references": [
+        "references/animation-best-practices.md",
+        "references/animations.md"
+      ],
+      "templates": [
+        "templates/animations.jsx"
+      ]
+    },
+    "mobile-mockup": {
+      "references": [
+        "references/starter-components.md",
+        "references/react-setup.md"
+      ],
+      "templates": [
+        "templates/ios_frame.jsx",
+        "templates/android_frame.jsx"
+      ]
+    },
+    "desktop-mockup": {
+      "references": [
+        "references/starter-components.md",
+        "references/react-setup.md"
+      ],
+      "templates": [
+        "templates/macos_window.jsx"
+      ]
+    },
+    "interactive-prototype": {
+      "references": [
+        "references/interactive-prototype.md",
+        "references/react-setup.md"
+      ],
+      "templates": [
+        "templates/ios_frame.jsx",
+        "templates/android_frame.jsx",
+        "templates/browser_window.jsx",
+        "templates/macos_window.jsx"
+      ]
+    },
+    "wireframe-low-fi": {
+      "references": [
+        "references/frontend-design.md"
+      ],
+      "templates": [
+        "templates/design_canvas.jsx"
+      ]
+    },
+    "design-system-creation": {
+      "references": [
+        "references/design-system-creation.md"
+      ],
+      "templates": [
+        "templates/typography-system.css"
+      ]
+    },
+    "no-design-system": {
+      "references": [
+        "references/frontend-design.md",
+        "references/design-excellence.md"
+      ]
+    },
+    "new-ambiguous-task": {
+      "references": [
+        "references/junior-designer-mode.md"
+      ]
+    },
+    "video-export": {
+      "references": [
+        "references/video-export.md"
+      ]
+    },
+    "audio-design": {
+      "references": [
+        "references/audio-design-rules.md",
+        "references/sfx-library.md"
+      ]
+    },
+    "pdf-export": {
+      "references": [
+        "references/platform-tools.md"
+      ]
+    },
+    "scene-output-specs": {
+      "references": [
+        "references/scene-templates.md"
+      ]
+    }
+  },
+  "checkpoints": {
+    "question-first-delivery": {
+      "references": [
+        "references/workflow.md",
+        "references/design-context.md",
+        "references/junior-designer-mode.md"
+      ]
+    },
+    "before-animation": {
+      "references": [
+        "references/animation-best-practices.md",
+        "references/animation-pitfalls.md"
+      ],
+      "templates": [
+        "templates/animations.jsx"
+      ]
+    },
+    "before-export": {
+      "references": [
+        "references/platform-tools.md"
+      ]
+    },
+    "before-ios-mockup": {
+      "templates": [
+        "templates/ios_frame.jsx"
+      ]
+    },
+    "before-delivery": {
+      "references": [
+        "references/verification-protocol.md"
+      ]
+    },
+    "deep-design-review": {
+      "references": [
+        "references/design-checklist.md",
+        "references/principle-review.md",
+        "references/verification.md",
+        "references/typography-spacing-quick-ref.md"
+      ]
+    }
+  },
+  "optionalInspirations": {
+    "presentation-case-studies": {
+      "references": [
+        "references/case-studies/presentations/keynote-style.md",
+        "references/case-studies/presentations/pitch-deck-example.md"
+      ]
+    },
+    "product-page-case-studies": {
+      "references": [
+        "references/case-studies/product-pages/linear-features.md",
+        "references/case-studies/product-pages/notion-landing.md",
+        "references/case-studies/product-pages/stripe-homepage.md"
+      ]
+    },
+    "mobile-case-studies": {
+      "references": [
+        "references/case-studies/mobile-apps/ios-onboarding.md"
+      ]
+    }
+  },
+  "maintainerOnly": {
+    "references": [],
+    "templates": [],
+    "scripts": [
+      "scripts/check-behavior-contract.sh"
+    ]
+  }
+}

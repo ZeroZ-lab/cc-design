@@ -31,6 +31,18 @@ This workflow is the **execution process**. The 8-layer framework (`design-think
 - **Use design-thinking-framework.md** when you need to diagnose problems, resolve conflicts, or understand "why" behind decisions
 - **Use both together** for complex multi-screen flows or design system creation
 
+## Runtime Load Announcements
+
+Treat runtime loading as visible work, not invisible thought. `load-manifest.json` is the source of truth for route bundles, checkpoint bundles, and optional inspiration bundles.
+
+Rules:
+- announce before reading runtime references or copying templates
+- use the exact line format: `Load: because=<reason> loaded=<comma-separated paths>`
+- if the bundle is already loaded, say `Load: because=<reason> already_loaded=<comma-separated paths>`
+- use stable reasons from `load-manifest.json` such as `all-design-tasks`, `question-first-delivery`, `react-prototype`, `before-animation`, `before-delivery`
+- do not announce ordinary codebase reads that are not part of the skill runtime bundle
+- do not silently skip bundle loads; explicit dedupe is part of the contract
+
 ## First-Turn Rule
 
 Treat this as supporting guidance, not an override:
@@ -200,6 +212,7 @@ After the direction is clear:
 - Write React components to replace placeholders
 - Create variations (using design_canvas or Tweaks)
 - If it's slides/animation, start with starter components
+- announce any newly loaded runtime bundle before reading it, even mid-task when a checkpoint triggers
 
 Show again halfway through. If the design direction is wrong, showing late means wasted work.
 

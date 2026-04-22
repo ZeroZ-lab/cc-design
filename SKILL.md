@@ -119,11 +119,25 @@ I'll proceed with [summary]. Continue?
 
 Full rules in `references/content-guidelines.md`.
 
+**P3: Loading Must Be Audible.** Never silently load runtime resources. Every time you load runtime references, templates, or supporting docs, announce it first using this exact format:
+
+```text
+Load: because=<reason> loaded=<comma-separated paths>
+```
+
+If the same bundle is already in context, do not silently skip it. Say:
+
+```text
+Load: because=<reason> already_loaded=<comma-separated paths>
+```
+
+Use short, stable reasons such as `all-design-tasks`, `react-prototype`, `before-animation`, `before-delivery`. `load-manifest.json` is the machine-readable source of truth for these bundles. The routing table below is the human summary.
+
 ---
 
 ## Routing Table
 
-Classify the user's task by intent (output format, keywords), then load only the references and templates you need. For multi-type tasks, combine all matching rows. For tasks not in the table, default to loading `react-setup` plus the closest matching component reference.
+Classify the user's task by intent (output format, keywords), then read `load-manifest.json` and load only the bundles you need. For multi-type tasks, combine all matching rows. For tasks not in the table, default to `all-design-tasks` plus `new-ambiguous-task` and the closest matching component reference.
 
 | Task type | Load reference | Copy template | Verify focus |
 |-----------|---------------|---------------|-------------|
@@ -196,7 +210,11 @@ If the direction feels wrong, now is the cheapest moment to change it.
 
 Default recommendation: **Merge**. Use **Append** when adding a bounded subsystem or feature-specific addendum. Use **Overwrite** only when the user clearly wants to reset the design system.
 
-**2. Route** — Read the routing table below. Load the specified reference(s). Copy the specified template(s):
+**2. Route** — Read `load-manifest.json` after classifying the task. Load `defaults.all-design-tasks`, then every matched task type, then any relevant checkpoint/supporting bundle. Before reading or copying any runtime bundle, announce it using:
+```text
+Load: because=<reason> loaded=<comma-separated paths>
+```
+Do not silently load or silently dedupe. If a bundle is already loaded, say `already_loaded=...` instead. After the announcement, read the specified reference(s). Copy the specified template(s):
 ```bash
 cp <skill-dir>/templates/<component>.<ext> ./<component>.<ext>
 ```
@@ -226,11 +244,11 @@ If no context exists: say so clearly — "I'll work from general intuition, whic
 
 **Checkpoint: Before saying "done"** — after your final edit, render the artifact yourself. Do not stop at code inspection. For multi-section pages, inspect every section you touched — not just the first screen or hero. For responsive work, inspect at least one desktop viewport and one narrow/mobile viewport. Use full-page screenshots plus targeted section screenshots when needed.
 
-**Checkpoint: Before animation** — Load `references/animation-best-practices.md` AND `references/animation-pitfalls.md`. Verify the 16 hard rules before writing any motion code.
+**Checkpoint: Before animation** — Announce `because=before-animation`, then load `references/animation-best-practices.md` AND `references/animation-pitfalls.md`. Verify the 16 hard rules before writing any motion code.
 
-**Checkpoint: Before export** — Load the relevant export reference. For editable PPTX, verify the 4 hard constraints in `references/editable-pptx.md` BEFORE starting HTML.
+**Checkpoint: Before export** — Announce the export reason, then load the relevant export reference. For editable PPTX, verify the 4 hard constraints in `references/editable-pptx.md` BEFORE starting HTML.
 
-**Checkpoint: Before iOS mockup** — **MUST use `templates/ios_frame.jsx`**. Never handwrite Dynamic Island (124×36px, top:12), status bar, or home indicator. 99% of handwritten attempts have positioning bugs. Read the template, copy the entire `iosFrameStyles` + `IosFrame` component into your HTML, wrap your screen content in `<IosFrame>`. Do not write `.dynamic-island`, `.status-bar`, or `.home-indicator` classes yourself.
+**Checkpoint: Before iOS mockup** — Announce `because=before-ios-mockup`, then **MUST use `templates/ios_frame.jsx`**. Never handwrite Dynamic Island (124×36px, top:12), status bar, or home indicator. 99% of handwritten attempts have positioning bugs. Read the template, copy the entire `iosFrameStyles` + `IosFrame` component into your HTML, wrap your screen content in `<IosFrame>`. Do not write `.dynamic-island`, `.status-bar`, or `.home-indicator` classes yourself.
 
 **Checkpoint: Typography & Spacing** — Before taking screenshot, verify:
 - [ ] Body text: 16-18px (web) or 24-32px (slides) — never smaller
@@ -244,7 +262,7 @@ If no context exists: say so clearly — "I'll work from general intuition, whic
 - [ ] All vertical spacing is multiple of 8px
 - [ ] Using only 2-3 font weights (400/600/700)
 
-**6. Verify (Mandatory self-check)** — Load `references/verification-protocol.md`. Run three-phase verification yourself after the final edit:
+**6. Verify (Mandatory self-check)** — Announce `because=before-delivery`, then load `references/verification-protocol.md`. Run three-phase verification yourself after the final edit:
 - **Structural:** console errors, layout, responsiveness
 - **Visual:** screenshot review, design quality
 - **Design excellence:** hierarchy, spacing, color harmony, emotional fit

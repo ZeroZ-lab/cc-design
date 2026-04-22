@@ -28,8 +28,10 @@ cc-design embeds a structured design workflow into Claude Code, enabling it to o
 - **Fact verification (P0)** — Never guess. Verify claims about design trends, brand aesthetics, or technology. Wrong facts are worse than no facts.
 - **Structured confirmation first (P1)** — For new ambiguous design tasks, start with step-by-step structured confirmation. Use the platform's native question UI when available; fall back to one compact batch only when structured prompts are unavailable.
 - **Anti-AI slop (P2)** — Aggressive gradients, emoji (unless brand), generic SaaS hero sections, and overused fonts are banned. Full rules in `references/content-guidelines.md`.
+- **Audible loading (P3)** — Runtime bundles are never loaded silently. cc-design announces every reference/template bundle with `Load: because=... loaded=...` before using it.
 
 Progressive disclosure keeps the main skill definition concise while 27+ technical references load on demand.
+`load-manifest.json` is the machine-readable source of truth for those bundles, and `scripts/lint-load-manifest.mjs` checks that every reference/template is accounted for.
 
 The core product promise is behavioral, not just feature breadth:
 - new ambiguous tasks start with structured step-by-step confirmation
@@ -131,6 +133,7 @@ Audio assets (BGM and SFX) are not included in the repository to keep it lightwe
 
 ```
 cc-design/
+├── load-manifest.json                    # Runtime bundle map for refs/templates/checkpoints
 ├── SKILL.md                              # Skill definition (YAML + routing table + workflow)
 ├── EXAMPLES.md                           # Usage examples and advanced workflows
 ├── test-prompts.json                     # 6 test prompts for skill validation
@@ -181,6 +184,7 @@ cc-design/
 │   ├── browser_window.jsx                # Browser window chrome
 │   └── animations.jsx                    # Timeline animation engine (signals)
 └── scripts/                              # Export utility scripts
+    ├── lint-load-manifest.mjs           # Checks refs/templates are all routed or tagged
     ├── package.json                      # Dependencies and npm scripts
     ├── export_deck_pdf.mjs              # Multi-file deck → PDF
     ├── export_deck_stage_pdf.mjs        # Single-file deck → PDF
@@ -198,25 +202,31 @@ cc-design/
 
 ```
 ┌─────────────────────────────────────┐
-│           SKILL.md                  │  ← Always loaded (131 lines)
-│  Core principles, routing table,   │
-│  workflow, rules, contracts         │
+│           SKILL.md                  │
+│  Triggering, workflow, contracts    │
 └──────────────┬──────────────────────┘
-               │  Loaded on demand per routing table
+               │  Reads machine-readable routing rules
+               ▼
+┌─────────────────────────────────────┐
+│       load-manifest.json            │
+│  task bundles + checkpoints +       │
+│  optional inspirations              │
+└──────────────┬──────────────────────┘
+               │  Announces each bundle before loading
        ┌───────┴────────┐
        ▼                ▼
 ┌──────────────┐  ┌──────────────┐
 │ references/  │  │ templates/   │
-│ 27 docs +    │  │ (copied to   │
-│ case-studies │  │  project)    │
+│ loaded on    │  │ copied into  │
+│ demand       │  │ the project  │
 └──────────────┘  └──────────────┘
                         │
                 ┌───────┴────────┐
                 ▼                ▼
          ┌──────────────┐  ┌──────────────┐
          │  scripts/    │  │  agents/     │
-         │  (export     │  │  (platform   │
-         │   tools)     │  │   config)    │
+         │  lint +      │  │  platform    │
+         │  export      │  │  metadata    │
          └──────────────┘  └──────────────┘
 ```
 
@@ -263,7 +273,7 @@ Mention a brand name to load its design system from [getdesign.md](https://getde
 Understand → Route → Acquire Context → Design Intent → Build → Verify → Deliver
     │          │           │                │             │        │         │
     ▼          ▼           ▼                ▼             ▼        ▼         ▼
- Stepwise   Load        Read            intent +      HTML +   3-phase    File
+ Stepwise   Announce +  Read            intent +      HTML +   3-phase    File
  confirm    refs +      design          scope         React    verify:    delivered
             templates   system          checkpoints   comps    structural,
                                      tone, flow,             visual,
@@ -278,6 +288,7 @@ First-turn behavior follows one default path:
 - **Follow-up iteration or minor fix** — act directly unless audience, scope, or output type changes
 
 `SKILL.md` is the runtime behavior contract. `references/workflow.md` supports execution and must not override it.
+`load-manifest.json` is the runtime routing manifest. Every runtime bundle load should be announced before it is read or copied.
 
 Two mandatory checkpoints in the Build phase:
 - **Before animation** — load animation-best-practices + animation-pitfalls, verify 16 hard rules
@@ -305,6 +316,7 @@ Verification is a required maker self-check:
 6. Open a pull request
 
 When adding new reference documents, add a row to the routing table in SKILL.md so the model knows when to load it.
+Also update `load-manifest.json` and run `node scripts/lint-load-manifest.mjs`.
 
 If a pull request changes first-turn behavior, it must also update:
 - `SKILL.md`
