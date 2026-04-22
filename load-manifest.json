@@ -17,7 +17,6 @@
         "anyKeywords": ["design philosophy", "design principle", "design rationale", "why this design", "philosophy"]
       },
       "references": [
-        "references/design-philosophy.md",
         "references/design-principles.md"
       ]
     },
@@ -36,8 +35,7 @@
         "anyKeywords": ["information architecture", "ia", "sitemap", "navigation structure", "content hierarchy"]
       },
       "references": [
-        "references/information-design-theory.md",
-        "references/design-excellence.md"
+        "references/information-design-theory.md"
       ]
     },
     "interaction-design": {
@@ -46,8 +44,7 @@
         "anyKeywords": ["interaction design", "interaction flow", "microinteraction", "state transition", "ux flow"]
       },
       "references": [
-        "references/interaction-design-theory.md",
-        "references/interactive-prototype.md"
+        "references/interaction-design-theory.md"
       ]
     },
     "visual-composition": {
@@ -56,8 +53,7 @@
         "anyKeywords": ["visual composition", "art direction", "visual hierarchy", "composition", "layout composition"]
       },
       "references": [
-        "references/visual-design-theory.md",
-        "references/design-excellence.md"
+        "references/visual-design-theory.md"
       ]
     },
     "brand-tone": {
@@ -76,8 +72,7 @@
         "anyKeywords": ["design system", "design tokens", "component library", "system architecture", "style guide"]
       },
       "references": [
-        "references/system-design-theory.md",
-        "references/design-system-creation.md"
+        "references/system-design-theory.md"
       ]
     },
     "layout-problems": {
@@ -104,8 +99,7 @@
         "anyKeywords": ["typography issue", "font issue", "line height", "type scale", "readability"]
       },
       "references": [
-        "references/anti-patterns/typography.md",
-        "references/typography-spacing-examples.md"
+        "references/anti-patterns/typography.md"
       ]
     },
     "typography-system-design": {
@@ -167,15 +161,6 @@
       },
       "references": [
         "references/design-styles.md"
-      ]
-    },
-    "design-review": {
-      "description": "Design review, critique, audit, scoring, scorecard, 设计评审, 设计批评, 审计, 评分",
-      "detect": {
-        "anyKeywords": ["design review", "critique", "audit", "score", "scorecard", "review this design"]
-      },
-      "references": [
-        "references/critique-guide.md"
       ]
     },
     "react-prototype": {
@@ -324,14 +309,7 @@
     "no-design-system": {
       "description": "No design system provided by the user, need to work from scratch, 没有设计系统, 从零开始设计",
       "references": [
-        "references/frontend-design.md",
-        "references/design-excellence.md"
-      ]
-    },
-    "new-ambiguous-task": {
-      "description": "Ambiguous or unclear design task, needs junior designer mode, 模糊任务, 不明确的设计需求, 需要澄清",
-      "references": [
-        "references/junior-designer-mode.md"
+        "references/frontend-design.md"
       ]
     },
     "video-export": {
@@ -421,6 +399,7 @@
         "anyKeywords": ["design review", "critique", "audit", "score", "scorecard", "review this design"]
       },
       "references": [
+        "references/critique-guide.md",
         "references/design-checklist.md",
         "references/principle-review.md",
         "references/verification.md",

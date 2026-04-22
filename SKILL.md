@@ -168,28 +168,27 @@ Use short, stable reasons such as `all-design-tasks`, `react-prototype`, `questi
 
 ## Routing Table
 
-Classify the user's task by intent (output format, keywords), then match it against the bundle catalog backed by `load-manifest.json`. Use semantic matching first; if that path is unavailable, fall back to `scripts/resolve-load-bundles.mjs`. For multi-type tasks, combine all matching rows. For tasks not in the table, default to `all-design-tasks` plus `new-ambiguous-task` and the closest matching component reference.
+Classify the user's task by intent (output format, keywords), then match it against the bundle catalog backed by `load-manifest.json`. Use semantic matching first; if that path is unavailable, fall back to `scripts/resolve-load-bundles.mjs`. For multi-type tasks, combine all matching rows. For tasks not in the table, default to `all-design-tasks` and the closest matching component reference, and set the `question-first-delivery` checkpoint.
 
 | Task type | Load reference | Copy template | Verify focus |
 |-----------|---------------|---------------|-------------|
 | **ANY design task** | `references/design-excellence.md` + `references/content-guidelines.md` + `references/typography-spacing-examples.md` + `references/design-philosophy.md` | — | Design quality + anti-slop + typography/spacing + philosophy |
-| Design philosophy / why questions | `references/design-philosophy.md` + `references/design-principles.md` | — | Worldview + decision framework |
+| Design philosophy / why questions | `references/design-principles.md` | — | Worldview + decision framework |
 | Complex multi-screen flow | `references/design-thinking-framework.md` | — | 8-layer decision tree |
-| Information architecture | `references/information-design-theory.md` + `references/design-excellence.md` | — | Cognitive load + hierarchy |
-| Interaction design problems | `references/interaction-design-theory.md` + `references/interactive-prototype.md` | — | Fitts/Hick's Law + feedback |
-| Visual quality / composition | `references/visual-design-theory.md` + `references/design-excellence.md` | — | Gestalt + color psychology |
+| Information architecture | `references/information-design-theory.md` | — | Cognitive load + hierarchy |
+| Interaction design problems | `references/interaction-design-theory.md` | — | Fitts/Hick's Law + feedback |
+| Visual quality / composition | `references/visual-design-theory.md` | — | Gestalt + color psychology |
 | Brand / emotional tone | `references/brand-emotion-theory.md` + `references/design-styles.md` | — | Brand personality + trust |
-| Design system architecture | `references/system-design-theory.md` + `references/design-system-creation.md` | — | Constraints + scalability |
+| Design system architecture | `references/system-design-theory.md` | — | Constraints + scalability |
 | Layout problems | `references/anti-patterns/layout.md` | — | Anti-pattern check |
 | Color problems | `references/anti-patterns/color.md` | — | Anti-pattern check |
-| Typography problems | `references/anti-patterns/typography.md` + `references/typography-spacing-examples.md` | — | Anti-pattern check + spacing verification |
+| Typography problems | `references/anti-patterns/typography.md` | — | Anti-pattern check |
 | Typography system design | `references/typography-design-system.md` | — | Complete theory + modular scale + baseline grid |
 | Interaction problems | `references/anti-patterns/interaction.md` | — | Anti-pattern check |
 | High-quality output needed | `references/design-patterns.md` + `references/case-studies/README.md` | — | Pattern application |
 | Brand style clone | `references/getdesign-loader.md` + `references/design-context.md` | Choose template as needed | Brand aesthetic match |
 | Brand asset acquisition | `references/asset-acquisition.md` + `references/design-context.md` | — | Real assets used, no CSS silhouettes |
 | Choose design style/direction | `references/design-styles.md` | — | Philosophy alignment |
-| Design review / critique | `references/critique-guide.md` | — | 5-dimension scoring |
 | React prototype | `references/react-setup.md` | Needed frame from `templates/` | No console errors |
 | Slide deck | `references/slide-decks.md` + `references/starter-components.md` | `templates/deck_stage.js` | Fixed canvas + scaling |
 | Editable PPTX export | `references/slide-decks.md` + `references/editable-pptx.md` | — | 4 hard constraints met |
@@ -201,8 +200,7 @@ Classify the user's task by intent (output format, keywords), then match it agai
 | Interactive prototype | `references/interactive-prototype.md` + `references/react-setup.md` | Choose frame template | Navigation works |
 | Wireframe / low-fi | `references/frontend-design.md` | `templates/design_canvas.jsx` | Layout structure visible |
 | Design system creation | `references/design-system-creation.md` | — | Tokens apply + coherence |
-| No design system provided | `references/frontend-design.md` + `references/design-excellence.md` | Choose template | Aesthetic coherence |
-| New/ambiguous task | `references/junior-designer-mode.md` | — | Plan visible before full build |
+| No design system provided | `references/frontend-design.md` | Choose template | Aesthetic coherence |
 | Video export | `references/video-export.md` | — | ffmpeg available + correct specs |
 | Audio design | `references/audio-design-rules.md` + `references/sfx-library.md` | — | Dual-track + loudness ratio |
 | PDF export | `references/platform-tools.md` | — | File generated |
