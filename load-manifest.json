@@ -1,13 +1,16 @@
 {
   "defaults": {
     "all-design-tasks": {
-      "description": "Always loaded for every design task — base-required (`基础必载`) design quality, typography, layout, and visual system references",
+      "description": "Always loaded for every design task — base-required (`基础必载`) design quality, typography, color, layout, responsive design, and visual system references",
       "references": [
         "references/design-excellence.md",
         "references/content-guidelines.md",
+        "references/color-theory.md",
         "references/typography-spacing-examples.md",
         "references/design-philosophy.md",
         "references/typography-design-system.md",
+        "references/layout-systems.md",
+        "references/responsive-design.md",
         "references/design-patterns.md",
         "references/visual-design-theory.md"
       ]
@@ -20,7 +23,8 @@
         "anyKeywords": ["design philosophy", "design principle", "design rationale", "why this design", "philosophy"]
       },
       "references": [
-        "references/design-principles.md"
+        "references/design-principles.md",
+        "references/user-research-methods.md"
       ]
     },
     "complex-multi-screen-flow": {
@@ -29,7 +33,8 @@
         "anyKeywords": ["multi-screen", "multi screen", "user flow", "customer journey", "onboarding flow", "end-to-end flow"]
       },
       "references": [
-        "references/design-thinking-framework.md"
+        "references/design-thinking-framework.md",
+        "references/user-research-methods.md"
       ]
     },
     "information-architecture": {
@@ -66,7 +71,8 @@
       },
       "references": [
         "references/brand-emotion-theory.md",
-        "references/design-styles.md"
+        "references/design-styles.md",
+        "references/color-theory.md"
       ]
     },
     "design-system-architecture": {
@@ -75,7 +81,9 @@
         "anyKeywords": ["design system", "design tokens", "component library", "system architecture", "style guide"]
       },
       "references": [
-        "references/system-design-theory.md"
+        "references/system-design-theory.md",
+        "references/color-theory.md",
+        "references/layout-systems.md"
       ]
     },
     "layout-problems": {
@@ -84,6 +92,7 @@
         "anyKeywords": ["layout issue", "layout problem", "grid issue", "spacing issue", "misaligned layout"]
       },
       "references": [
+        "references/layout-systems.md",
         "references/anti-patterns/layout.md"
       ]
     },
@@ -93,6 +102,7 @@
         "anyKeywords": ["color issue", "color problem", "palette issue", "contrast issue", "color harmony"]
       },
       "references": [
+        "references/color-theory.md",
         "references/anti-patterns/color.md"
       ]
     },
@@ -194,6 +204,17 @@
         "templates/deck_stage.js"
       ]
     },
+    "form-design": {
+      "description": "Form design, input forms, signup forms, checkout forms, contact forms, multi-step forms, 表单设计, 输入表单, 注册表单, 结账表单",
+      "detect": {
+        "anyKeywords": ["form design", "input form", "signup form", "checkout form", "contact form", "multi-step form"]
+      },
+      "references": [
+        "references/form-design.md",
+        "references/interaction-design-theory.md",
+        "references/typography-design-system.md"
+      ]
+    },
     "editable-pptx-export": {
       "description": "Editable PowerPoint exports, 可编辑的PPT导出",
       "detect": {
@@ -223,7 +244,8 @@
       },
       "references": [
         "references/starter-components.md",
-        "references/design-patterns.md"
+        "references/design-patterns.md",
+        "references/responsive-design.md"
       ],
       "templates": [
         "templates/browser_window.jsx"
@@ -249,7 +271,8 @@
       },
       "references": [
         "references/starter-components.md",
-        "references/react-setup.md"
+        "references/react-setup.md",
+        "references/responsive-design.md"
       ],
       "templates": [
         "templates/ios_frame.jsx",
@@ -263,7 +286,8 @@
       },
       "references": [
         "references/starter-components.md",
-        "references/react-setup.md"
+        "references/react-setup.md",
+        "references/responsive-design.md"
       ],
       "templates": [
         "templates/macos_window.jsx"
@@ -276,7 +300,8 @@
       },
       "references": [
         "references/interactive-prototype.md",
-        "references/react-setup.md"
+        "references/react-setup.md",
+        "references/responsive-design.md"
       ],
       "templates": [
         "templates/ios_frame.jsx",
@@ -334,6 +359,17 @@
         "references/sfx-library.md"
       ]
     },
+    "data-visualization": {
+      "description": "Data visualization, charts, graphs, dashboards, analytics, metrics, statistics display, 数据可视化, 图表, 仪表板, 数据展示",
+      "detect": {
+        "anyKeywords": ["data visualization", "chart", "graph", "dashboard", "analytics", "metrics", "stat", "data display"]
+      },
+      "references": [
+        "references/data-visualization.md",
+        "references/color-theory.md",
+        "references/typography-design-system.md"
+      ]
+    },
     "pdf-export": {
       "description": "PDF export/save, PDF导出, 保存PDF",
       "detect": {
@@ -350,6 +386,37 @@
       },
       "references": [
         "references/scene-templates.md"
+      ]
+    },
+    "ux-writing": {
+      "description": "UX writing, microcopy, interface text, button labels, error messages, UX文案, 界面文案, 微文案, 按钮文本",
+      "detect": {
+        "anyKeywords": ["ux writing", "microcopy", "interface text", "button text", "error message", "copy", "label text", "cta text"]
+      },
+      "references": [
+        "references/ux-writing.md",
+        "references/content-guidelines.md"
+      ]
+    },
+    "usability-testing": {
+      "description": "Usability testing, user testing, A/B testing, test scripts, user research validation, 可用性测试, 用户测试, A/B测试",
+      "detect": {
+        "anyKeywords": ["usability testing", "user testing", "ab testing", "a/b testing", "a/b test", "test script", "validation testing", "user research"]
+      },
+      "references": [
+        "references/usability-testing.md",
+        "references/user-research-methods.md"
+      ]
+    },
+    "design-handoff": {
+      "description": "Design handoff, design-to-developer workflow, design specs, developer collaboration, 设计交接, 开发协作, 设计规范",
+      "detect": {
+        "anyKeywords": ["design handoff", "developer handoff", "design specs", "design to development", "developer collaboration", "design tokens"]
+      },
+      "references": [
+        "references/design-handoff.md",
+        "references/design-system-creation.md",
+        "references/system-design-theory.md"
       ]
     }
   },
