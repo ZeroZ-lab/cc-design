@@ -6,11 +6,11 @@ You are the user's junior designer. The user is the manager. Working through the
 
 ---
 
-## Pass 1: Assumptions + Placeholders (5–15 minutes)
+## Pass 1: Plan + Placeholder Structure (5–15 minutes)
 
-Before writing any real code, write an **assumptions + reasoning comment** at the top of the HTML file — like a junior reporting to their manager before starting.
+Before writing any real code, write an **execution-plan comment** at the top of the HTML file — like a junior reporting to their manager before starting.
 
-### What to Cover in Assumptions Comment
+### What to Cover in the Plan Comment
 
 Your assumptions should cover the **8-layer design framework** (`design-thinking-framework.md`):
 
@@ -32,14 +32,17 @@ Your assumptions should cover the **8-layer design framework** (`design-thinking
 - Brand personality (professional/playful/serious/etc.)
 - Emotional tone
 
-**Unresolved questions:**
-- Anything you're uncertain about
-- Placeholders you're using
-- Missing context
+**Build plan:**
+- The first artifact you will build
+- Which dimensions will vary
+- What stays placeholder for now
+
+**Verification:**
+- How you will check desktop/mobile, console, and touched areas
 
 ```html
 <!--
-My assumptions:
+Execution plan:
 
 [Layer 1: Goal]
 - Target audience: [XX] (e.g., "B2B SaaS buyers, technical decision-makers")
@@ -59,12 +62,17 @@ My assumptions:
 - Personality: [XX] (e.g., "Professional but approachable")
 - Tone: [XX] (e.g., "Confident, not aggressive")
 
-Unresolved questions:
-- Where does the Step 3 data come from? Using placeholder for now
-- Background: abstract geometry or real photography? Placeholder for now
-- Is there a design system I should be following? Haven't found one yet
+[Build plan]
+- First artifact: [XX] (e.g., "One approved hero + feature proof section")
+- Variation axes: [XX] (e.g., "Layout density + visual tone")
+- Placeholder strategy: [XX] (e.g., "Use placeholder proof cards until copy is approved")
 
-If you see this and the direction feels wrong, now is the lowest-cost moment to change it.
+[Verification]
+- Check desktop + narrow viewport
+- Check console errors
+- Review every changed section after the final edit
+
+Approve this plan before I continue into the full build.
 -->
 
 <!-- Then the placeholder structure below -->
@@ -75,22 +83,23 @@ If you see this and the direction feels wrong, now is the lowest-cost moment to 
 </section>
 ```
 
-**Save → show the user → wait for feedback before continuing.**
+**Save → show the user → wait for approval before continuing.**
 
-**Note:** You don't need to cover all 8 layers in every comment. Focus on Layer 1 (Goal), Layer 2 (Information), Layer 5 (Visual), and Layer 6 (Brand). Layers 3-4 (Structure/Interaction) and Layer 7 (System) emerge during execution.
+**Note:** You don't need to cover all 8 layers in every comment. Focus on Layer 1 (Goal), Layer 2 (Information), Layer 5 (Visual), Layer 6 (Brand), plus a concise build plan and verification path. Layers 3-4 (Structure/Interaction) and Layer 7 (System) emerge during execution.
 
 ### Rules for Pass 1
 
 - Placeholders are not failures — they are communication
 - Every unresolved question costs less to fix now than after Pass 2
-- If the user approves the direction without commenting on placeholders, that is implicit approval to fill them in
+- For first-pass new tasks, require explicit approval of the plan
+- Implicit approval is acceptable only for follow-up iterations
 - Keep the comment honest: assumptions you are confident in, questions you are not
 
 ---
 
 ## Pass 2: Real Components + Variations (main work)
 
-After the user approves the direction, begin the real build:
+After the user approves the plan, begin the real build:
 
 - Write React components to replace placeholders
 - Create variations using `design_canvas` (static) or Tweaks (interactive switching)
@@ -121,7 +130,7 @@ After the user is satisfied with the overall shape, polish:
 
 ## When to Skip Pass 1
 
-Skip the assumptions comment when:
+Skip the plan comment when:
 - This is a minor edit to an existing file (no new direction needed)
 - The user explicitly said "just build it, I trust you"
 - The task is a follow-up iteration where direction was already confirmed
@@ -144,7 +153,7 @@ In all other cases, default to Pass 1.
 The junior designer mode forces the cheapest-first iteration loop:
 
 ```
-Assumptions (free) → Structure (cheap) → Direction confirmed → Full build (expensive)
+Plan (cheap) → Structure (cheap) → Direction confirmed → Full build (expensive)
 ```
 
 Without it, the loop is:

@@ -4,7 +4,7 @@ This file supports `SKILL.md`. It does not define an independent product workflo
 
 The runtime contract lives in `SKILL.md`:
 - new ambiguous tasks start with structured step-by-step confirmation
-- richly specified briefs can skip to explicit assumptions
+- richly specified briefs can skip most clarification, but still require a visible plan
 - follow-up iterations and minor fixes act directly unless scope changes
 
 Use this file to structure the step-by-step confirmation flow and the follow-through after that decision has already been made.
@@ -22,9 +22,11 @@ This workflow is the **execution process**. The 8-layer framework (`design-think
 | **Step 1: Understand** (Structured confirmation) | Layer 1 (Goal) + Layer 2 (Information) | Clarify objectives, audience, scope, information priorities |
 | **Step 2: Route** (Load references) | Layer 2-7 (task-dependent) | Load theory and patterns for relevant layers |
 | **Step 3: Acquire Context** (Design system/brand) | Layer 6 (Brand) + Layer 7 (System) | Understand existing constraints and brand personality |
-| **Step 4: Design** (Build artifacts) | Layer 3 (Structure) + Layer 4 (Interaction) + Layer 5 (Visual) | Execute structure, interaction, and visual design |
-| **Step 5: Verify** (Check quality) | Layer 8 (Validation) | Test technical feasibility, usability, design quality |
-| **Step 6: Iterate** (Refine based on feedback) | Layer 8 → Layer 1 (feedback loop) | Use validation results to refine goals and execution |
+| **Step 4: Plan** (Visible execution plan) | Layer 1-7 (condensed) | Turn confirmed facts and assumptions into a build plan |
+| **Step 5: Approval** (Manager review) | Layer 8 (Validation) | Confirm direction before expensive execution |
+| **Step 6: Design** (Build artifacts) | Layer 3 (Structure) + Layer 4 (Interaction) + Layer 5 (Visual) | Execute structure, interaction, and visual design |
+| **Step 7: Verify** (Check quality) | Layer 8 (Validation) | Test technical feasibility, usability, design quality |
+| **Step 8: Iterate** (Refine based on feedback) | Layer 8 → Layer 1 (feedback loop) | Use validation results to refine goals and execution |
 
 **When to use which:**
 - **Use workflow.md** for step-by-step execution guidance
@@ -48,7 +50,7 @@ Rules:
 Treat this as supporting guidance, not an override:
 
 - **Use structured confirmation** for new tasks with missing audience, scope, output shape, hard constraints, or reference context
-- **Skip to assumptions** only when the brief is already rich, or the user explicitly asks to move fast
+- **Skip most questions** only when the brief is already rich, or the user explicitly asks to move fast
 - **Act directly** for follow-up iterations and minor fixes
 
 If you are unsure which path applies, default to the next blocking confirmation step. Do not invent a fourth path.
@@ -71,13 +73,15 @@ Fallback:
 After the steps:
 - stop once blocking fields are resolved
 - ask at most one open follow-up round if critical details remain
-- if critical fields are still unknown after that, proceed with explicit assumptions
+- if critical fields are still unknown after that, convert them into explicit assumptions in the visible plan
 
 Critical blocking fields:
 - output shape
 - audience
 - scope
 - hard constraints that would materially change the direction
+- reference source, or an explicit "no reference"
+- success criteria
 - existing contract update mode (`DESIGN.md`: append / merge / overwrite) when relevant
 
 Non-blocking fields:
@@ -175,40 +179,64 @@ What should I build first?
 - One flow
 - Wireframe pass before hi-fi
 
-Step 5 — Confirm
-I'll proceed with [summary]. Continue?
+Step 5 — Plan
+Plan
+- Goal: ...
+- Confirmed facts: ...
+- Assumptions: ...
+- First artifact: ...
+- Variation axes: ...
+- Verification: ...
+
+Approve this plan, or tell me what to change before I build.
 ```
 
 If the platform lacks structured question UI, convert the same flow into one compact text block.
 
 ## After the Confirmation Steps
 
-Once the confirmation steps are answered, or once unanswered critical fields have been converted into explicit assumptions, move into delivery.
+Once the confirmation steps are answered, or once unanswered critical fields have been converted into explicit assumptions, do not move straight into delivery. Produce a visible plan, wait for approval, then build.
 
-### Direction Memo (Only When Needed)
+### Planning Gate
 
-If questions were skipped, or the user explicitly asked for speed, write a short direction memo before building:
+A task is ready for planning when:
+- audience is known or explicitly assumed
+- output shape is known
+- scope is known
+- hard constraints are known
+- reference context is known or explicitly absent
+- success criteria are known or explicitly assumed
+
+If these are incomplete, keep clarifying. If the user wants speed, compress the questions, but do not skip the plan.
+
+### Execution Plan
+
+Before building, show a short plan:
 
 ```html
 <!--
-Direction memo:
-- This is for XX audience
-- Output shape: XX
-- Tone: XX
-- The main flow is A→B→C
-- Key constraints: XX
+Execution plan:
+- Goal: ...
+- Confirmed facts: ...
+- Assumptions: ...
+- First artifact: ...
+- Variation axes: ...
+- Verification: ...
+
+Approve this plan before I continue into the full build.
 -->
 ```
 
 Rules:
-- 3 to 6 bullets maximum
-- this is not a separate deliverable
-- this is only a bridge into the actual build
+- 4 to 6 bullets maximum
+- this is visible to the user
+- approval is required before the first full build
+- rich briefs may skip questioning, but not planning
 - do not reopen the full question flow unless audience, scope, or output type changes
 
 ### Main Work
 
-After the direction is clear:
+After the plan is approved:
 - Write React components to replace placeholders
 - Create variations (using design_canvas or Tweaks)
 - If it's slides/animation, start with starter components

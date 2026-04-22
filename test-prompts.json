@@ -34,5 +34,17 @@
     "prompt": "Create a Running Tracker App prototype",
     "expected": "Overview flat layout; ios_frame.jsx; running app is high-density type (map, pace curve, heart rate zones, per-km split data), each screen ≥3 product-differentiating info elements; at least 5 screens (today overview/real-time during run/route map/history/monthly stats); avoids AI slop (no purple gradients, no decorative icon stacking, but data visualization icons allowed)",
     "tests": "overview + ios_frame + high-density data visualization + map/chart mixed layout + slop boundary conditions"
+  },
+  {
+    "id": 7,
+    "prompt": "Design a fintech landing page for SMB payroll automation",
+    "expected": "Asks only for missing blocking context; once enough context exists, outputs a visible execution plan with confirmed facts, assumptions, first artifact, variation axes, and verification approach; waits for approval before building HTML",
+    "tests": "planning gate + visible plan + approval before build"
+  },
+  {
+    "id": 8,
+    "prompt": "Build a polished onboarding flow for a B2B AI sales assistant. Audience is RevOps managers. Three screens. Use a restrained enterprise tone. Just move fast.",
+    "expected": "Skips most clarification because the brief is rich and speed is requested, but still produces a compressed mini-plan before building; does not jump directly into HTML unless the user explicitly says to skip planning",
+    "tests": "rich-brief path + speed path + mini-plan still required"
   }
 ]

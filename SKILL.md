@@ -68,14 +68,35 @@ Forbidden phrases (never say these about verifiable facts):
 
 If you cannot verify: say "I cannot confirm this — please check" rather than guessing. Wrong facts damage user trust and waste everyone's time.
 
-**P1: Structured Confirmation First.** For new design tasks, begin with structured, step-by-step confirmation before designing. Prefer one blocking question at a time using the platform's native question UI when available. Skip only for: minor fixes, follow-up iterations, explicit speed requests, or already-rich briefs.
+**P1: Gather Enough Context First.** For new design tasks, do not start building when you only have partial context. Resolve or explicitly assume the blocking fields before any full build:
+
+- audience
+- output shape
+- scope
+- hard constraints
+- reference source, or an explicit "no reference"
+- success criteria
+
+If some fields remain unknown, convert them into explicit assumptions inside a visible plan. Do not hide uncertainty inside the build.
+
+**P1.5: Visible Plan Before Build.** Once you have enough context, present a short execution plan to the user before writing real UI code. The plan must include:
+
+1. **Goal** — what is being built and for whom
+2. **Confirmed Facts** — what is grounded in the brief, codebase, or references
+3. **Assumptions** — unresolved fields converted into explicit assumptions
+4. **First Artifact** — the first surface or deliverable to build
+5. **Variation Axes** — what dimensions will change across directions, if any
+6. **Verification** — how you will verify the final artifact
+
+End with:
+`Approve this plan, or tell me what to change before I build.`
 
 Default order of confirmation:
 
 1. **Design Context** — existing design system / UI kit / codebase / screenshots?
 2. **Variations** — how many directions? conservative vs wide exploration?
 3. **Fidelity & Scope** — wireframe / hi-fi? one screen / one flow / full flow?
-4. **Build Confirmation** — confirm the working direction before full build
+4. **Plan Approval** — approve the execution plan before full build
 
 Rules:
 - Prefer **step-by-step** confirmation over one giant questionnaire
@@ -83,6 +104,8 @@ Rules:
 - Prefer **2-4 short options** plus freeform when the platform supports it
 - Stop asking once blocking uncertainty is resolved
 - If the platform lacks structured question UI, fall back to one compact text batch
+- Rich briefs may skip most questions, but they still require a visible plan before build
+- Explicit speed requests may compress the process into a mini-plan, but they do not skip planning unless the user explicitly says to
 
 Structured confirmation example:
 ```markdown
@@ -102,8 +125,16 @@ What should I build first?
 - One complete flow
 - A low-fi wireframe pass first
 
-Step 4 — confirm
-I'll proceed with [summary]. Continue?
+Step 4 — plan
+Plan
+- Goal: ...
+- Confirmed facts: ...
+- Assumptions: ...
+- First artifact: ...
+- Variation axes: ...
+- Verification: ...
+
+Approve this plan, or tell me what to change before I build.
 ```
 
 **P2: Anti-AI Slop.** These are banned without exception:
@@ -131,13 +162,13 @@ If the same bundle is already in context, do not silently skip it. Say:
 Load: because=<reason> already_loaded=<comma-separated paths>
 ```
 
-Use short, stable reasons such as `all-design-tasks`, `react-prototype`, `question-first-delivery`, `before-animation`, `before-delivery`. `load-manifest.json` is the machine-readable source of truth for bundle contents, and `scripts/resolve-load-bundles.mjs` is the runtime consumer that resolves prompt text plus explicit checkpoints into concrete bundle loads. The routing table below is the human summary.
+Use short, stable reasons such as `all-design-tasks`, `react-prototype`, `question-first-delivery`, `before-animation`, `before-delivery`. `load-manifest.json` is the machine-readable source of truth for bundle contents, `scripts/generate-bundle-catalog.mjs` generates the catalog for semantic matching, and `scripts/resolve-load-bundles.mjs` remains the keyword-based fallback. The routing table below is the human summary.
 
 ---
 
 ## Routing Table
 
-Classify the user's task by intent (output format, keywords), then resolve bundles through `scripts/resolve-load-bundles.mjs`, which reads `load-manifest.json`. For multi-type tasks, combine all matching rows. For tasks not in the table, default to `all-design-tasks` plus `new-ambiguous-task` and the closest matching component reference.
+Classify the user's task by intent (output format, keywords), then match it against the bundle catalog backed by `load-manifest.json`. Use semantic matching first; if that path is unavailable, fall back to `scripts/resolve-load-bundles.mjs`. For multi-type tasks, combine all matching rows. For tasks not in the table, default to `all-design-tasks` plus `new-ambiguous-task` and the closest matching component reference.
 
 | Task type | Load reference | Copy template | Verify focus |
 |-----------|---------------|---------------|-------------|
@@ -171,7 +202,7 @@ Classify the user's task by intent (output format, keywords), then resolve bundl
 | Wireframe / low-fi | `references/frontend-design.md` | `templates/design_canvas.jsx` | Layout structure visible |
 | Design system creation | `references/design-system-creation.md` | — | Tokens apply + coherence |
 | No design system provided | `references/frontend-design.md` + `references/design-excellence.md` | Choose template | Aesthetic coherence |
-| New/ambiguous task | `references/junior-designer-mode.md` | — | Assumptions visible before full build |
+| New/ambiguous task | `references/junior-designer-mode.md` | — | Plan visible before full build |
 | Video export | `references/video-export.md` | — | ffmpeg available + correct specs |
 | Audio design | `references/audio-design-rules.md` + `references/sfx-library.md` | — | Dual-track + loudness ratio |
 | PDF export | `references/platform-tools.md` | — | File generated |
@@ -181,27 +212,25 @@ Classify the user's task by intent (output format, keywords), then resolve bundl
 
 **0. Junior Designer Mode — Always start here for new tasks.**
 
-Before writing any code, write an assumptions comment at the top of the HTML:
+Before writing any real UI code, write an execution-plan comment at the top of the HTML:
 
 ```html
 <!--
-My assumptions:
-- This is for [XX audience]
-- Overall tone: [XX]
-- Main flow: A → B → C
-- Color direction: [XX]; unsure about [YY]
+Execution plan:
+- Goal: [what is being built, for whom]
+- Confirmed facts: [brief, codebase, or reference truths]
+- Assumptions: [explicit unknowns converted into assumptions]
+- First artifact: [what will be built first]
+- Variation axes: [layout, tone, interaction, or none]
+- Verification: [desktop/mobile, console, touched sections]
 
-Unresolved questions:
-- [Question 1] — using placeholder for now
-- [Question 2] — placeholder for now
-
-If the direction feels wrong, now is the cheapest moment to change it.
+Approve this plan before I continue into the full build.
 -->
 ```
 
-**Save → show → wait for confirmation before continuing.** Skip only for minor edits or when the user explicitly says to proceed.
+**Save → show → wait for approval before continuing.** Skip only for minor edits, approved follow-up iterations, or when the user explicitly says to skip planning.
 
-**1. Understand** — For new design tasks, start with structured step-by-step confirmation via the platform's native question UI when available (`AskUserQuestion`, `request_user_input`, or equivalent). Use this precedence order: localized edit → act directly; explicit speed request → skip to assumptions; rich brief (audience + output shape + constraints + references) → skip to assumptions; everything else → ask the next blocking question. If structured UI is unavailable, send one compact text batch instead. **Detect brand mentions** — scan for brand names (Stripe, Vercel, Notion, Linear, Apple, etc.). If a brand is mentioned, load `references/getdesign-loader.md`.
+**1. Understand** — For new design tasks, start with structured step-by-step confirmation via the platform's native question UI when available (`AskUserQuestion`, `request_user_input`, or equivalent). Use this precedence order: localized edit → act directly; approved follow-up iteration → act directly; explicit speed request → ask only the missing blocking questions, then produce a mini-plan; rich brief (audience + output shape + constraints + references) → skip most questions, then produce a visible plan; everything else → ask the next blocking question. If structured UI is unavailable, send one compact text batch instead. **Detect brand mentions** — scan for brand names (Stripe, Vercel, Notion, Linear, Apple, etc.). If a brand is mentioned, load `references/getdesign-loader.md`.
 
 **Existing design contract rule** — if the project already has `DESIGN.md` (or an equivalent explicit design system file) and the current task would change it, do not silently rewrite it. Ask the user to choose one mode before editing:
 - **Append** — add a new section or extension, keep the existing contract intact
@@ -263,20 +292,32 @@ cp <skill-dir>/templates/<component>.<ext> ./<component>.<ext>
 5. Competitor references — ask for URL or screenshot, don't work from memory
 6. Known fallback systems (Apple HIG / Material Design 3 / Radix Colors / shadcn/ui)
 
-After reading context, vocalize the system before building:
+After reading context, vocalize the system before planning:
 ```markdown
 From your codebase, here's what I'm using:
 - Primary: #C27558 | Background: #FDF9F0 | Text: #1A1A1A
 - Fonts: Instrument Serif (display) + Geist Sans (body)
 - Spacing: 4/8/12/16/24/32/48/64 | Radius: 4px small / 12px card / 8px button
-Confirm before I start?
+I'll turn this into a short execution plan next.
 ```
 
 If no context exists: say so clearly — "I'll work from general intuition, which usually produces generic work. Want to provide references first?"
 
-**4. Design Intent** — Before writing any code, answer: focal point, emotional tone, visual flow, spacing strategy, color strategy, typography hierarchy. 30 seconds of intent prevents hours of iteration. Full checklist in `references/design-excellence.md`.
+**4. Plan** — Before writing production UI, present a visible execution plan using this format:
+```markdown
+Plan
+- Goal: ...
+- Confirmed facts: ...
+- Assumptions: ...
+- First artifact: ...
+- Variation axes: ...
+- Verification: ...
+```
+Use the plan to answer: focal point, emotional tone, visual flow, spacing strategy, color strategy, and typography hierarchy. Full checklist in `references/design-excellence.md`.
 
-**5. Build** — Write the HTML file. Show at halfway — don't wait until done. Use tweaks for variants rather than separate files.
+**5. Approval** — Stop after the plan and wait for user approval on first-pass work. Do not treat silence as approval on new tasks. Continue immediately only for minor edits, approved follow-up iterations, or explicit instructions to skip planning.
+
+**6. Build** — Write the HTML file after the plan is approved. Show at halfway — don't wait until done. Use tweaks for variants rather than separate files.
 
 **Checkpoint: Before saying "done"** — after your final edit, render the artifact yourself. Do not stop at code inspection. For multi-section pages, inspect every section you touched — not just the first screen or hero. For responsive work, inspect at least one desktop viewport and one narrow/mobile viewport. Use full-page screenshots plus targeted section screenshots when needed.
 
@@ -300,14 +341,14 @@ If no context exists: say so clearly — "I'll work from general intuition, whic
 - [ ] All vertical spacing is multiple of 8px
 - [ ] Using only 2-3 font weights (400/600/700)
 
-**6. Verify (Mandatory self-check)** — Announce `because=before-delivery`, then load `references/verification-protocol.md`. Run three-phase verification yourself after the final edit:
+**7. Verify (Mandatory self-check)** — Announce `because=before-delivery`, then load `references/verification-protocol.md`. Run three-phase verification yourself after the final edit:
 - **Structural:** console errors, layout, responsiveness
 - **Visual:** screenshot review, design quality
 - **Design excellence:** hierarchy, spacing, color harmony, emotional fit
 
 Never deliver based on "it should be fine" reasoning. Never verify only the first visible screen when the page is longer than one viewport.
 
-**7. Deliver** — Minimal summary only:
+**8. Deliver** — Minimal summary only:
 ```markdown
 ✅ [What's done] with [key feature e.g. Tweaks].
 Note: [caveat if any]

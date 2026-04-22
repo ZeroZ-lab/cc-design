@@ -23,10 +23,11 @@ A Claude Code skill for high-fidelity HTML design and prototype creation — sli
 
 ## Overview
 
-cc-design embeds a structured design workflow into Claude Code, enabling it to operate as an expert product designer. Three core principles guide every task:
+cc-design embeds a structured design workflow into Claude Code, enabling it to operate as an expert product designer. Five core principles guide every task:
 
 - **Fact verification (P0)** — Never guess. Verify claims about design trends, brand aesthetics, or technology. Wrong facts are worse than no facts.
-- **Structured confirmation first (P1)** — For new ambiguous design tasks, start with step-by-step structured confirmation. Use the platform's native question UI when available; fall back to one compact batch only when structured prompts are unavailable.
+- **Gather enough context first (P1)** — Resolve or explicitly assume the blocking fields before any full build: audience, output shape, scope, hard constraints, reference source, and success criteria.
+- **Visible plan before build (P1.5)** — Once blocking uncertainty is resolved, produce a short execution plan and wait for approval before starting the full build.
 - **Anti-AI slop (P2)** — Aggressive gradients, emoji (unless brand), generic SaaS hero sections, and overused fonts are banned. Full rules in `references/content-guidelines.md`.
 - **Audible loading (P3)** — Runtime bundles are never loaded silently. cc-design announces every reference/template bundle with `Load: because=... loaded=...` before using it.
 
@@ -35,8 +36,9 @@ Progressive disclosure keeps the main skill definition concise while 27+ technic
 
 The core product promise is behavioral, not just feature breadth:
 - new ambiguous tasks start with structured step-by-step confirmation
-- richly specified briefs can skip straight to a first pass with explicit assumptions
-- explicit speed requests can skip straight to a first pass with explicit assumptions
+- richly specified briefs can skip most clarification, but still require a visible plan before build
+- explicit speed requests compress clarification, but still produce a mini-plan unless the user explicitly says to skip planning
+- first-pass work stops for approval after the plan
 - small edits and follow-up iterations do not reopen the full discovery flow
 - existing `DESIGN.md` files are never silently rewritten; the user confirms append / merge / overwrite first
 
@@ -136,7 +138,7 @@ cc-design/
 ├── load-manifest.json                    # Runtime bundle map for refs/templates/checkpoints
 ├── SKILL.md                              # Skill definition (YAML + routing table + workflow)
 ├── EXAMPLES.md                           # Usage examples and advanced workflows
-├── test-prompts.json                     # 6 test prompts for skill validation
+├── test-prompts.json                     # 8 test prompts for skill validation
 ├── screenshots/                          # Demo screenshots for README
 ├── agents/
 │   └── openai.yaml                       # Codex-compatible platform interface config
@@ -271,22 +273,27 @@ Mention a brand name to load its design system from [getdesign.md](https://getde
 ## Design Workflow
 
 ```
-Understand → Route → Acquire Context → Design Intent → Build → Verify → Deliver
-    │          │           │                │             │        │         │
-    ▼          ▼           ▼                ▼             ▼        ▼         ▼
- Stepwise   Announce +  Read            intent +      HTML +   3-phase    File
- confirm    refs +      design          scope         React    verify:    delivered
-            templates   system          checkpoints   comps    structural,
-                                     tone, flow,             visual,
-                                     spacing,               excellence
-                                     color, type)
+Understand → Route → Acquire Context → Plan → Approval → Build → Verify → Deliver
+    │          │           │                │        │           │        │         │
+    ▼          ▼           ▼                ▼        ▼           ▼        ▼         ▼
+ Stepwise   Announce +  Read            Visible   Manager     HTML +   3-phase    File
+ confirm    refs +      design          plan      signoff     React    verify:    delivered
+            templates   system          with      before      comps    structural,
+                                      facts +    full build           visual,
+                                      assumptions                        excellence
 ```
 
 First-turn behavior follows one default path:
 - **New ambiguous task** — ask structured confirmation questions step by step
-- **New rich brief** — begin with explicit assumptions, then build
-- **Explicit speed request** — begin with explicit assumptions, then build
+- **New rich brief** — skip most clarification, then produce a visible plan before build
+- **Explicit speed request** — compress clarification, then produce a mini-plan before build unless the user explicitly says to skip planning
 - **Follow-up iteration or minor fix** — act directly unless audience, scope, or output type changes
+
+The core behavioral contract is:
+- gather enough context before building
+- present a visible execution plan
+- wait for approval on the first pass
+- only then start the full build
 
 `SKILL.md` is the runtime behavior contract. `references/workflow.md` supports execution and must not override it.
 `load-manifest.json` is the runtime routing manifest, and `scripts/generate-bundle-catalog.mjs` generates the compact catalog consumed by the AI matcher. Every runtime bundle load should be announced before it is read or copied.
@@ -304,8 +311,8 @@ Verification is a required maker self-check:
 
 | Platform | Status | Notes |
 |---|---|---|
-| Claude Code (CLI) | **Primary target** | Playwright MCP + local scripts + structured stepwise confirmation |
-| Codex / OpenAI-compatible | Supported | Prompt metadata in `agents/openai.yaml`, optimized for structured stepwise confirmation |
+| Claude Code (CLI) | **Primary target** | Playwright MCP + local scripts + context gathering, visible planning, and approval before build |
+| Codex / OpenAI-compatible | Supported | Prompt metadata in `agents/openai.yaml`, optimized for context gathering, visible planning, and approval before build |
 
 ## Contributing
 

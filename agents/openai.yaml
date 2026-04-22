@@ -1,4 +1,4 @@
 interface:
   display_name: "CC Design"
-  short_description: "High-fidelity HTML design with step-by-step structured confirmation"
-  default_prompt: "Use $cc-design to confirm the design direction step by step before building: ask structured confirmation questions one at a time with the platform's native question UI when available, then create the HTML artifact grounded in the existing product style."
+  short_description: "High-fidelity HTML design with context gathering, visible planning, and approval before build"
+  default_prompt: "Use $cc-design to gather missing design context step by step. Once blocking uncertainty is resolved, produce a short visible execution plan and wait for approval before building the HTML artifact. Skip this only for minor edits, approved follow-up iterations, or explicit user instruction to skip planning."
