@@ -1,4 +1,4 @@
 interface:
   display_name: "CC Design"
-  short_description: "High-fidelity HTML design and prototype guidance"
-  default_prompt: "Use $cc-design to explore three strong HTML-based design directions for this feature, grounded in the existing product style."
+  short_description: "High-fidelity HTML design with step-by-step structured confirmation"
+  default_prompt: "Use $cc-design to confirm the design direction step by step before building: ask structured confirmation questions one at a time with the platform's native question UI when available, then create the HTML artifact grounded in the existing product style."

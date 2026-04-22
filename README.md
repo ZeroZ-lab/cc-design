@@ -26,13 +26,13 @@ A Claude Code skill for high-fidelity HTML design and prototype creation — sli
 cc-design embeds a structured design workflow into Claude Code, enabling it to operate as an expert product designer. Three core principles guide every task:
 
 - **Fact verification (P0)** — Never guess. Verify claims about design trends, brand aesthetics, or technology. Wrong facts are worse than no facts.
-- **Batch questions first (P1)** — For new ambiguous design tasks, start with one batch of clarifying questions. Skip that only for minor fixes, follow-up iterations, explicit speed requests, or already-rich briefs.
+- **Structured confirmation first (P1)** — For new ambiguous design tasks, start with step-by-step structured confirmation. Use the platform's native question UI when available; fall back to one compact batch only when structured prompts are unavailable.
 - **Anti-AI slop (P2)** — Aggressive gradients, emoji (unless brand), generic SaaS hero sections, and overused fonts are banned. Full rules in `references/content-guidelines.md`.
 
 Progressive disclosure keeps the main skill definition concise while 27+ technical references load on demand.
 
 The core product promise is behavioral, not just feature breadth:
-- new ambiguous tasks start with one batch of clarifying questions
+- new ambiguous tasks start with structured step-by-step confirmation
 - richly specified briefs can skip straight to a first pass with explicit assumptions
 - explicit speed requests can skip straight to a first pass with explicit assumptions
 - small edits and follow-up iterations do not reopen the full discovery flow
@@ -262,16 +262,16 @@ Mention a brand name to load its design system from [getdesign.md](https://getde
 Understand → Route → Acquire Context → Design Intent → Build → Verify → Deliver
     │          │           │                │             │        │         │
     ▼          ▼           ▼                ▼             ▼        ▼         ▼
- Batch      Load        Read            6-question    HTML +   3-phase    File
- questions  refs +      design          checklist     React    verify:    delivered
-            templates   system          (focal,      comps    structural,
+ Stepwise   Load        Read            intent +      HTML +   3-phase    File
+ confirm    refs +      design          scope         React    verify:    delivered
+            templates   system          checkpoints   comps    structural,
                                      tone, flow,             visual,
                                      spacing,               excellence
                                      color, type)
 ```
 
 First-turn behavior follows one default path:
-- **New ambiguous task** — ask one batched set of clarifying questions
+- **New ambiguous task** — ask structured confirmation questions step by step
 - **New rich brief** — begin with explicit assumptions, then build
 - **Explicit speed request** — begin with explicit assumptions, then build
 - **Follow-up iteration or minor fix** — act directly unless audience, scope, or output type changes
@@ -291,8 +291,8 @@ Verification is a required maker self-check:
 
 | Platform | Status | Notes |
 |---|---|---|
-| Claude Code (CLI) | **Primary target** | Playwright MCP + local scripts |
-| Codex / OpenAI-compatible | Supported | Prompt metadata in `agents/openai.yaml` |
+| Claude Code (CLI) | **Primary target** | Playwright MCP + local scripts + structured stepwise confirmation |
+| Codex / OpenAI-compatible | Supported | Prompt metadata in `agents/openai.yaml`, optimized for structured stepwise confirmation |
 
 ## Contributing
 

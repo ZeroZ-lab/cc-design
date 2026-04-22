@@ -68,36 +68,42 @@ Forbidden phrases (never say these about verifiable facts):
 
 If you cannot verify: say "I cannot confirm this — please check" rather than guessing. Wrong facts damage user trust and waste everyone's time.
 
-**P1: Batch Questions First.** For new design tasks, begin with one batch of clarifying questions before designing. Ask them all at once so the user can answer in one pass. Skip only for: minor fixes, follow-up iterations, explicit speed requests, or already-rich briefs.
+**P1: Structured Confirmation First.** For new design tasks, begin with structured, step-by-step confirmation before designing. Prefer one blocking question at a time using the platform's native question UI when available. Skip only for: minor fixes, follow-up iterations, explicit speed requests, or already-rich briefs.
 
-When asking, cover these 5 categories every time:
+Default order of confirmation:
 
-1. **Design Context** — existing design system / UI kit / codebase / brand guidelines / product screenshots?
-2. **Variations** — how many? which dimensions (visual / color / layout / interaction)?
-3. **Fidelity & Scope** — wireframe / hi-fi? one screen / full flow?
-4. **Tweaks** — which parameters should be adjustable after delivery?
-5. **Task-specific** — at least 4 questions specific to the task type
+1. **Design Context** — existing design system / UI kit / codebase / screenshots?
+2. **Variations** — how many directions? conservative vs wide exploration?
+3. **Fidelity & Scope** — wireframe / hi-fi? one screen / one flow / full flow?
+4. **Build Confirmation** — confirm the working direction before full build
 
-Template:
+Rules:
+- Prefer **step-by-step** confirmation over one giant questionnaire
+- Prefer **1 question per step**
+- Prefer **2-4 short options** plus freeform when the platform supports it
+- Stop asking once blocking uncertainty is resolved
+- If the platform lacks structured question UI, fall back to one compact text batch
+
+Structured confirmation example:
 ```markdown
-Before starting, a few questions — answer in one batch:
+Step 1 — context
+Do you already have a design system or screenshots I should match?
+- Yes, I have references
+- No, work from scratch
 
-**Design Context**
-1. Design system / UI kit / brand guidelines? Where?
-2. Existing product screenshots or URL I can reference?
-3. Codebase I can read?
+Step 2 — variations
+How broad should the exploration be?
+- 1 direction, close to expected
+- 3 directions, conservative → bold
 
-**Variations & Fidelity**
-4. How many variations? Which dimensions?
-5. Fidelity: wireframe / semi-finished / full hi-fi?
+Step 3 — fidelity/scope
+What should I build first?
+- One screen
+- One complete flow
+- A low-fi wireframe pass first
 
-**Tweaks**
-6. Which parameters adjustable after delivery?
-
-**Task-specific**
-7. [question]
-8. [question]
-...
+Step 4 — confirm
+I'll proceed with [summary]. Continue?
 ```
 
 **P2: Anti-AI Slop.** These are banned without exception:
@@ -181,7 +187,7 @@ If the direction feels wrong, now is the cheapest moment to change it.
 
 **Save → show → wait for confirmation before continuing.** Skip only for minor edits or when the user explicitly says to proceed.
 
-**1. Understand** — For new design tasks, start with one batch of clarifying questions via `AskUserQuestion`. Use the template in P1 above. Use this precedence order: localized edit → act directly; explicit speed request → skip to assumptions; rich brief (audience + output shape + constraints + references) → skip to assumptions; everything else → ask the batch. **Detect brand mentions** — scan for brand names (Stripe, Vercel, Notion, Linear, Apple, etc.). If a brand is mentioned, load `references/getdesign-loader.md`.
+**1. Understand** — For new design tasks, start with structured step-by-step confirmation via the platform's native question UI when available (`AskUserQuestion`, `request_user_input`, or equivalent). Use this precedence order: localized edit → act directly; explicit speed request → skip to assumptions; rich brief (audience + output shape + constraints + references) → skip to assumptions; everything else → ask the next blocking question. If structured UI is unavailable, send one compact text batch instead. **Detect brand mentions** — scan for brand names (Stripe, Vercel, Notion, Linear, Apple, etc.). If a brand is mentioned, load `references/getdesign-loader.md`.
 
 **2. Route** — Read the routing table below. Load the specified reference(s). Copy the specified template(s):
 ```bash
