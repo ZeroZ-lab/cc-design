@@ -121,7 +121,14 @@ Classify the user's task by intent (output format, keywords), then load only the
 
 | Task type | Load reference | Copy template | Verify focus |
 |-----------|---------------|---------------|-------------|
-| **ANY design task** | `references/design-excellence.md` + `references/content-guidelines.md` + `references/typography-spacing-examples.md` | — | Design quality + anti-slop + typography/spacing |
+| **ANY design task** | `references/design-excellence.md` + `references/content-guidelines.md` + `references/typography-spacing-examples.md` + `references/design-philosophy.md` | — | Design quality + anti-slop + typography/spacing + philosophy |
+| Design philosophy / why questions | `references/design-philosophy.md` + `references/design-principles.md` | — | Worldview + decision framework |
+| Complex multi-screen flow | `references/design-thinking-framework.md` | — | 8-layer decision tree |
+| Information architecture | `references/information-design-theory.md` + `references/design-excellence.md` | — | Cognitive load + hierarchy |
+| Interaction design problems | `references/interaction-design-theory.md` + `references/interactive-prototype.md` | — | Fitts/Hick's Law + feedback |
+| Visual quality / composition | `references/visual-design-theory.md` + `references/design-excellence.md` | — | Gestalt + color psychology |
+| Brand / emotional tone | `references/brand-emotion-theory.md` + `references/design-styles.md` | — | Brand personality + trust |
+| Design system architecture | `references/system-design-theory.md` + `references/design-system-creation.md` | — | Constraints + scalability |
 | Layout problems | `references/anti-patterns/layout.md` | — | Anti-pattern check |
 | Color problems | `references/anti-patterns/color.md` | — | Anti-pattern check |
 | Typography problems | `references/anti-patterns/typography.md` + `references/typography-spacing-examples.md` | — | Anti-pattern check + spacing verification |
