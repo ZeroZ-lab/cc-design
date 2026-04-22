@@ -1,520 +1,540 @@
-# 设计思维框架：8 层设计体系
+# Design Thinking Framework: 8-Layer Design System
 
-> **Load when:** 复杂多屏流程、设计系统创建、架构决策、需要完整设计思维时
-> **Skip when:** 简单视觉调整、单一组件修改、明确的小改动
-> **Why it matters:** 提供完整的设计决策框架，确保不遗漏关键层级
-> **Typical failure it prevents:** 只关注视觉忽略目标、只做表面不管系统、设计无法落地
+> **Load when:** Complex multi-screen flows, design system creation, architecture decisions, need complete design thinking
+> **Skip when:** Simple visual adjustments, single component modifications, clear small changes
+> **Why it matters:** Provides complete design decision framework, ensures no critical layers are missed
+> **Typical failure it prevents:** Focusing only on visuals while ignoring goals, surface-level work without system thinking, designs that can't be implemented
 
-8 层设计框架是 cc-design 的核心方法论。它将设计拆解为 8 个层级，每层有明确的关注点、决策方法和验证标准。
-
----
-
-## 为什么需要 8 层框架
-
-### 常见问题
-
-**只关注视觉：**
-- "做一个好看的 dashboard" → 不知道展示什么数据
-- "参考 Apple 风格" → 不知道为什么要像 Apple
-- "加个渐变" → 不知道渐变解决什么问题
-
-**只关注功能：**
-- "实现这 20 个功能" → 不知道优先级
-- "都很重要" → 信息过载
-- "能用就行" → 体验糟糕
-
-**缺少系统思维：**
-- 每次重新设计 → 无法复用
-- 风格不一致 → 认知负荷高
-- 无法扩展 → 技术债累积
-
-### 8 层框架的价值
-
-1. **完整性**：覆盖从目标到验证的全流程
-2. **优先级**：明确层级依赖关系
-3. **可检查**：每层有清晰的验证标准
-4. **可教学**：新手能按框架学习
-5. **可诊断**：快速定位设计问题
+The 8-layer design framework is cc-design's core methodology. It breaks design into 8 layers, each with clear focus areas, decision methods, and validation criteria.
 
 ---
 
-## 8 层设计体系
+## Why We Need the 8-Layer Framework
 
-### 第 1 层：目标设计（为什么做）
+### Common Problems
 
-**定义：** 明确设计要解决的问题、服务的用户、预期的改变。
+**Only focusing on visuals:**
+- "Make a nice-looking dashboard" → Don't know what data to show
+- "Reference Apple style" → Don't know why it should look like Apple
+- "Add a gradient" → Don't know what problem the gradient solves
 
-**关键问题：**
-- 解决什么问题？
-- 服务谁？（用户画像、场景）
-- 预期改变什么？（行为、认知、情绪）
-- 成功标准是什么？
-- 优先级如何排序？
+**Only focusing on functionality:**
+- "Implement these 20 features" → Don't know the priorities
+- "Everything is important" → Information overload
+- "As long as it works" → Poor experience
 
-**思想关键词：** 问题定义、价值假设、成功度量、优先级
+**Lacking system thinking:**
+- Redesigning from scratch every time → Can't reuse
+- Inconsistent style → High cognitive load
+- Can't scale → Technical debt accumulates
 
-**为什么重要：**
-- 目标决定所有其他层的方向
-- 没有目标 = 没有评价标准
-- 错误的目标 → 正确的执行也是失败
+### Value of the 8-Layer Framework
 
-**现有文档：**
-- `junior-designer-mode.md` - 新任务的假设和提问
-- `design-context.md` - 上下文理解
-
-**验证标准：**
-- [ ] 能用一句话说清核心问题
-- [ ] 能描述目标用户和使用场景
-- [ ] 有明确的成功指标
-- [ ] 有清晰的优先级排序
+1. **Completeness**: Covers the full flow from goals to validation
+2. **Priority**: Clear layer dependency relationships
+3. **Checkable**: Each layer has clear validation criteria
+4. **Teachable**: Beginners can learn by following the framework
+5. **Diagnostic**: Quickly locate design problems
 
 ---
 
-### 第 2 层：信息设计（讲什么、怎么讲）
+## 8-Layer Design System
 
-**定义：** 筛选、组织、排序信息，建立认知路径。
+### Layer 1: Goal Design (Why)
 
-**关键问题：**
-- 哪些信息必须展示？（筛选）
-- 如何分组？（归类）
-- 如何排序？（优先级）
-- 如何建立层级？（主次关系）
-- 用户的认知路径是什么？（阅读顺序）
+**Definition:** Clarify the problem to solve, users to serve, and expected changes.
 
-**思想关键词：** 筛选、分组、排序、层级、压缩、认知路径
+**Key Questions:**
+- What problem does this solve?
+- Who is it for? (User personas, scenarios)
+- What change is expected? (Behavior, cognition, emotion)
+- What are the success criteria?
+- How to prioritize?
 
-**为什么重要：**
-- 信息过载是最常见的设计问题
-- 好的信息设计 = 用户能快速找到需要的
-- 信息结构决定了页面结构
+**Thought Keywords:** Problem definition, value hypothesis, success metrics, prioritization
 
-**理论基础：**
-- Miller's Law：人只能同时处理 7±2 个信息块
-- 认知负荷理论：减少不必要的认知消耗
-- 分块（Chunking）：将信息组织成有意义的块
+**Why It Matters:**
+- Goals determine the direction of all other layers
+- No goals = no evaluation criteria
+- Wrong goals → correct execution is still failure
 
-**现有文档：**
-- `design-excellence.md` - Hierarchy 部分
-- `content-guidelines.md` - 内容规则
-- `information-design-theory.md` - 认知负荷理论
+**Existing Documents:**
+- `junior-designer-mode.md` - Assumptions and questions for new tasks
+- `design-context.md` - Context understanding
 
-**验证标准：**
-- [ ] 信息有明确的主次关系
-- [ ] 同一层级的信息量不超过 7 个
-- [ ] 信息分组有清晰的逻辑
-- [ ] 用户能在 3 秒内找到核心信息
+**Validation Criteria:**
+- [ ] Can explain the core problem in one sentence
+- [ ] Can describe target users and usage scenarios
+- [ ] Has clear success metrics
+- [ ] Has clear priority ordering
 
 ---
 
-### 第 3 层：结构设计（骨架）
+### Layer 2: Information Design (What to Say, How to Say It)
 
-**定义：** 搭建页面结构、划分模块、建立布局系统。
+**Definition:** Filter, organize, and sequence information to establish cognitive paths.
 
-**关键问题：**
-- 页面如何划分区域？
-- 模块之间的关系是什么？
-- 导航体系如何设计？
-- 布局系统的规则是什么？
-- 如何适配不同屏幕？
+**Key Questions:**
+- What information must be shown? (Filtering)
+- How to group? (Categorization)
+- How to sequence? (Priority)
+- How to establish hierarchy? (Primary-secondary relationships)
+- What is the user's cognitive path? (Reading order)
 
-**思想关键词：** 秩序、关系、组织、架构、网格
+**Thought Keywords:** Filtering, grouping, sequencing, hierarchy, compression, cognitive path
 
-**为什么重要：**
-- 结构是视觉的骨架
-- 好的结构 = 清晰的秩序感
-- 结构约束交互和视觉
+**Why It Matters:**
+- Information overload is the most common design problem
+- Good information design = users can quickly find what they need
+- Information structure determines page structure
 
-**理论基础：**
-- 网格系统：建立视觉秩序
-- 模块化：降低复杂度
-- 响应式设计：适配多端
+**Theoretical Foundation:**
+- Miller's Law: People can only process 7±2 information chunks simultaneously
+- Cognitive Load Theory: Reduce unnecessary cognitive consumption
+- Chunking: Organize information into meaningful blocks
 
-**现有文档：**
-- `design-patterns.md` - 经典布局模式
-- `anti-patterns/layout.md` - 布局反模式
-- `frontend-design.md` - 前端布局
+**Existing Documents:**
+- `design-excellence.md` - Hierarchy section
+- `content-guidelines.md` - Content rules
+- `information-design-theory.md` - Cognitive load theory
 
-**验证标准：**
-- [ ] 页面有清晰的区域划分
-- [ ] 模块之间的关系明确
-- [ ] 使用一致的网格系统
-- [ ] 布局在不同屏幕下合理
-
----
-
-### 第 4 层：交互设计（人怎么用）
-
-**定义：** 设计操作流程、反馈机制、状态变化、容错机制。
-
-**关键问题：**
-- 用户如何完成任务？（流程）
-- 操作后有什么反馈？（反馈）
-- 不同状态如何展示？（状态）
-- 出错时如何处理？（容错）
-- 操作成本是否合理？（效率）
-
-**思想关键词：** 自然、低阻力、可预期、反馈、容错
-
-**为什么重要：**
-- 交互决定了用户体验
-- 好的交互 = 用户感觉不到交互
-- 交互问题导致任务失败
-
-**理论基础：**
-- Fitts's Law：目标越大越近越容易点击
-- Hick's Law：选择越多决策越慢
-- 反馈心理学：即时反馈降低焦虑
-- 可供性（Affordance）：设计暗示如何使用
-
-**现有文档：**
-- `interactive-prototype.md` - 交互原型
-- `animation-best-practices.md` - 动效最佳实践
-- `anti-patterns/interaction.md` - 交互反模式
-- `interaction-design-theory.md` - 交互理论
-
-**验证标准：**
-- [ ] 核心流程不超过 3 步
-- [ ] 每个操作都有即时反馈
-- [ ] 状态变化清晰可见
-- [ ] 有明确的错误提示和恢复机制
+**Validation Criteria:**
+- [ ] Information has clear primary-secondary relationships
+- [ ] No more than 7 items at the same hierarchy level
+- [ ] Information grouping has clear logic
+- [ ] Users can find core information within 3 seconds
 
 ---
 
-### 第 5 层：视觉设计（看起来如何）
+### Layer 3: Structure Design (Skeleton)
 
-**定义：** 设计色彩、字体、排版、对比、留白、视觉节奏。
+**Definition:** Build page structure, divide modules, establish layout system.
 
-**关键问题：**
-- 用什么色彩？（色彩系统）
-- 用什么字体？（字体选择）
-- 如何排版？（排版规则）
-- 如何建立对比？（视觉层级）
-- 如何使用留白？（视觉呼吸）
-- 如何建立节奏？（重复与变化）
+**Key Questions:**
+- How to divide page areas?
+- What are the relationships between modules?
+- How to design navigation?
+- What are the layout system rules?
+- How to adapt to different screens?
 
-**思想关键词：** 对比、秩序、节奏、识别、氛围
+**Thought Keywords:** Order, relationships, organization, architecture, grid
 
-**为什么重要：**
-- 视觉是用户的第一印象
-- 好的视觉 = 清晰 + 美观 + 一致
-- 视觉传达品牌和情绪
+**Why It Matters:**
+- Structure is the skeleton of visuals
+- Good structure = clear sense of order
+- Structure constrains interaction and visuals
 
-**理论基础：**
-- Gestalt 心理学：接近、相似、连续、闭合
-- 色彩心理学：色彩的情绪和文化含义
-- 对比理论：大小、颜色、字重、留白
-- 视觉节奏：重复建立秩序，变化建立焦点
+**Theoretical Foundation:**
+- Grid system: Establish visual order
+- Modularization: Reduce complexity
+- Responsive design: Adapt to multiple devices
 
-**现有文档：**
-- `design-excellence.md` - 视觉卓越标准
-- `typography-design-system.md` - 字体系统
-- `typography-spacing-examples.md` - 排版示例
-- `anti-patterns/color.md` - 色彩反模式
-- `anti-patterns/typography.md` - 字体反模式
-- `visual-design-theory.md` - 视觉理论
+**Existing Documents:**
+- `design-patterns.md` - Classic layout patterns
+- `anti-patterns/layout.md` - Layout anti-patterns
+- `frontend-design.md` - Frontend layout
 
-**验证标准：**
-- [ ] 使用一致的色彩系统（2-3 个主色）
-- [ ] 使用 type scale（1.25 ratio）
-- [ ] 使用 spacing scale（4/8/12/16/24/32/48/64）
-- [ ] 有清晰的视觉层级
-- [ ] 留白充足，视觉呼吸良好
+**Validation Criteria:**
+- [ ] Page has clear area divisions
+- [ ] Module relationships are clear
+- [ ] Uses consistent grid system
+- [ ] Layout works well on different screens
 
 ---
 
-### 第 6 层：品牌与情绪设计（感受到什么）
+### Layer 4: Interaction Design (How People Use It)
 
-**定义：** 设计气质、语气、信任感、情绪氛围、记忆点。
+**Definition:** Design operation flows, feedback mechanisms, state changes, error handling.
 
-**关键问题：**
-- 品牌定位是什么？（气质）
-- 用什么语气？（tone of voice）
-- 如何建立信任？（信任信号）
-- 想传达什么情绪？（情绪设计）
-- 记忆点是什么？（品牌识别）
+**Key Questions:**
+- How do users complete tasks? (Flow)
+- What feedback after operations? (Feedback)
+- How to show different states? (States)
+- How to handle errors? (Error handling)
+- Is the operation cost reasonable? (Efficiency)
 
-**思想关键词：** 识别、记忆、人格、信任、持续性
+**Thought Keywords:** Natural, low friction, predictable, feedback, fault tolerance
 
-**为什么重要：**
-- 品牌是长期价值
-- 好的品牌 = 一致的人格
-- 情绪影响决策
+**Why It Matters:**
+- Interaction determines user experience
+- Good interaction = users don't notice the interaction
+- Interaction problems lead to task failure
 
-**理论基础：**
-- 品牌人格理论：真诚、刺激、能力、精致、强韧
-- 情绪设计三层次：本能层、行为层、反思层
-- 信任信号：社会证明、权威、稀缺、一致性
+**Theoretical Foundation:**
+- Fitts's Law: Larger and closer targets are easier to click
+- Hick's Law: More choices slow down decisions
+- Feedback psychology: Immediate feedback reduces anxiety
+- Affordance: Design hints at how to use
 
-**现有文档：**
-- `design-styles.md` - 20 个设计流派
-- `getdesign-loader.md` - 品牌风格克隆
-- `brand-emotion-theory.md` - 品牌情绪理论
+**Existing Documents:**
+- `interactive-prototype.md` - Interactive prototypes
+- `animation-best-practices.md` - Animation best practices
+- `anti-patterns/interaction.md` - Interaction anti-patterns
+- `interaction-design-theory.md` - Interaction theory
 
-**验证标准：**
-- [ ] 视觉风格与品牌定位一致
-- [ ] 语气（文案、动效）统一
-- [ ] 有明确的信任信号
-- [ ] 情绪氛围符合目标
-
----
-
-### 第 7 层：系统设计（如何长期运转）
-
-**定义：** 建立设计规范、组件系统、复用机制、扩展规则、一致性治理。
-
-**关键问题：**
-- 如何建立设计规范？（design tokens）
-- 如何组件化？（组件库）
-- 如何复用？（模式库）
-- 如何扩展？（扩展规则）
-- 如何保持一致性？（治理机制）
-
-**思想关键词：** 一致性、复用、约束、扩展、治理
-
-**为什么重要：**
-- 设计是系统，不是作品
-- 好的系统 = 可持续、可扩展
-- 系统降低长期成本
-
-**理论基础：**
-- 约束提升创造力：限制选择降低决策成本
-- 组件化思维：DRY 原则
-- Token 架构：分离决策和实现
-
-**现有文档：**
-- `design-system-creation.md` - 设计系统创建
-- `typography-design-system.md` - 字体系统
-- `system-design-theory.md` - 系统理论
-
-**验证标准：**
-- [ ] 有明确的 design tokens（颜色、字号、间距）
-- [ ] 组件可复用
-- [ ] 有清晰的扩展规则
-- [ ] 一致性可验证
+**Validation Criteria:**
+- [ ] Core flow has no more than 3 steps
+- [ ] Every operation has immediate feedback
+- [ ] State changes are clearly visible
+- [ ] Has clear error messages and recovery mechanisms
 
 ---
 
-### 第 8 层：验证与迭代设计（是否有效）
+### Layer 5: Visual Design (How It Looks)
 
-**定义：** 验证可实现性、测试使用、收集数据、获取反馈、持续优化。
+**Definition:** Design color, typography, layout, contrast, whitespace, visual rhythm.
 
-**关键问题：**
-- 技术上可实现吗？（可实现性）
-- 用户能完成任务吗？（可用性测试）
-- 数据支持假设吗？（数据验证）
-- 用户反馈是什么？（真实反馈）
-- 如何持续优化？（迭代机制）
+**Key Questions:**
+- What colors to use? (Color system)
+- What fonts to use? (Font selection)
+- How to layout? (Layout rules)
+- How to establish contrast? (Visual hierarchy)
+- How to use whitespace? (Visual breathing)
+- How to establish rhythm? (Repetition and variation)
 
-**思想关键词：** 验证、测试、反馈、迭代、结果
+**Thought Keywords:** Contrast, order, rhythm, recognition, atmosphere
 
-**为什么重要：**
-- 设计是假设，验证是真相
-- 好的设计 = 经过验证的设计
-- 迭代是唯一的进步方式
+**Why It Matters:**
+- Visuals are the user's first impression
+- Good visuals = clear + beautiful + consistent
+- Visuals convey brand and emotion
 
-**理论基础：**
-- 精益设计：Build → Measure → Learn
-- A/B 测试：数据驱动决策
-- 用户测试：观察真实行为
+**Theoretical Foundation:**
+- Gestalt psychology: Proximity, similarity, continuity, closure
+- Color psychology: Emotional and cultural meanings of colors
+- Contrast theory: Size, color, weight, whitespace
+- Visual rhythm: Repetition establishes order, variation establishes focus
 
-**现有文档：**
-- `verification-protocol.md` - 验证协议
-- `verification.md` - 验证清单
+**Existing Documents:**
+- `design-excellence.md` - Visual excellence standards
+- `typography-design-system.md` - Typography system
+- `typography-spacing-examples.md` - Typography examples
+- `anti-patterns/color.md` - Color anti-patterns
+- `anti-patterns/typography.md` - Typography anti-patterns
+- `visual-design-theory.md` - Visual theory
 
-**验证标准：**
-- [ ] 技术可实现（无 console errors）
-- [ ] 用户能完成核心任务
-- [ ] 有数据支持关键假设
-- [ ] 有反馈收集机制
+**Validation Criteria:**
+- [ ] Uses consistent color system (2-3 primary colors)
+- [ ] Uses type scale (1.25 ratio)
+- [ ] Uses spacing scale (4/8/12/16/24/32/48/64)
+- [ ] Has clear visual hierarchy
+- [ ] Sufficient whitespace, good visual breathing
 
 ---
 
-## 层级之间的关系
+### Layer 6: Brand & Emotion Design (What It Feels Like)
 
-### 依赖关系（自上而下）
+**Definition:** Design temperament, tone, trust, emotional atmosphere, memorable elements.
+
+**Key Questions:**
+- What is the brand positioning? (Temperament)
+- What tone to use? (Tone of voice)
+- How to build trust? (Trust signals)
+- What emotion to convey? (Emotional design)
+- What are the memorable elements? (Brand recognition)
+
+**Thought Keywords:** Recognition, memory, personality, trust, continuity
+
+**Why It Matters:**
+- Brand is long-term value
+- Good brand = consistent personality
+- Emotion influences decisions
+
+**Theoretical Foundation:**
+- Brand personality theory: Sincerity, excitement, competence, sophistication, ruggedness
+- Three levels of emotional design: Visceral, behavioral, reflective
+- Trust signals: Social proof, authority, scarcity, consistency
+
+**Existing Documents:**
+- `design-styles.md` - 20 design schools
+- `getdesign-loader.md` - Brand style cloning
+- `brand-emotion-theory.md` - Brand emotion theory
+
+**Validation Criteria:**
+- [ ] Visual style aligns with brand positioning
+- [ ] Tone (copy, animation) is unified
+- [ ] Has clear trust signals
+- [ ] Emotional atmosphere matches goals
+
+---
+
+### Layer 7: System Design (How It Runs Long-Term)
+
+**Definition:** Establish design specs, component system, reuse mechanisms, extension rules, consistency governance.
+
+**Key Questions:**
+- How to establish design specs? (Design tokens)
+- How to componentize? (Component library)
+- How to reuse? (Pattern library)
+- How to extend? (Extension rules)
+- How to maintain consistency? (Governance mechanisms)
+
+**Thought Keywords:** Consistency, reuse, constraints, extension, governance
+
+**Why It Matters:**
+- Design is a system, not an artwork
+- Good system = sustainable, scalable
+- Systems reduce long-term costs
+
+**Theoretical Foundation:**
+- Constraints enhance creativity: Limiting choices reduces decision costs
+- Component thinking: DRY principle
+- Token architecture: Separate decisions from implementation
+
+**Existing Documents:**
+- `design-system-creation.md` - Design system creation
+- `typography-design-system.md` - Typography system
+- `system-design-theory.md` - System theory
+
+**Validation Criteria:**
+- [ ] Has clear design tokens (colors, font sizes, spacing)
+- [ ] Components are reusable
+- [ ] Has clear extension rules
+- [ ] Consistency is verifiable
+
+---
+
+### Layer 8: Validation & Iteration Design (Is It Effective)
+
+**Definition:** Validate feasibility, test usage, collect data, gather feedback, continuous optimization.
+
+**Key Questions:**
+- Is it technically feasible? (Feasibility)
+- Can users complete tasks? (Usability testing)
+- Does data support assumptions? (Data validation)
+- What is user feedback? (Real feedback)
+- How to continuously optimize? (Iteration mechanism)
+
+**Thought Keywords:** Validation, testing, feedback, iteration, results
+
+**Why It Matters:**
+- Design is hypothesis, validation is truth
+- Good design = validated design
+- Iteration is the only way to progress
+
+**Theoretical Foundation:**
+- Lean design: Build → Measure → Learn
+- A/B testing: Data-driven decisions
+- User testing: Observe real behavior
+
+**Existing Documents:**
+- `verification-protocol.md` - Verification protocol
+- `verification.md` - Verification checklist
+
+**Validation Criteria:**
+- [ ] Technically feasible (no console errors)
+- [ ] Users can complete core tasks
+- [ ] Has data supporting key assumptions
+- [ ] Has feedback collection mechanism
+
+---
+
+## Relationships Between Layers
+
+### Dependency Relationships (Top-Down)
 
 ```
-第 1 层：目标
-   ↓ 决定
-第 2 层：信息
-   ↓ 影响
-第 3 层：结构
-   ↓ 约束
-第 4 层：交互
-   ↓ 需要
-第 5 层：视觉
-   ↓ 体现
-第 6 层：品牌
-   ↓ 规范化
-第 7 层：系统
-   ↓ 验证
-第 8 层：验证
-   ↓ 反馈到
-第 1 层：目标（迭代）
+Layer 1: Goal
+   ↓ determines
+Layer 2: Information
+   ↓ influences
+Layer 3: Structure
+   ↓ constrains
+Layer 4: Interaction
+   ↓ requires
+Layer 5: Visual
+   ↓ embodies
+Layer 6: Brand
+   ↓ standardizes
+Layer 7: System
+   ↓ validates
+Layer 8: Validation
+   ↓ feeds back to
+Layer 1: Goal (iteration)
 ```
 
-**关键依赖：**
-- 目标层决定所有其他层的方向
-- 信息层影响结构层（内容决定形式）
-- 结构层约束交互层（布局决定操作）
-- 视觉层和品牌层必须服务于前 4 层
-- 系统层是前 6 层的规范化
-- 验证层反馈到目标层形成闭环
+**Key Dependencies:**
+- Goal layer determines the direction of all other layers
+- Information layer influences structure layer (content determines form)
+- Structure layer constrains interaction layer (layout determines operations)
+- Visual and brand layers must serve the first 4 layers
+- System layer standardizes the first 6 layers
+- Validation layer feeds back to goal layer forming a closed loop
 
 ---
 
-### 冲突处理规则
+### Conflict Resolution Rules
 
-当层级之间冲突时，优先级：
+When layers conflict, priority order:
 
-**目标 > 信息 > 结构 > 交互 > 视觉 > 品牌**
+**Goal > Information > Structure > Interaction > Visual > Brand**
 
-**示例：**
+**Examples:**
 
-**冲突 1：视觉 vs 信息**
-- 问题：大标题很美，但信息层级不清
-- 决策：缩小标题，保证层级清晰
-- 原因：信息 > 视觉
+**Conflict 1: Visual vs Information**
+- Problem: Large title looks beautiful, but information hierarchy is unclear
+- Decision: Reduce title size, ensure hierarchy clarity
+- Reason: Information > Visual
 
-**冲突 2：品牌 vs 交互**
-- 问题：品牌要求用特殊字体，但可读性差
-- 决策：标题用品牌字体，正文用可读字体
-- 原因：交互 > 品牌
+**Conflict 2: Brand vs Interaction**
+- Problem: Brand requires special font, but readability is poor
+- Decision: Use brand font for titles, readable font for body text
+- Reason: Interaction > Brand
 
-**冲突 3：系统一致性 vs 局部最优**
-- 问题：这个页面用 12px 更好，但系统是 14px
-- 决策：保持 14px，维护系统一致性
-- 原因：系统 > 局部
+**Conflict 3: System Consistency vs Local Optimization**
+- Problem: 12px works better for this page, but system uses 14px
+- Decision: Keep 14px, maintain system consistency
+- Reason: System > Local
 
-**例外：目标层明确要求时可以打破规则**
-- 如果目标是"品牌展示"，品牌 > 交互
-- 如果目标是"视觉冲击"，视觉 > 信息
-- 但必须有明确的理由和权衡
-
----
-
-## 完整设计流程
-
-### 标准流程（自上而下）
-
-1. **目标定义** → 明确问题、用户、成功标准
-2. **用户研究** → 理解用户需求和场景
-3. **信息整理** → 筛选、分组、排序、建立层级
-4. **结构搭建** → 页面结构、模块划分、布局系统
-5. **流程规划** → 操作流程、反馈、状态、容错
-6. **视觉表达** → 色彩、字体、排版、对比、留白
-7. **品牌融入** → 气质、语气、情绪、记忆点
-8. **规范沉淀** → 组件化、文档化、系统化
-9. **上线验证** → 测试、数据、反馈
-10. **持续优化** → 迭代、改进
-
-### 快速流程（小改动）
-
-1. **确认目标** → 这个改动解决什么问题？
-2. **检查一致性** → 是否符合现有系统？
-3. **执行** → 按规范实现
-4. **验证** → 检查效果
-
-### 诊断流程（问题修复）
-
-1. **定位层级** → 问题出在哪一层？
-2. **检查依赖** → 上游层级是否有问题？
-3. **修复** → 从根源层级开始修复
-4. **验证** → 确认问题解决
+**Exception: Can break rules when goal layer explicitly requires**
+- If goal is "brand showcase", Brand > Interaction
+- If goal is "visual impact", Visual > Information
+- But must have clear reasoning and tradeoffs
 
 ---
 
-## 如何使用这个框架
+## Complete Design Process
 
-### 设计前检查清单
+### Standard Process (Top-Down)
 
-**第 1 层：目标**
-- [ ] 核心问题是什么？
-- [ ] 目标用户是谁？
-- [ ] 成功标准是什么？
-- [ ] 优先级如何排序？
+1. **Define Goals** → Clarify problem, users, success criteria
+2. **User Research** → Understand user needs and scenarios
+3. **Organize Information** → Filter, group, sequence, establish hierarchy
+4. **Build Structure** → Page structure, module division, layout system
+5. **Plan Flow** → Operation flow, feedback, states, error handling
+6. **Visual Expression** → Color, typography, layout, contrast, whitespace
+7. **Integrate Brand** → Temperament, tone, emotion, memorable elements
+8. **Standardize Specs** → Componentization, documentation, systematization
+9. **Launch Validation** → Testing, data, feedback
+10. **Continuous Optimization** → Iteration, improvement
 
-**第 2 层：信息**
-- [ ] 哪些信息必须展示？
-- [ ] 如何分组？
-- [ ] 如何排序？
-- [ ] 信息层级是否清晰？
+### Quick Process (Small Changes)
 
-**第 3 层：结构**
-- [ ] 页面结构是否清晰？
-- [ ] 模块关系是否明确？
-- [ ] 布局系统是否一致？
+1. **Confirm Goal** → What problem does this change solve?
+2. **Check Consistency** → Does it fit the existing system?
+3. **Execute** → Implement according to specs
+4. **Validate** → Check results
 
-**第 4 层：交互**
-- [ ] 核心流程是否顺畅？
-- [ ] 每个操作是否有反馈？
-- [ ] 状态变化是否清晰？
-- [ ] 是否有容错机制？
+### Diagnostic Process (Problem Fixing)
 
-**第 5 层：视觉**
-- [ ] 色彩系统是否一致？
-- [ ] 字体系统是否规范？
-- [ ] 视觉层级是否清晰？
-- [ ] 留白是否充足？
-
-**第 6 层：品牌**
-- [ ] 气质是否符合定位？
-- [ ] 语气是否统一？
-- [ ] 是否有信任信号？
-- [ ] 情绪氛围是否合适？
-
-**第 7 层：系统**
-- [ ] 是否使用 design tokens？
-- [ ] 组件是否可复用？
-- [ ] 是否有扩展规则？
-- [ ] 一致性是否可验证？
-
-**第 8 层：验证**
-- [ ] 技术是否可实现？
-- [ ] 用户能否完成任务？
-- [ ] 是否有数据支持？
-- [ ] 如何收集反馈？
+1. **Locate Layer** → Which layer has the problem?
+2. **Check Dependencies** → Are there problems in upstream layers?
+3. **Fix** → Start fixing from the root layer
+4. **Validate** → Confirm problem is solved
 
 ---
 
-### 诊断设计问题
+## How to Use This Framework
 
-**症状 → 层级 → 解决方向**
+### Pre-Design Checklist
 
-| 症状 | 问题层级 | 检查重点 |
-|------|---------|---------|
-| "看起来不对" | 第 5 层（视觉） | 对比、层级、留白、一致性 |
-| "用起来别扭" | 第 4 层（交互） | 流程、反馈、状态、容错 |
-| "找不到重点" | 第 2 层（信息） | 筛选、分组、排序、层级 |
-| "感觉很乱" | 第 3 层（结构） | 页面结构、模块关系、网格 |
-| "不知道为什么做" | 第 1 层（目标） | 问题定义、用户、成功标准 |
-| "气质不对" | 第 6 层（品牌） | 定位、语气、情绪、记忆点 |
-| "无法扩展" | 第 7 层（系统） | tokens、组件、规范、治理 |
-| "不知道是否有效" | 第 8 层（验证） | 测试、数据、反馈、迭代 |
+**Layer 1: Goal**
+- [ ] What is the core problem?
+- [ ] Who are the target users?
+- [ ] What are the success criteria?
+- [ ] How to prioritize?
+
+**Layer 2: Information**
+- [ ] What information must be shown?
+- [ ] How to group?
+- [ ] How to sequence?
+- [ ] Is information hierarchy clear?
+
+**Layer 3: Structure**
+- [ ] Is page structure clear?
+- [ ] Are module relationships clear?
+- [ ] Is layout system consistent?
+
+**Layer 4: Interaction**
+- [ ] Is core flow smooth?
+- [ ] Does every operation have feedback?
+- [ ] Are state changes clear?
+- [ ] Is there error handling?
+
+**Layer 5: Visual**
+- [ ] Is color system consistent?
+- [ ] Is typography system standardized?
+- [ ] Is visual hierarchy clear?
+- [ ] Is whitespace sufficient?
+
+**Layer 6: Brand**
+- [ ] Does temperament match positioning?
+- [ ] Is tone unified?
+- [ ] Are there trust signals?
+- [ ] Is emotional atmosphere appropriate?
+
+**Layer 7: System**
+- [ ] Are design tokens used?
+- [ ] Are components reusable?
+- [ ] Are there extension rules?
+- [ ] Is consistency verifiable?
+
+**Layer 8: Validation**
+- [ ] Is it technically feasible?
+- [ ] Can users complete tasks?
+- [ ] Is there data support?
+- [ ] How to collect feedback?
 
 ---
 
-### 层级映射：现有文档
+### Diagnosing Design Problems
 
-| 设计层级 | 对应文档 |
-|---------|---------|
-| 第 1 层：目标 | `junior-designer-mode.md`, `design-context.md` |
-| 第 2 层：信息 | `design-excellence.md`, `content-guidelines.md`, `information-design-theory.md` |
-| 第 3 层：结构 | `design-patterns.md`, `anti-patterns/layout.md`, `frontend-design.md` |
-| 第 4 层：交互 | `interactive-prototype.md`, `animation-best-practices.md`, `anti-patterns/interaction.md`, `interaction-design-theory.md` |
-| 第 5 层：视觉 | `design-excellence.md`, `typography-design-system.md`, `anti-patterns/color.md`, `anti-patterns/typography.md`, `visual-design-theory.md` |
-| 第 6 层：品牌 | `design-styles.md`, `getdesign-loader.md`, `brand-emotion-theory.md` |
-| 第 7 层：系统 | `design-system-creation.md`, `typography-design-system.md`, `system-design-theory.md` |
-| 第 8 层：验证 | `verification-protocol.md`, `verification.md` |
+**Symptom → Layer → Solution Direction**
+
+| Symptom | Problem Layer | Check Focus |
+|---------|--------------|-------------|
+| "Looks wrong" | Layer 5 (Visual) | Contrast, hierarchy, whitespace, consistency |
+| "Feels awkward to use" | Layer 4 (Interaction) | Flow, feedback, states, error handling |
+| "Can't find the focus" | Layer 2 (Information) | Filtering, grouping, sequencing, hierarchy |
+| "Feels messy" | Layer 3 (Structure) | Page structure, module relationships, grid |
+| "Don't know why we're doing this" | Layer 1 (Goal) | Problem definition, users, success criteria |
+| "Temperament is off" | Layer 6 (Brand) | Positioning, tone, emotion, memorable elements |
+| "Can't scale" | Layer 7 (System) | Tokens, components, specs, governance |
+| "Don't know if it's effective" | Layer 8 (Validation) | Testing, data, feedback, iteration |
 
 ---
 
-## 记住
+### Layer Mapping: Existing Documents
 
-1. **8 层框架**：目标 → 信息 → 结构 → 交互 → 视觉 → 品牌 → 系统 → 验证
-2. **依赖关系**：上层决定下层，下层服务上层
-3. **冲突处理**：目标 > 信息 > 结构 > 交互 > 视觉 > 品牌
-4. **完整流程**：自上而下设计，自下而上验证
-5. **诊断方法**：症状 → 定位层级 → 检查依赖 → 修复根源
+| Design Layer | Corresponding Documents | Purpose |
+|--------------|------------------------|---------|
+| Layer 1: Goal | `junior-designer-mode.md`, `design-context.md`, `workflow.md` (Step 1) | Clarify problem, users, success criteria |
+| Layer 2: Information | `design-excellence.md`, `content-guidelines.md`, `information-design-theory.md` | Filter, group, prioritize, hierarchy |
+| Layer 3: Structure | `design-patterns.md`, `anti-patterns/layout.md`, `frontend-design.md` | Page structure, module division, layout |
+| Layer 4: Interaction | `interactive-prototype.md`, `animation-best-practices.md`, `anti-patterns/interaction.md`, `interaction-design-theory.md` | Flow, feedback, states, error handling |
+| Layer 5: Visual | `design-excellence.md`, `typography-design-system.md`, `anti-patterns/color.md`, `anti-patterns/typography.md`, `visual-design-theory.md` | Color, typography, layout, contrast |
+| Layer 6: Brand | `design-styles.md`, `getdesign-loader.md`, `brand-emotion-theory.md` | Personality, tone, emotion, memory |
+| Layer 7: System | `design-system-creation.md`, `typography-design-system.md`, `system-design-theory.md` | Componentization, documentation, systematization |
+| Layer 8: Validation | `verification-protocol.md`, `verification.md`, `critique-guide.md`, `principle-review.md`, `design-checklist.md` | Testing, data, feedback, iteration |
 
-**8 层框架不是流程，是思维模型。**
+**Review Document Mapping:**
+- **Quick Review** (daily iteration): `critique-guide.md` (5-dimension scoring)
+- **Principle Review** (final delivery): `principle-review.md` (10 principles Pass/Warning/Fail)
+- **Automated Check** (every review): `design-checklist.md` (50+ binary checks)
+
+---
+
+## Relationship to Execution Workflow
+
+**8-Layer Framework = Thinking Model** (what to think about)
+**workflow.md = Execution Process** (how to execute)
+
+Use them together:
+- Follow workflow.md steps during execution
+- Use 8-layer framework to check for missing considerations during decision-making
+- Use 8-layer framework to locate problem layers during diagnosis
+- Use layer priority to resolve conflicts
+
+See the mapping table at the beginning of `workflow.md`.
+
+---
+
+## Remember
+
+1. **8-Layer Framework**: Goal → Information → Structure → Interaction → Visual → Brand → System → Validation
+2. **Dependency Relationships**: Upper layers determine lower layers, lower layers serve upper layers
+3. **Conflict Resolution**: Goal > Information > Structure > Interaction > Visual > Brand
+4. **Complete Process**: Design top-down, validate bottom-up
+5. **Diagnostic Method**: Symptom → Locate layer → Check dependencies → Fix root cause
+
+**The 8-layer framework is not a process, it's a thinking model.**

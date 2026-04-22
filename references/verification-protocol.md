@@ -5,6 +5,24 @@
 > **Why it matters:** Platform-native design tools run two-phase verification automatically. Without this protocol, defects slip through to delivery.
 > **Typical failure it prevents:** Delivering artifacts with console errors, broken scaling, invisible text, or misaligned elements
 
+---
+
+## Relationship to 8-Layer Framework
+
+This verification protocol implements **Layer 8 (Validation)** of the design thinking framework (`design-thinking-framework.md`).
+
+**Mapping:**
+
+| Verification Phase | 8-Layer Framework | What It Validates |
+|--------------------|-------------------|-------------------|
+| **Phase 1: Structural** | Layer 3 (Structure) + Layer 4 (Interaction) | Technical feasibility, layout structure, interaction functionality |
+| **Phase 2: Visual** | Layer 5 (Visual) + Layer 6 (Brand) | Visual hierarchy, typography, spacing, brand consistency |
+| **Phase 3: Design Excellence** | Layer 2 (Information) + Layer 7 (System) | Information clarity, system consistency, anti-slop compliance |
+
+**Complete validation requires all 3 phases.** Phase 1-2 are defined here. Phase 3 uses `design-checklist.md` for objective quality checks.
+
+---
+
 ## Phase 1: Structural Verification
 
 Run these checks first. Any failure = stop and fix before proceeding to Phase 2.

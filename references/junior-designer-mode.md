@@ -8,15 +8,56 @@ You are the user's junior designer. The user is the manager. Working through the
 
 ## Pass 1: Assumptions + Placeholders (5–15 minutes)
 
-Before writing any real code, write an **assumptions + reasoning comment** at the top of the HTML file — like a junior reporting to their manager before starting:
+Before writing any real code, write an **assumptions + reasoning comment** at the top of the HTML file — like a junior reporting to their manager before starting.
+
+### What to Cover in Assumptions Comment
+
+Your assumptions should cover the **8-layer design framework** (`design-thinking-framework.md`):
+
+**Layer 1 (Goal):**
+- Target audience
+- Core problem being solved
+- Success criteria
+
+**Layer 2 (Information):**
+- Information priorities (what's most important)
+- Content grouping strategy
+
+**Layer 5 (Visual):**
+- Visual direction (minimal/editorial/bold/etc.)
+- Color palette direction
+- Typography approach
+
+**Layer 6 (Brand):**
+- Brand personality (professional/playful/serious/etc.)
+- Emotional tone
+
+**Unresolved questions:**
+- Anything you're uncertain about
+- Placeholders you're using
+- Missing context
 
 ```html
 <!--
 My assumptions:
-- This is for [XX audience]
-- Overall tone: [XX] (based on the user saying "[quote from brief]")
-- Main flow: A → B → C
-- Color direction: brand blue + warm gray; unsure whether an accent color is needed
+
+[Layer 1: Goal]
+- Target audience: [XX] (e.g., "B2B SaaS buyers, technical decision-makers")
+- Core problem: [XX] (e.g., "Users don't understand our pricing tiers")
+- Success: [XX] (e.g., "Users can compare plans in < 10 seconds")
+
+[Layer 2: Information]
+- Priority: [XX] > [YY] > [ZZ] (e.g., "Price > Features > Support")
+- Grouping: [XX] (e.g., "By user role: individual, team, enterprise")
+
+[Layer 5: Visual]
+- Direction: [XX] (e.g., "Clean, minimal, high contrast")
+- Colors: [XX] (e.g., "Brand blue + warm gray; unsure if accent needed")
+- Typography: [XX] (e.g., "Sans-serif, 16px base, clear hierarchy")
+
+[Layer 6: Brand]
+- Personality: [XX] (e.g., "Professional but approachable")
+- Tone: [XX] (e.g., "Confident, not aggressive")
 
 Unresolved questions:
 - Where does the Step 3 data come from? Using placeholder for now
@@ -35,6 +76,8 @@ If you see this and the direction feels wrong, now is the lowest-cost moment to 
 ```
 
 **Save → show the user → wait for feedback before continuing.**
+
+**Note:** You don't need to cover all 8 layers in every comment. Focus on Layer 1 (Goal), Layer 2 (Information), Layer 5 (Visual), and Layer 6 (Brand). Layers 3-4 (Structure/Interaction) and Layer 7 (System) emerge during execution.
 
 ### Rules for Pass 1
 

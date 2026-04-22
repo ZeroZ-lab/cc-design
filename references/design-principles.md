@@ -1,520 +1,520 @@
-# 设计原则：10 条核心决策框架
+# Design Principles: 10 Core Decision Framework
 
-> **Load when:** 设计评审、原则冲突、权衡决策、需要解释设计理由时
-> **Skip when:** 简单执行、规范明确、无需判断的任务
-> **Why it matters:** 提供一致的决策框架，解决原则冲突，建立设计判断力
-> **Typical failure it prevents:** 主观臆断、无法解释决策、原则冲突时不知如何选择
+> **Load when:** Design reviews, principle conflicts, tradeoff decisions, need to explain design reasoning
+> **Skip when:** Simple execution, clear specs, no judgment needed
+> **Why it matters:** Provides consistent decision framework, resolves principle conflicts, builds design judgment
+> **Typical failure it prevents:** Subjective guessing, unable to explain decisions, not knowing how to choose when principles conflict
 
-10 条核心原则是 cc-design 的决策框架。它们不是规则，是判断工具。当面临选择时，用原则指导决策。
-
----
-
-## cc-design 的 10 条核心原则
-
-### 1. 清晰优先于美观
-
-**原则：** 如果必须在清晰和美观之间选择，选择清晰。
-
-**理由：**
-- 设计的首要目标是传达信息，不是装饰
-- 用户来是为了完成任务，不是欣赏设计
-- 美观但不清晰 = 失败的设计
-
-**应用：**
-- **字号**：可读性 > 视觉紧凑（最小 14px 正文）
-- **对比**：信息层级 > 视觉和谐（足够的对比度）
-- **留白**：阅读节奏 > 空间利用率（宁可多留白）
-- **动效**：功能反馈 > 视觉炫技（有目的的动效）
-
-**例外：**
-- 品牌表达型设计（艺术海报、概念展示）
-- 情绪优先的场景（情感化设计）
-- 但即使例外，也要保证基本可读性
-
-**检验：**
-- 用户能在 3 秒内找到核心信息吗？
-- 信息层级一目了然吗？
-- 去掉装饰后还能用吗？
+The 10 core principles are cc-design's decision framework. They are not rules, they are judgment tools. When facing choices, use principles to guide decisions.
 
 ---
 
-### 2. 上下文优先于惯例
+## cc-design's 10 Core Principles
 
-**原则：** 用户的设计系统 > 通用最佳实践。
+### 1. Clarity Over Beauty
 
-**理由：**
-- 一致性比"正确性"更重要
-- 用户已有的系统是他们的上下文
-- 打破一致性的代价高于局部优化的收益
+**Principle:** If you must choose between clarity and beauty, choose clarity.
 
-**应用：**
-- **先读 codebase**：复制用户的 hex/px 值，不要猜
-- **遵循命名**：用户叫 `primary-blue` 就用这个名字
-- **保持模式**：用户用 card 就继续用 card
-- **尊重规范**：不要用"Material Design 说应该这样"反驳
+**Reasoning:**
+- Design's primary goal is to convey information, not to decorate
+- Users come to complete tasks, not to admire design
+- Beautiful but unclear = failed design
 
-**例外：**
-- 用户系统明显违反可用性（如 12px 正文、3:1 对比度）
-- 用户明确要求改进现有系统
-- 但要先提出建议，获得同意后再改
+**Application:**
+- **Font size**: Readability > visual compactness (minimum 14px body text)
+- **Contrast**: Information hierarchy > visual harmony (sufficient contrast ratio)
+- **Whitespace**: Reading rhythm > space efficiency (prefer more whitespace)
+- **Animation**: Functional feedback > visual showmanship (purposeful animation)
 
-**检验：**
-- 这个设计放到用户的产品里和谐吗？
-- 用户能认出这是他们的风格吗？
-- 是否复用了用户的 tokens 和组件？
+**Exception:**
+- Brand expression designs (art posters, concept showcases)
+- Emotion-priority scenarios (emotional design)
+- But even in exceptions, ensure basic readability
 
----
-
-### 3. 问题定义优先于解决方案
-
-**原则：** 先问"为什么"，再问"怎么做"。
-
-**理由：**
-- 没有目标定义，就没有真正的设计，只有装饰
-- 错误的问题定义 → 正确的执行也是失败
-- 问题定义决定了评价标准
-
-**应用：**
-- **P1 原则**：新任务先批量提问，不要直接动手
-- **Junior Designer Mode**：先写假设再写代码
-- **每个设计前回答**：解决什么问题？服务谁？成功标准？
-- **拒绝模糊需求**："做一个好看的 dashboard" → 问清楚展示什么数据
-
-**例外：**
-- 明确的小改动（"把按钮改成蓝色"）
-- 用户已经提供了详细的 brief
-- 但即使例外，也要确认理解正确
-
-**检验：**
-- 能用一句话说清核心问题吗？
-- 能描述目标用户和场景吗？
-- 有明确的成功指标吗？
+**Test:**
+- Can users find core information within 3 seconds?
+- Is information hierarchy immediately clear?
+- Is it still usable without decoration?
 
 ---
 
-### 4. 验证优先于假设
+### 2. Context Over Convention
 
-**原则：** 用数据和测试验证，不要依赖直觉。
+**Principle:** User's design system > general best practices.
 
-**理由：**
-- 设计师的"感觉"经常错
-- 假设未经验证 = 风险
-- 验证是学习和改进的唯一途径
+**Reasoning:**
+- Consistency is more important than "correctness"
+- User's existing system is their context
+- Cost of breaking consistency > benefit of local optimization
 
-**应用：**
-- **P0 原则**：事实验证（品牌、产品、价格、技术）
-- **三阶段验证**：结构 → 视觉 → 卓越
-- **截图前检查**：console errors、响应式、真实内容
-- **交付前测试**：核心流程、边界情况、不同设备
+**Application:**
+- **Read codebase first**: Copy user's hex/px values, don't guess
+- **Follow naming**: If user calls it `primary-blue`, use that name
+- **Keep patterns**: If user uses cards, keep using cards
+- **Respect specs**: Don't argue with "Material Design says it should be this way"
 
-**例外：**
-- 时间紧迫的原型设计（但要标注假设）
-- 探索性设计（但要明确这是探索）
-- 但要尽快验证假设
+**Exception:**
+- User's system clearly violates usability (e.g., 12px body text, 3:1 contrast ratio)
+- User explicitly requests system improvements
+- But suggest first, change only after agreement
 
-**检验：**
-- 这个设计基于事实还是假设？
-- 假设是否已验证？
-- 有数据支持关键决策吗？
-
----
-
-### 5. 系统优先于局部
-
-**原则：** 整体一致性 > 局部最优。
-
-**理由：**
-- 局部精彩但整体混乱 = 失败的设计
-- 系统思维降低认知负荷
-- 一致性建立信任和可预测性
-
-**应用：**
-- **Spacing scale**：4/8/12/16/24/32/48/64，不要随机值
-- **Type scale**：1.25 ratio，不要任意字号
-- **字重**：2-3 个字重，不要 5 个
-- **色彩**：2-3 个主色，不要彩虹
-- **组件**：复用现有组件，不要每次重新设计
-
-**例外：**
-- 明确的视觉焦点（hero section）可以打破规则
-- 品牌展示需要特殊处理
-- 但要有明确的理由，并记录例外
-
-**检验：**
-- 这个设计使用了系统的 tokens 吗？
-- 是否与其他页面一致？
-- 如果复制 10 次会混乱吗？
+**Test:**
+- Does this design fit harmoniously into the user's product?
+- Can the user recognize this as their style?
+- Does it reuse the user's tokens and components?
 
 ---
 
-### 6. 内容优先于形式
+### 3. Problem Definition Over Solutions
 
-**原则：** 先整理内容，再设计形式。
+**Principle:** Ask "why" first, then "how".
 
-**理由：**
-- 形式服务于内容，不是反过来
-- 内容决定了结构和视觉
-- 形式脱离内容 = 空洞的视觉游戏
+**Reasoning:**
+- Without goal definition, there's no real design, only decoration
+- Wrong problem definition → correct execution is still failure
+- Problem definition determines evaluation criteria
 
-**应用：**
-- **先做信息架构**：筛选、分组、排序
-- **再做视觉设计**：用视觉表达信息层级
-- **不要削足适履**：不要为了 bento grid 强行拆分内容
-- **No filler content**：没有内容就不要占位
+**Application:**
+- **P1 principle**: Ask questions in batch for new tasks, don't jump in
+- **Junior Designer Mode**: Write assumptions before code
+- **Before each design answer**: What problem? For whom? Success criteria?
+- **Reject vague briefs**: "Make a nice dashboard" → clarify what data to show
 
-**例外：**
-- 品牌表达型设计（形式即内容）
-- 视觉探索阶段（但要尽快填入真实内容）
-- 但要明确这是例外
+**Exception:**
+- Clear small changes ("change button to blue")
+- User has provided detailed brief
+- But even in exceptions, confirm understanding
 
-**检验：**
-- 内容是否已整理好？
-- 形式是否服务于内容？
-- 去掉内容后形式还有意义吗？
-
----
-
-### 7. 减法优先于加法
-
-**原则：** 能删就删，不要堆砌。
-
-**理由：**
-- 每个元素都增加认知负荷
-- 少即是多（Less is more）
-- 删除是最难的设计决策
-
-**应用：**
-- **No filler content**：没有实际内容就不要占位
-- **删除装饰**：不承载信息的元素都可以删
-- **留白 > 填满**：宁可多留白，不要塞满
-- **一屏一个重点**：不要试图在一屏展示所有
-
-**例外：**
-- 需要营造丰富感的设计（电商、媒体）
-- 品牌要求的装饰元素
-- 但要确保不影响核心信息
-
-**检验：**
-- 每个元素都有明确的目的吗？
-- 删除后会影响理解吗？
-- 是否有不必要的装饰？
+**Test:**
+- Can you explain the core problem in one sentence?
+- Can you describe target users and scenarios?
+- Are there clear success metrics?
 
 ---
 
-### 8. 自然优先于炫技
+### 4. Validation Over Assumptions
 
-**原则：** 交互应该符合直觉，不要为了酷而设计。
+**Principle:** Validate with data and testing, don't rely on intuition.
 
-**理由：**
-- 用户不关心你的技术，只关心能否完成任务
-- 自然的交互 = 用户感觉不到交互
-- 炫技增加学习成本
+**Reasoning:**
+- Designer's "feeling" is often wrong
+- Unvalidated assumptions = risk
+- Validation is the only way to learn and improve
 
-**应用：**
-- **按钮在预期位置**：不要为了创新改变基本模式
-- **反馈及时清晰**：不要用复杂动效延迟反馈
-- **不要过度动效**：动效服务于功能，不是炫技
-- **遵循平台规范**：iOS 用 iOS 模式，Web 用 Web 模式
+**Application:**
+- **P0 principle**: Fact validation (brand, product, pricing, technology)
+- **Three-phase validation**: Structure → Visual → Excellence
+- **Pre-screenshot checks**: Console errors, responsive, real content
+- **Pre-delivery testing**: Core flow, edge cases, different devices
 
-**例外：**
-- 品牌展示型动画（但不能影响核心功能）
-- 创新型产品（但要降低学习成本）
-- 但要确保基本可用性
+**Exception:**
+- Time-constrained prototyping (but label assumptions)
+- Exploratory design (but clarify it's exploration)
+- But validate assumptions as soon as possible
 
-**检验：**
-- 用户第一次用能猜到怎么操作吗？
-- 动效是否有明确的功能目的？
-- 是否遵循了平台规范？
-
----
-
-### 9. 一致性优先于创新
-
-**原则：** 遵循平台规范和用户习惯。
-
-**理由：**
-- 一致性降低学习成本
-- 用户习惯是宝贵的资产
-- 创新要有充分的理由
-
-**应用：**
-- **iOS 用 iOS 规范**：不要在 iOS 上用 Material Design
-- **Web 用 Web 惯例**：链接是蓝色下划线，按钮是实心
-- **不要重新发明导航**：用户知道左上角是返回
-- **保持内部一致**：同一个产品内保持一致
-
-**例外：**
-- 明确的品牌差异化需求
-- 创新能显著提升体验
-- 但要降低学习成本，提供引导
-
-**检验：**
-- 这个设计符合平台规范吗？
-- 是否与用户习惯一致？
-- 创新是否有充分的理由？
+**Test:**
+- Is this design based on facts or assumptions?
+- Have assumptions been validated?
+- Is there data supporting key decisions?
 
 ---
 
-### 10. 可扩展性优先于完美
+### 5. System Over Local
 
-**原则：** 设计要能长期运转，不只是当下完美。
+**Principle:** Overall consistency > local optimization.
 
-**理由：**
-- 设计是系统，不是作品
-- 完美但无法扩展 = 技术债
-- 可扩展性是长期价值
+**Reasoning:**
+- Locally brilliant but globally chaotic = failed design
+- System thinking reduces cognitive load
+- Consistency builds trust and predictability
 
-**应用：**
-- **建立 design system**：tokens、组件、规范
-- **使用 CSS 变量**：不要硬编码值
-- **组件化思维**：可复用、可组合
-- **文档化**：记录决策和规则
+**Application:**
+- **Spacing scale**: 4/8/12/16/24/32/48/64, not random values
+- **Type scale**: 1.25 ratio, not arbitrary font sizes
+- **Font weights**: 2-3 weights, not 5
+- **Colors**: 2-3 primary colors, not a rainbow
+- **Components**: Reuse existing components, don't redesign every time
 
-**例外：**
-- 一次性营销页面（但也要考虑复用）
-- 快速原型（但要标注临时方案）
-- 但要尽快系统化
+**Exception:**
+- Clear visual focus (hero section) can break rules
+- Brand showcase needs special treatment
+- But have clear reasoning and document the exception
 
-**检验：**
-- 这个设计能复用吗？
-- 能扩展到其他场景吗？
-- 有清晰的规则吗？
-
----
-
-## 原则的优先级
-
-当原则冲突时，按以下顺序：
-
-1. **清晰** > 美观
-2. **上下文** > 惯例
-3. **问题定义** > 解决方案
-4. **验证** > 假设
-5. **系统** > 局部
-6. **内容** > 形式
-7. **减法** > 加法
-8. **自然** > 炫技
-9. **一致性** > 创新
-10. **可扩展** > 完美
-
-**注意：** 这不是绝对的，要根据具体情况判断。
+**Test:**
+- Does this design use system tokens?
+- Is it consistent with other pages?
+- If copied 10 times, would it become chaotic?
 
 ---
 
-## 原则冲突案例
+### 6. Content Over Form
 
-### 案例 1：清晰 vs 美观
+**Principle:** Organize content first, then design form.
 
-**场景：** 大标题很美，但信息层级不清
+**Reasoning:**
+- Form serves content, not the other way around
+- Content determines structure and visuals
+- Form without content = empty visual games
 
-**冲突：**
-- 美观：48px 大标题视觉冲击力强
-- 清晰：标题太大，正文相对太小，层级不清
+**Application:**
+- **Information architecture first**: Filter, group, sequence
+- **Then visual design**: Use visuals to express information hierarchy
+- **Don't force fit**: Don't break content to fit bento grid
+- **No filler content**: No content = no placeholder
 
-**决策：** 缩小标题到 32px，保证层级清晰
+**Exception:**
+- Brand expression designs (form is the content)
+- Visual exploration phase (but fill in real content soon)
+- But clarify it's an exception
 
-**理由：** 原则 1（清晰 > 美观）
-
----
-
-### 案例 2：上下文 vs 惯例
-
-**场景：** 用户系统用 12px 正文，但最佳实践是 14px
-
-**冲突：**
-- 上下文：保持 12px 维护一致性
-- 惯例：14px 可读性更好
-
-**决策：** 先提出建议，如果用户坚持，保持 12px
-
-**理由：** 原则 2（上下文 > 惯例），但要提出建议
+**Test:**
+- Is content organized?
+- Does form serve content?
+- Does form have meaning without content?
 
 ---
 
-### 案例 3：系统 vs 局部
+### 7. Subtraction Over Addition
 
-**场景：** 这个页面用 12px 更好，但系统是 14px
+**Principle:** Remove what you can, don't pile on.
 
-**冲突：**
-- 局部：12px 在这个页面视觉更紧凑
-- 系统：14px 是系统标准
+**Reasoning:**
+- Every element adds cognitive load
+- Less is more
+- Removing is the hardest design decision
 
-**决策：** 保持 14px，维护系统一致性
+**Application:**
+- **No filler content**: No actual content = no placeholder
+- **Remove decoration**: Elements that don't carry information can be removed
+- **Whitespace > filling**: Prefer more whitespace, don't stuff everything in
+- **One focus per screen**: Don't try to show everything on one screen
 
-**理由：** 原则 5（系统 > 局部）
+**Exception:**
+- Designs requiring richness (e-commerce, media)
+- Brand-required decorative elements
+- But ensure core information is not affected
 
----
-
-### 案例 4：品牌 vs 交互
-
-**场景：** 品牌要求用特殊字体，但可读性差
-
-**冲突：**
-- 品牌：特殊字体体现品牌个性
-- 交互：可读性差影响使用
-
-**决策：** 标题用品牌字体，正文用可读字体
-
-**理由：** 原则 1（清晰 > 美观）+ 原则 8（自然 > 炫技）
-
----
-
-### 案例 5：创新 vs 一致性
-
-**场景：** 想用新的导航模式，但用户习惯传统模式
-
-**冲突：**
-- 创新：新模式更高效
-- 一致性：传统模式用户熟悉
-
-**决策：** 如果新模式显著提升体验，可以创新，但要提供引导
-
-**理由：** 原则 9（一致性 > 创新），但有例外
+**Test:**
+- Does every element have a clear purpose?
+- Would removing it affect understanding?
+- Are there unnecessary decorations?
 
 ---
 
-## 设计决策框架
+### 8. Natural Over Flashy
 
-当面临设计决策时，按以下步骤：
+**Principle:** Interaction should follow intuition, don't design for cool factor.
 
-### 1. 明确问题
+**Reasoning:**
+- Users don't care about your technology, only about completing tasks
+- Natural interaction = users don't notice the interaction
+- Flashiness increases learning cost
 
-**问：** 这个决策要解决什么问题？
+**Application:**
+- **Buttons in expected places**: Don't change basic patterns for innovation
+- **Timely clear feedback**: Don't use complex animations to delay feedback
+- **Don't overdo animation**: Animation serves function, not showmanship
+- **Follow platform norms**: iOS uses iOS patterns, Web uses Web patterns
 
-**检查：** 原则 3（问题定义 > 解决方案）
+**Exception:**
+- Brand showcase animations (but can't affect core functionality)
+- Innovative products (but reduce learning cost)
+- But ensure basic usability
 
----
-
-### 2. 检查上下文
-
-**问：** 是否有上下文约束？
-
-**检查：**
-- 用户的设计系统
-- 平台规范
-- 品牌要求
-- 技术限制
-
-**应用：** 原则 2（上下文 > 惯例）
-
----
-
-### 3. 评估清晰度
-
-**问：** 是否清晰？
-
-**检查：**
-- 信息层级是否明确
-- 用户能否快速理解
-- 是否有歧义
-
-**应用：** 原则 1（清晰 > 美观）
+**Test:**
+- Can a first-time user guess how to operate?
+- Does animation have a clear functional purpose?
+- Does it follow platform norms?
 
 ---
 
-### 4. 检查一致性
+### 9. Consistency Over Innovation
 
-**问：** 是否一致？
+**Principle:** Follow platform norms and user habits.
 
-**检查：**
-- 与系统其他部分一致吗
-- 与平台规范一致吗
-- 与用户习惯一致吗
+**Reasoning:**
+- Consistency reduces learning cost
+- User habits are precious assets
+- Innovation needs sufficient justification
 
-**应用：** 原则 5（系统 > 局部）+ 原则 9（一致性 > 创新）
+**Application:**
+- **iOS uses iOS norms**: Don't use Material Design on iOS
+- **Web uses Web conventions**: Links are blue and underlined, buttons are solid
+- **Don't reinvent navigation**: Users know top-left is back
+- **Maintain internal consistency**: Keep consistency within same product
 
----
+**Exception:**
+- Clear brand differentiation needs
+- Innovation significantly improves experience
+- But reduce learning cost, provide guidance
 
-### 5. 验证假设
-
-**问：** 是否可验证？
-
-**检查：**
-- 基于事实还是假设
-- 假设是否已验证
-- 有数据支持吗
-
-**应用：** 原则 4（验证 > 假设）
-
----
-
-### 6. 考虑扩展性
-
-**问：** 是否可扩展？
-
-**检查：**
-- 能复用吗
-- 能扩展到其他场景吗
-- 有清晰的规则吗
-
-**应用：** 原则 10（可扩展 > 完美）
+**Test:**
+- Does this design follow platform norms?
+- Is it consistent with user habits?
+- Does the innovation have sufficient justification?
 
 ---
 
-## 打破原则的条件
+### 10. Scalability Over Perfection
 
-原则不是规则，可以打破，但要满足：
+**Principle:** Design should work long-term, not just be perfect now.
 
-### 1. 目标层明确要求
+**Reasoning:**
+- Design is a system, not an artwork
+- Perfect but unscalable = technical debt
+- Scalability is long-term value
 
-**示例：**
-- 目标是"品牌展示" → 品牌 > 交互
-- 目标是"视觉冲击" → 视觉 > 信息
-- 目标是"创新体验" → 创新 > 一致性
+**Application:**
+- **Build design system**: Tokens, components, specs
+- **Use CSS variables**: Don't hardcode values
+- **Component thinking**: Reusable, composable
+- **Document**: Record decisions and rules
 
-**前提：** 目标层有明确的理由
+**Exception:**
+- One-off marketing pages (but still consider reuse)
+- Quick prototypes (but label temporary solutions)
+- But systematize as soon as possible
 
----
-
-### 2. 有充分的理由
-
-**示例：**
-- 打破一致性：因为这个场景特殊，一致性会降低体验
-- 打破系统：因为这是视觉焦点，需要特殊处理
-- 打破惯例：因为创新能显著提升效率
-
-**前提：** 能说清楚为什么打破
-
----
-
-### 3. 理解打破的后果
-
-**示例：**
-- 打破一致性 → 增加学习成本
-- 打破系统 → 增加维护成本
-- 打破惯例 → 需要用户教育
-
-**前提：** 权衡后认为值得
+**Test:**
+- Can this design be reused?
+- Can it scale to other scenarios?
+- Are there clear rules?
 
 ---
 
-### 4. 记录为什么打破
+## Principle Priority
 
-**示例：**
-- 在代码注释中记录
-- 在设计文档中说明
-- 在 design system 中标注例外
+When principles conflict, follow this order:
 
-**前提：** 让未来的自己和团队理解
+1. **Clarity** > Beauty
+2. **Context** > Convention
+3. **Problem Definition** > Solutions
+4. **Validation** > Assumptions
+5. **System** > Local
+6. **Content** > Form
+7. **Subtraction** > Addition
+8. **Natural** > Flashy
+9. **Consistency** > Innovation
+10. **Scalability** > Perfection
 
----
-
-## 与其他文档的关系
-
-- **design-philosophy.md**：原则的哲学基础
-- **design-thinking-framework.md**：原则在 8 层框架中的应用
-- **design-excellence.md**：原则在视觉设计中的体现
-- **content-guidelines.md**：原则在内容设计中的规则
-- **SKILL.md P0/P1/P2**：原则的操作化
+**Note:** This is not absolute; judge based on specific situations.
 
 ---
 
-## 记住
+## Principle Conflict Case Studies
 
-1. **10 条原则**：清晰、上下文、问题定义、验证、系统、内容、减法、自然、一致性、可扩展
-2. **优先级**：清晰 > 上下文 > 问题定义 > 验证 > 系统 > 内容 > 减法 > 自然 > 一致性 > 可扩展
-3. **决策框架**：问题 → 上下文 → 清晰 → 一致 → 验证 → 扩展
-4. **打破条件**：目标要求 + 充分理由 + 理解后果 + 记录原因
-5. **原则不是规则**：是判断工具，不是死板的规定
+### Case 1: Clarity vs Beauty
 
-**原则指导判断，判断建立直觉。**
+**Scenario:** Large title looks beautiful, but information hierarchy is unclear
+
+**Conflict:**
+- Beauty: 48px large title has strong visual impact
+- Clarity: Title too large, body text relatively too small, hierarchy unclear
+
+**Decision:** Reduce title to 32px, ensure hierarchy clarity
+
+**Reasoning:** Principle 1 (Clarity > Beauty)
+
+---
+
+### Case 2: Context vs Convention
+
+**Scenario:** User's system uses 12px body text, but best practice is 14px
+
+**Conflict:**
+- Context: Keep 12px to maintain consistency
+- Convention: 14px has better readability
+
+**Decision:** Suggest improvement first; if user insists, keep 12px
+
+**Reasoning:** Principle 2 (Context > Convention), but suggest improvements
+
+---
+
+### Case 3: System vs Local
+
+**Scenario:** 12px works better for this page, but system uses 14px
+
+**Conflict:**
+- Local: 12px is more visually compact on this page
+- System: 14px is the system standard
+
+**Decision:** Keep 14px, maintain system consistency
+
+**Reasoning:** Principle 5 (System > Local)
+
+---
+
+### Case 4: Brand vs Interaction
+
+**Scenario:** Brand requires special font, but readability is poor
+
+**Conflict:**
+- Brand: Special font embodies brand personality
+- Interaction: Poor readability affects usage
+
+**Decision:** Use brand font for titles, readable font for body text
+
+**Reasoning:** Principle 1 (Clarity > Beauty) + Principle 8 (Natural > Flashy)
+
+---
+
+### Case 5: Innovation vs Consistency
+
+**Scenario:** Want to use new navigation pattern, but users are accustomed to traditional
+
+**Conflict:**
+- Innovation: New pattern is more efficient
+- Consistency: Users are familiar with traditional pattern
+
+**Decision:** If new pattern significantly improves experience, innovate but provide guidance
+
+**Reasoning:** Principle 9 (Consistency > Innovation), but has exceptions
+
+---
+
+## Design Decision Framework
+
+When facing design decisions, follow these steps:
+
+### 1. Clarify the Problem
+
+**Ask:** What problem does this decision solve?
+
+**Check:** Principle 3 (Problem Definition > Solutions)
+
+---
+
+### 2. Check Context
+
+**Ask:** Are there contextual constraints?
+
+**Check:**
+- User's design system
+- Platform norms
+- Brand requirements
+- Technical limitations
+
+**Apply:** Principle 2 (Context > Convention)
+
+---
+
+### 3. Evaluate Clarity
+
+**Ask:** Is it clear?
+
+**Check:**
+- Is information hierarchy clear
+- Can users understand quickly
+- Is there ambiguity
+
+**Apply:** Principle 1 (Clarity > Beauty)
+
+---
+
+### 4. Check Consistency
+
+**Ask:** Is it consistent?
+
+**Check:**
+- Consistent with other parts of the system
+- Consistent with platform norms
+- Consistent with user habits
+
+**Apply:** Principle 5 (System > Local) + Principle 9 (Consistency > Innovation)
+
+---
+
+### 5. Validate Assumptions
+
+**Ask:** Is it verifiable?
+
+**Check:**
+- Based on facts or assumptions
+- Have assumptions been validated
+- Is there data support
+
+**Apply:** Principle 4 (Validation > Assumptions)
+
+---
+
+### 6. Consider Scalability
+
+**Ask:** Is it scalable?
+
+**Check:**
+- Can it be reused
+- Can it scale to other scenarios
+- Are there clear rules
+
+**Apply:** Principle 10 (Scalability > Perfection)
+
+---
+
+## Conditions for Breaking Principles
+
+Principles are not rules; they can be broken, but must satisfy:
+
+### 1. Goal Layer Explicitly Requires
+
+**Examples:**
+- Goal is "brand showcase" → Brand > Interaction
+- Goal is "visual impact" → Visual > Information
+- Goal is "innovative experience" → Innovation > Consistency
+
+**Prerequisite:** Goal layer has clear justification
+
+---
+
+### 2. Sufficient Reasoning
+
+**Examples:**
+- Breaking consistency: Because this scenario is special, consistency would reduce experience
+- Breaking system: Because this is a visual focus, needs special treatment
+- Breaking convention: Because innovation significantly improves efficiency
+
+**Prerequisite:** Can clearly explain why the break is needed
+
+---
+
+### 3. Understanding Consequences
+
+**Examples:**
+- Breaking consistency → Increases learning cost
+- Breaking system → Increases maintenance cost
+- Breaking convention → Requires user education
+
+**Prerequisite:** After weighing, determined to be worth it
+
+---
+
+### 4. Documenting Why
+
+**Examples:**
+- Record in code comments
+- Explain in design documentation
+- Mark as exception in design system
+
+**Prerequisite:** Let future self and team understand
+
+---
+
+## Relationship to Other Documents
+
+- **design-philosophy.md**: Philosophical foundation of principles
+- **design-thinking-framework.md**: Application of principles in the 8-layer framework
+- **design-excellence.md**: Embodiment of principles in visual design
+- **content-guidelines.md**: Rules of principles in content design
+- **SKILL.md P0/P1/P2**: Operationalization of principles
+
+---
+
+## Remember
+
+1. **10 Principles**: Clarity, Context, Problem Definition, Validation, System, Content, Subtraction, Natural, Consistency, Scalability
+2. **Priority**: Clarity > Context > Problem Definition > Validation > System > Content > Subtraction > Natural > Consistency > Scalability
+3. **Decision Framework**: Problem → Context → Clarity → Consistency → Validation → Scalability
+4. **Breaking Conditions**: Goal requires + Sufficient reasoning + Understanding consequences + Documentation
+5. **Principles are not rules**: They are judgment tools, not rigid regulations
+
+**Principles guide judgment, judgment builds intuition.**

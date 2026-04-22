@@ -1,342 +1,360 @@
-# 设计哲学
+# Design Philosophy
 
-> **Load when:** 所有设计任务（Tier 1 - 总是加载）
-> **Skip when:** 从不跳过 - 这是 cc-design 的世界观基础
-> **Why it matters:** 建立设计判断力的根基，防止规范堆砌和风格拼贴
-> **Typical failure it prevents:** 无法解释设计决策、盲目跟随趋势、缺少设计直觉
+> **Load when:** All design tasks (Tier 1 - always loaded)
+> **Skip when:** Never skip - this is the worldview foundation of cc-design
+> **Why it matters:** Establishes the foundation of design judgment, prevents spec stacking and style collage
+> **Typical failure it prevents:** Unable to explain design decisions, blindly following trends, lacking design intuition
 
-设计哲学是 cc-design 的世界观基础。它解释"设计是什么"、"为什么这样做"，以及"如何建立判断力"。
-
----
-
-## 设计的本质
-
-### 设计不是装饰
-
-设计不是让东西"看起来好看"。装饰是表面的、可有可无的；设计是结构性的、必不可少的。
-
-**装饰思维：**
-- "加个渐变让它更酷"
-- "用这个字体因为它流行"
-- "多加点动效显得高级"
-
-**设计思维：**
-- "这个渐变引导视线到 CTA 按钮"
-- "这个字体传达品牌的专业感"
-- "这个动效提供操作反馈"
-
-### 设计是带判断的组织行为
-
-设计 = 组织问题 + 做出判断 + 把结果做对
-
-1. **组织问题**：理解目标、用户、约束、优先级
-2. **做出判断**：在多个方案中选择，基于原则而非偏好
-3. **把结果做对**：执行到位，细节经得起推敲
-
-没有判断的组织 = 信息堆砌  
-没有组织的判断 = 主观臆断  
-没有执行的判断 = 空中楼阁
+Design philosophy is the worldview foundation of cc-design. It explains "what design is", "why we do it this way", and "how to build judgment".
 
 ---
 
-## cc-design 的核心信念
+## The Essence of Design
 
-### 1. 内容优先于形式
+### Design Is Not Decoration
 
-**信念：** 形式服务于内容，不是反过来。
+Design is not about making things "look good". Decoration is superficial and optional; design is structural and essential.
 
-**为什么：**
-- 内容是用户来的原因，形式是传达内容的方式
-- 先有"说什么"，再有"怎么说"
-- 形式脱离内容 = 空洞的视觉游戏
+**Decorative Thinking:**
+- "Add a gradient to make it cooler"
+- "Use this font because it's trendy"
+- "Add more animations to look premium"
 
-**应用：**
-- 先整理信息架构，再设计视觉
-- 不要用 bento grid 装不适合的内容
-- 删除不承载信息的装饰元素
+**Design Thinking:**
+- "This gradient guides the eye to the CTA button"
+- "This font conveys the brand's professionalism"
+- "This animation provides operation feedback"
 
-**例外：** 品牌表达型设计（艺术海报、概念展示）可以形式优先
+### Design Is Organized Action with Judgment
 
----
+Design = Organizing the problem + Making judgments + Getting it right
 
-### 2. 问题定义优先于解决方案
+1. **Organizing the problem**: Understand goals, users, constraints, priorities
+2. **Making judgments**: Choose among multiple solutions, based on principles not preferences
+3. **Getting it right**: Execute properly, details withstand scrutiny
 
-**信念：** 先问"为什么"，再问"怎么做"。
-
-**为什么：**
-- 没有目标定义，就没有真正的设计，只有装饰
-- 错误的问题定义导致正确的执行也是失败
-- 问题定义决定了评价标准
-
-**应用：**
-- P1 原则：新任务先批量提问
-- Junior Designer Mode：先写假设再动手
-- 每个设计前回答：解决什么问题？服务谁？
-
-**例外：** 明确的小改动（"把按钮改成蓝色"）可以直接执行
+Organization without judgment = information pile-up  
+Judgment without organization = subjective speculation  
+Judgment without execution = castles in the air
 
 ---
 
-### 3. 上下文优先于惯例
+## cc-design's Core Beliefs
 
-**信念：** 用户的设计系统 > 通用最佳实践。
+### 1. Content Over Form
 
-**为什么：**
-- 一致性比"正确性"更重要
-- 用户已有的系统是他们的上下文
-- 打破一致性的代价高于局部优化的收益
+**Belief:** Form serves content, not the other way around.
 
-**应用：**
-- 先读用户的 codebase，复制 hex/px 值
-- 遵循用户的命名规范和组件模式
-- 不要用"Material Design 说应该这样"反驳用户系统
+**Why:**
+- Content is why users come, form is how content is conveyed
+- First "what to say", then "how to say it"
+- Form without content = empty visual games
 
-**例外：** 用户系统明显违反可用性（如 12px 正文）时，提出建议
+**Application:**
+- Organize information architecture first, then design visuals
+- Don't force content into bento grid if it doesn't fit
+- Remove decorative elements that don't carry information
 
----
-
-### 4. 验证优先于假设
-
-**信念：** 用数据和测试验证，不要依赖直觉。
-
-**为什么：**
-- 设计师的"感觉"经常错
-- 假设未经验证 = 风险
-- 验证是学习和改进的唯一途径
-
-**应用：**
-- P0 原则：事实验证（品牌、产品、价格）
-- 三阶段验证：结构 → 视觉 → 卓越
-- 截图前检查 console errors
-- 交付前用真实内容测试
-
-**例外：** 时间紧迫的原型设计可以先假设后验证
+**Exception:** Brand expression designs (art posters, concept showcases) can prioritize form
 
 ---
 
-### 5. 系统优先于局部
+### 2. Problem Definition Over Solutions
 
-**信念：** 整体一致性 > 局部最优。
+**Belief:** Ask "why" first, then "how".
 
-**为什么：**
-- 局部精彩但整体混乱 = 失败的设计
-- 系统思维降低认知负荷
-- 一致性建立信任和可预测性
+**Why:**
+- Without goal definition, there's no real design, only decoration
+- Wrong problem definition leads to failure even with correct execution
+- Problem definition determines evaluation criteria
 
-**应用：**
-- 使用 spacing scale（4/8/12/16/24/32/48/64），不要随机值
-- 使用 type scale（1.25 ratio），不要任意字号
-- 2-3 个字重，不要 5 个
-- 建立 design system，不要每次重新发明
+**Application:**
+- P1 principle: Ask questions in batch for new tasks
+- Junior Designer Mode: Write assumptions before building
+- Before each design, answer: What problem does this solve? Who is it for?
 
-**例外：** 明确的视觉焦点（hero section）可以打破规则
-
----
-
-## 设计的三层思想
-
-完整的设计思想包含三个层次：
-
-### 第 1 层：底层世界观（整体气质）
-
-**定义：** 对设计本质的理解，决定整体方向。
-
-**问题：**
-- 设计是为了什么？
-- 什么是好设计？
-- 如何评价设计？
-
-**cc-design 的世界观：**
-- 设计是组织问题并做对的过程
-- 好设计 = 清晰 + 有效 + 一致 + 可持续
-- 评价标准 = 是否解决了问题
+**Exception:** Clear small changes ("change button to blue") can be executed directly
 
 ---
 
-### 第 2 层：模块原则（各部分的局部思想）
+### 3. Context Over Convention
 
-**定义：** 针对具体设计领域的指导原则。
+**Belief:** User's design system > general best practices.
 
-**问题：**
-- 信息如何组织？（信息设计）
-- 结构如何搭建？（结构设计）
-- 交互如何设计？（交互设计）
-- 视觉如何表达？（视觉设计）
-- 品牌如何体现？（品牌设计）
-- 系统如何运转？（系统设计）
+**Why:**
+- Consistency is more important than "correctness"
+- User's existing system is their context
+- Cost of breaking consistency > benefit of local optimization
 
-**cc-design 的模块原则：**
-- 8 层设计框架（见 `design-thinking-framework.md`）
-- 10 条核心原则（见 `design-principles.md`）
-- 各领域理论基础（见 `*-design-theory.md`）
+**Application:**
+- Read user's codebase first, copy hex/px values
+- Follow user's naming conventions and component patterns
+- Don't argue with "Material Design says it should be this way"
 
----
-
-### 第 3 层：具体方法论（落地技法）
-
-**定义：** 可执行的技术和工具。
-
-**问题：**
-- 用什么工具？
-- 怎么实现？
-- 有什么模式？
-
-**cc-design 的方法论：**
-- 42 个 reference 文档（execution guides）
-- Design patterns 库
-- Anti-patterns 检查清单
-- Templates 和 components
+**Exception:** When user's system clearly violates usability (e.g., 12px body text), suggest improvements
 
 ---
 
-## 为什么需要设计思想
+### 4. Validation Over Assumptions
 
-### 没有思想的设计 = 规范堆砌 + 风格拼贴
+**Belief:** Validate with data and testing, don't rely on intuition.
 
-**症状：**
-- 能说"Material Design 规定 8dp"，说不出"为什么 8dp"
-- 能模仿 Apple 风格，说不出"为什么这样有 Apple 感"
-- 能列举 10 个设计原则，不知道冲突时选哪个
-- 看到好设计说"好看"，看到坏设计说"不好看"，说不出为什么
+**Why:**
+- Designer's "feeling" is often wrong
+- Unvalidated assumptions = risk
+- Validation is the only way to learn and improve
 
-**后果：**
-- 遇到新问题无法判断
-- 遇到冲突无法取舍
-- 遇到批评无法辩护
-- 无法建立设计直觉
+**Application:**
+- P0 principle: Fact validation (brand, product, pricing)
+- Three-phase validation: Structure → Visual → Excellence
+- Check console errors before screenshots
+- Test with real content before delivery
 
-### 思想 = 原则 + 判断 + 取舍逻辑
-
-**有思想的设计师：**
-- 能解释每个决策背后的原因
-- 能在原则冲突时做出判断
-- 能说清楚为什么这样做是对的
-- 能从失败中提炼可复用的原则
-
-**思想的价值：**
-- 指导决策：不是"感觉"，是"判断"
-- 建立直觉：重复应用原则形成直觉
-- 可传承：思想可以教，直觉难以教
-- 可进化：思想可以迭代，技巧容易过时
+**Exception:** Time-constrained prototyping can assume first, validate later
 
 ---
 
-## 设计思想的检验标准
+### 5. System Over Local
 
-如何判断一个设计是否有思想？用这 4 个标准：
+**Belief:** Overall consistency > local optimization.
 
-### 1. 能否说清核心问题
+**Why:**
+- Locally brilliant but globally chaotic = failed design
+- System thinking reduces cognitive load
+- Consistency builds trust and predictability
 
-**问：** 这个设计解决什么问题？
+**Application:**
+- Use spacing scale (4/8/12/16/24/32/48/64), not random values
+- Use type scale (1.25 ratio), not arbitrary font sizes
+- 2-3 font weights, not 5
+- Build design system, don't reinvent every time
 
-**有思想：**
-- "这个 dashboard 帮助运维快速定位异常指标"
-- "这个 onboarding 降低新用户的认知负荷"
-
-**没思想：**
-- "做一个好看的 dashboard"
-- "参考 Stripe 的 onboarding"
-
----
-
-### 2. 是否有明确优先级
-
-**问：** 如果只能做一件事，做什么？
-
-**有思想：**
-- "优先保证核心流程清晰，视觉可以简化"
-- "优先建立信任感，功能展示其次"
-
-**没思想：**
-- "都很重要"
-- "看起来都得做"
+**Exception:** Clear visual focus (hero section) can break rules
 
 ---
 
-### 3. 是否与整体一致
+## Three Layers of Design Thinking
 
-**问：** 这个决策是否符合整体方向？
+Complete design thinking includes three levels:
 
-**有思想：**
-- "用 sans-serif 因为整体定位是现代专业"
-- "用大留白因为品牌主张克制"
+### Layer 1: Foundational Worldview (Overall Temperament)
 
-**没思想：**
-- "用 serif 因为好看"
-- "加满元素因为显得丰富"
+**Definition:** Understanding of design essence, determines overall direction.
 
----
+**Questions:**
+- What is design for?
+- What is good design?
+- How to evaluate design?
 
-### 4. 是否有取舍理由
-
-**问：** 为什么选 A 不选 B？
-
-**有思想：**
-- "选卡片布局因为内容独立性强，虽然空间利用率低"
-- "选深色模式因为目标用户长时间使用，虽然品牌色不够突出"
-
-**没思想：**
-- "卡片布局比较流行"
-- "深色模式比较酷"
+**cc-design's Worldview:**
+- Design is the process of organizing problems and getting them right
+- Good design = clear + effective + consistent + sustainable
+- Evaluation criteria = whether it solves the problem
 
 ---
 
-## 8 层设计框架概览
+### Layer 2: Module Principles (Local Thinking for Each Part)
 
-cc-design 的设计思想体现在 8 层设计框架中：
+**Definition:** Guiding principles for specific design domains.
 
-1. **目标层**：为什么做 → 问题定义、用户、成功标准
-2. **信息层**：讲什么怎么讲 → 筛选、分组、排序、层级
-3. **结构层**：骨架 → 页面结构、模块划分、布局系统
-4. **交互层**：人怎么用 → 操作流程、反馈、状态、容错
-5. **视觉层**：看起来如何 → 色彩、字体、排版、对比、留白
-6. **品牌层**：感受到什么 → 气质、语气、信任感、情绪
-7. **系统层**：如何长期运转 → 规范、组件、复用、扩展
-8. **验证层**：是否有效 → 测试、数据、反馈、迭代
+**Questions:**
+- How to organize information? (Information design)
+- How to build structure? (Structure design)
+- How to design interaction? (Interaction design)
+- How to express visuals? (Visual design)
+- How to embody brand? (Brand design)
+- How to run the system? (System design)
 
-**详细内容见：** `references/design-thinking-framework.md`
-
----
-
-## 如何应用设计哲学
-
-### 设计前三问
-
-1. **为什么做？** → 目标层
-2. **给谁做？** → 目标层 + 信息层
-3. **如何判断成功？** → 验证层
-
-### 设计中三问
-
-1. **这个决策解决什么问题？** → 问题定义优先
-2. **是否与整体一致？** → 系统优先
-3. **是否可验证？** → 验证优先
-
-### 设计后三问
-
-1. **能否说清每个决策的理由？** → 思想检验
-2. **是否有明确的优先级？** → 思想检验
-3. **如果重做会怎么改？** → 迭代学习
+**cc-design's Module Principles:**
+- 8-layer design framework (see `design-thinking-framework.md`)
+- 10 core principles (see `design-principles.md`)
+- Theoretical foundations for each domain (see `*-design-theory.md`)
 
 ---
 
-## 与其他文档的关系
+### Layer 3: Specific Methodology (Implementation Techniques)
 
-- **design-thinking-framework.md**：8 层框架的详细展开
-- **design-principles.md**：10 条核心原则的具体应用
-- **design-excellence.md**：视觉设计的执行标准
-- **content-guidelines.md**：内容和反模式的具体规则
-- **design-styles.md**：20 个设计流派的哲学基础
-- **\*-design-theory.md**：各层级的理论基础
+**Definition:** Executable techniques and tools.
+
+**Questions:**
+- What tools to use?
+- How to implement?
+- What patterns exist?
+
+**cc-design's Methodology:**
+- 42 reference documents (execution guides)
+- Design patterns library
+- Anti-patterns checklist
+- Templates and components
 
 ---
 
-## 记住
+## Why Design Thinking Is Needed
 
-1. **设计不是装饰**，是带判断的组织行为
-2. **5 个核心信念**：内容>形式、问题>方案、上下文>惯例、验证>假设、系统>局部
-3. **3 层思想**：世界观 → 模块原则 → 落地技法
-4. **4 个检验标准**：核心问题、优先级、整体一致、取舍理由
-5. **思想的价值**：指导决策、建立直觉、可传承、可进化
+### Design Without Thinking = Spec Stacking + Style Collage
 
-**设计哲学不是规则，是判断框架。**
+**Symptoms:**
+- Can say "Material Design specifies 8dp", can't say "why 8dp"
+- Can imitate Apple style, can't say "why this feels like Apple"
+- Can follow rules, can't make judgments
+- Can execute, can't explain
+
+**Consequences:**
+- Unable to handle new problems (no rules to follow)
+- Unable to make tradeoffs (don't know which is more important)
+- Unable to innovate (can only copy)
+- Unable to teach (can't pass on knowledge)
+
+---
+
+## How Design Thinking Is Tested
+
+Good design thinking must pass these 4 tests:
+
+### 1. Can Explain the Core Problem
+
+**Test:**
+- Can you explain in one sentence what problem this design solves?
+- Can you describe who the target users are?
+- Can you explain what change is expected?
+
+**Pass:** Clear problem definition, clear users, clear goals  
+**Fail:** "Make it look better", "More premium", "Follow trends"
+
+---
+
+### 2. Has Clear Priorities
+
+**Test:**
+- If you can only keep 3 elements, which 3?
+- If you must sacrifice one aspect, which one?
+- Why is A more important than B?
+
+**Pass:** Can rank importance, can explain reasoning  
+**Fail:** "Everything is important", "Can't remove anything"
+
+---
+
+### 3. Overall Consistency
+
+**Test:**
+- Does every decision serve the same goal?
+- Are there contradictory elements?
+- If you copy this design 10 times, will it be chaotic?
+
+**Pass:** Unified direction, no contradictions, scalable  
+**Fail:** Each part is good but doesn't fit together, style collage
+
+---
+
+### 4. Can Explain Tradeoffs
+
+**Test:**
+- Why choose A over B?
+- What did you sacrifice?
+- What would you change if you did it again?
+
+**Pass:** Clear reasoning, aware of tradeoffs, can iterate  
+**Fail:** "Because it looks good", "I just feel this way"
+
+---
+
+## The Value of Design Thinking
+
+### 1. Guides Decisions
+
+When facing choices, thinking provides judgment framework:
+- Should I add this element? → Does it serve the goal?
+- Should I break consistency? → Is the benefit worth the cost?
+- Should I follow this trend? → Does it fit the context?
+
+---
+
+### 2. Builds Intuition
+
+Thinking → Practice → Intuition:
+- Beginners need to think through every step
+- Experts have internalized thinking into intuition
+- But intuition can still be explained with thinking
+
+---
+
+### 3. Teachable and Inheritable
+
+With thinking, design becomes:
+- Teachable: Can explain to juniors
+- Reviewable: Can critique with criteria
+- Inheritable: Team can maintain consistency
+- Evolvable: Can improve based on principles
+
+---
+
+### 4. Can Evolve
+
+Thinking is not fixed rules, but evolving framework:
+- Principles can be adjusted based on context
+- Methods can be optimized based on feedback
+- System can grow based on needs
+- But core beliefs remain stable
+
+---
+
+## Design Thinking Framework Overview
+
+cc-design's design thinking is embodied in the **8-layer design framework**:
+
+1. **Goal Layer**: Why do it → Problem, users, success criteria
+2. **Information Layer**: What to say, how to say it → Filter, group, sequence, hierarchy
+3. **Structure Layer**: Skeleton → Page structure, modules, layout system
+4. **Interaction Layer**: How people use it → Operation flow, feedback, states, error handling
+5. **Visual Layer**: How it looks → Color, typography, layout, contrast, whitespace
+6. **Brand Layer**: What it feels like → Temperament, tone, trust, emotion
+7. **System Layer**: How it runs long-term → Specs, components, reuse, extension
+8. **Validation Layer**: Is it effective → Testing, data, feedback, iteration
+
+**For details see:** `references/design-thinking-framework.md`
+
+---
+
+## How to Apply Design Philosophy
+
+### Three Questions Before Design
+
+1. **Why do it?** → Goal layer
+2. **For whom?** → Goal layer + Information layer
+3. **How to judge success?** → Validation layer
+
+### Three Questions During Design
+
+1. **What problem does this decision solve?** → Problem definition first
+2. **Is it consistent with the whole?** → System first
+3. **Is it verifiable?** → Validation first
+
+### Three Questions After Design
+
+1. **Can you explain the reasoning for each decision?** → Thinking test
+2. **Are there clear priorities?** → Thinking test
+3. **What would you change if you did it again?** → Iterative learning
+
+---
+
+## Relationship to Other Documents
+
+- **design-thinking-framework.md**: Detailed expansion of the 8-layer framework
+- **design-principles.md**: Specific application of 10 core principles
+- **design-excellence.md**: Execution standards for visual design
+- **content-guidelines.md**: Specific rules for content and anti-patterns
+- **design-styles.md**: Philosophical foundation for 20 design schools
+- **\*-design-theory.md**: Theoretical foundations for each layer
+
+---
+
+## Remember
+
+1. **Design is not decoration**, it's organized action with judgment
+2. **5 core beliefs**: Content>Form, Problem>Solution, Context>Convention, Validation>Assumption, System>Local
+3. **3 layers of thinking**: Worldview → Module principles → Implementation techniques
+4. **4 test criteria**: Core problem, priorities, overall consistency, tradeoff reasoning
+5. **Value of thinking**: Guides decisions, builds intuition, teachable, evolvable
+
+**Design philosophy is not rules, it's a judgment framework.**

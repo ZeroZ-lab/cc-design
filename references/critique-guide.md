@@ -1,6 +1,25 @@
 # Design Review In-Depth Guide
 
-> Detailed reference for Phase 7. Provides scoring criteria, scenario-specific focus areas, and common issues checklist.
+> **Load when:** Daily iteration feedback, quick design reviews, WIP feedback
+> **Skip when:** Final delivery (use principle-review.md), design system review (use system-design-theory.md)
+> **Why it matters:** Provides fast 5-dimension scoring for iterative feedback
+> **Typical failure it prevents:** Missing obvious quality issues, inconsistent review standards
+
+---
+
+## When to Use Which Review Method
+
+cc-design has 3 review methods. Use the right one for your context:
+
+| Scenario | Use | Load |
+|----------|-----|------|
+| **Daily iteration feedback** | 5-Dimension Quick Review (this file) | `critique-guide.md` |
+| **Final delivery review** | 5-Dimension + 10-Principle Review | `critique-guide.md` + `principle-review.md` |
+| **Design system review** | 10-Principle Review + System Theory | `principle-review.md` + `system-design-theory.md` |
+| **Anti-slop check** | Design Checklist (automated) | `design-checklist.md` |
+| **Principle conflict resolution** | 10-Principle Review | `principle-review.md` + `design-principles.md` |
+
+**This file (critique-guide.md)** is for quick, subjective scoring (1-10 scale). For rigorous principle alignment, use `principle-review.md` (Pass/Warning/Fail diagnostic). For objective quality checks, use `design-checklist.md` (binary pass/fail).
 
 ---
 

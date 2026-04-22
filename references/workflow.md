@@ -9,6 +9,28 @@ The runtime contract lives in `SKILL.md`:
 
 Use this file to structure the question batch and the follow-through after that decision has already been made.
 
+---
+
+## Relationship to 8-Layer Design Framework
+
+This workflow is the **execution process**. The 8-layer framework (`design-thinking-framework.md`) is the **thinking structure**.
+
+**Mapping:**
+
+| Workflow Step | 8-Layer Framework | Purpose |
+|---------------|-------------------|---------|
+| **Step 1: Understand** (Question batch) | Layer 1 (Goal) + Layer 2 (Information) | Clarify objectives, audience, scope, information priorities |
+| **Step 2: Route** (Load references) | Layer 2-7 (task-dependent) | Load theory and patterns for relevant layers |
+| **Step 3: Acquire Context** (Design system/brand) | Layer 6 (Brand) + Layer 7 (System) | Understand existing constraints and brand personality |
+| **Step 4: Design** (Build artifacts) | Layer 3 (Structure) + Layer 4 (Interaction) + Layer 5 (Visual) | Execute structure, interaction, and visual design |
+| **Step 5: Verify** (Check quality) | Layer 8 (Validation) | Test technical feasibility, usability, design quality |
+| **Step 6: Iterate** (Refine based on feedback) | Layer 8 → Layer 1 (feedback loop) | Use validation results to refine goals and execution |
+
+**When to use which:**
+- **Use workflow.md** for step-by-step execution guidance
+- **Use design-thinking-framework.md** when you need to diagnose problems, resolve conflicts, or understand "why" behind decisions
+- **Use both together** for complex multi-screen flows or design system creation
+
 ## First-Turn Rule
 
 Treat this as supporting guidance, not an override:
