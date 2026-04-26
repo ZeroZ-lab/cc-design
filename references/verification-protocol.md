@@ -69,7 +69,7 @@ This is a **maker self-check**. The person who made the change must inspect the 
 3. For responsive work, capture at least one narrow/mobile viewport
 4. Review all screenshots against criteria above
 5. If any criterion fails → fix in Build step, re-verify from Phase 1
-6. If all pass → proceed to Deliver step
+6. If all pass → proceed to Phase 4 (User Review)
 ```
 
 ## Task-Type-Specific Verification
@@ -100,3 +100,15 @@ Phase 2 fail → fix → re-navigate → Phase 1 + Phase 2 again
 Never skip Phase 1 to "just check visuals." Structural errors cause visual defects that are symptoms, not root causes.
 
 If the fix loop repeats 3+ times on the same issue, or if fixing one thing breaks another, enter the structured recovery protocol: see `references/failure-mode-handling.md`.
+
+## Phase 4: User Review (new)
+
+**Purpose**: Get human approval before delivery. After all three phases pass, present results to the user.
+
+Steps:
+1. Present exit conditions checklist results (checked / failed items) from `references/exit-conditions.md`
+2. Present Phase 2 screenshot(s)
+3. Wait for user decision:
+   - **Approve** → proceed to Deliver step
+   - **Request changes** → re-enter fix loop (back to Phase 1), fix the specific item, re-run all phases
+   - **Rethink direction** → trigger Iteration Gate in `references/workflow.md` (back to Step 1 — Understand)

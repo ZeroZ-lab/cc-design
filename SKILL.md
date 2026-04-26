@@ -112,9 +112,10 @@ End with:
 Default order of confirmation:
 
 1. **Design Context** — existing design system / UI kit / codebase / screenshots?
-2. **Variations** — how many directions? conservative vs wide exploration?
-3. **Fidelity & Scope** — wireframe / hi-fi? one screen / one flow / full flow?
-4. **Plan Approval** — approve the execution plan before full build
+2. **Direction (new)** — confirm own understanding before planning
+3. **Variations** — how many directions? conservative vs wide exploration?
+4. **Fidelity & Scope** — wireframe / hi-fi? one screen / one flow / full flow?
+5. **Plan Approval** — approve the execution plan before full build
 
 All questions must follow a **standard option format** that works on both Claude Code and Codex:
 
@@ -140,18 +141,30 @@ Do you already have a design system or screenshots I should match?
 1) Yes, I have references
 2) No, work from scratch
 
-Step 2 — variations
+Step 2 — direction confirmation
+Based on our answers so far, I understand we're building:
+- Type: landing page
+- Context: brand reference (Stripe)
+- Audience: SaaS buyers, technical
+- Core action: sign up for free trial
+
+Is this direction correct?
+1) Yes, proceed
+2) No, adjust the type
+3) No, adjust the audience
+
+Step 3 — variations
 How broad should the exploration be?
 1) 1 direction, close to expected
 2) 3 directions, conservative → bold
 
-Step 3 — fidelity/scope
+Step 4 — fidelity/scope
 What should I build first?
 1) One screen
 2) One complete flow
 3) A low-fi wireframe pass first
 
-Step 4 — plan
+Step 5 — plan
 Plan
 - Goal: ...
 - Confirmed facts: ...
@@ -366,7 +379,15 @@ Use the plan to answer: focal point, emotional tone, visual flow, spacing strate
 
 **5. Approval** — Stop after the plan and wait for user approval on first-pass work. Do not treat silence as approval on new tasks. Continue immediately only for minor edits, approved follow-up iterations, or explicit instructions to skip planning.
 
-**6. Build** — Write the HTML file after the plan is approved. Show at halfway — don't wait until done. Use tweaks for variants rather than separate files.
+**6. Build** — Write the HTML file after the plan is approved. Use a **per-section preview pattern** instead of a single halfway checkpoint:
+
+- **Multi-section pages**: finish one section → render → screenshot → show user → approve → next section
+- **Slide decks**: finish title + one content slide → show → approve → build remaining slides
+- **Animations**: finish storyboard → show → approve → build animation frames
+- **Prototypes**: finish one screen → show → approve → next screen
+
+The first section is the minimum viable preview. If the user rejects direction here, zero code is wasted.
+Use tweaks for variants rather than separate files.
 
 If the user rejects this direction (especially 3+ times or feedback keeps changing), STOP building more variations. Enter the Iteration Gate protocol instead — see `references/workflow.md`.
 
@@ -400,6 +421,31 @@ If the user rejects this direction (especially 3+ times or feedback keeps changi
 Never deliver based on "it should be fine" reasoning. Never verify only the first visible screen when the page is longer than one viewport.
 
 If the fix loop repeats 3+ times on the same issue, or fixing one thing breaks another, enter the structured recovery protocol — see `references/failure-mode-handling.md`.
+
+**7a. User Review (new)** — After agent self-verify, present results to user for approval before delivery:
+
+1. **Show Phase 2 screenshot(s)** — the rendered artifact after final edit
+2. **Present exit conditions results** — checked items vs failed items from `references/exit-conditions.md`
+3. **Wait for user decision**
+
+Format:
+```markdown
+Design Review
+Exit conditions:
+- [x] No console errors
+- [x] Responsive at desktop + mobile
+- [ ] Body font >= 16px — currently 14px, needs bump
+- [x] Visual hierarchy clear
+- [screenshot: <path>]
+
+Approve for delivery?
+1) Approve, deliver it
+2) Adjust [specific item] — re-enters fix loop
+3) Rethink direction — back to Step 1 (Understand)
+```
+
+On "Adjust" → re-enter Verify (Step 7), fix the failed item, re-run all phases.
+On "Rethink" → enter Iteration Gate in `references/workflow.md`.
 
 **8. Deliver** — Minimal summary only:
 ```markdown

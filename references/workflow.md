@@ -243,7 +243,27 @@ If the platform lacks structured question UI, convert the same flow into one com
 
 ## After the Confirmation Steps
 
-Once the confirmation steps are answered, or once unanswered critical fields have been converted into explicit assumptions, do not move straight into delivery. Produce a visible plan, wait for approval, then build.
+Once the confirmation steps are answered, or once unanswered critical fields have been converted into explicit assumptions, do not move straight into delivery. First confirm direction understanding, then produce a visible plan, wait for approval, then build.
+
+### Direction Confirmation (new)
+
+Before writing the plan, summarize what you understand and ask the user to confirm:
+
+```markdown
+Based on our answers, I understand we're building:
+- Type: [landing page / deck / prototype / animation / ...]
+- Context: [brand reference / design system / codebase / scratch]
+- Audience: [target user]
+- Core action / purpose: [what the user should do]
+
+Is this direction correct?
+1) Yes, proceed to Plan
+2) No, adjust the type
+3) No, adjust the audience / purpose
+```
+
+Don't build yet if the user adjusts — re-confirm the adjusted fields, then proceed to plan.
+This step is skip-able for simple edits but **required for new tasks**.
 
 ### Planning Gate
 
@@ -292,7 +312,12 @@ After the plan is approved:
 - if you chose the question-first path, route with `question-first-delivery` plus the bundles locked by the route-shaping answers
 - if the user asked for critique/review/audit/score, route with `deep-design-review` before judging the work
 
-Show again halfway through. If the design direction is wrong, showing late means wasted work.
+Use a **per-section preview pattern** instead of a single halfway checkpoint:
+- For multi-section pages: finish one section → render → show user → approve → next section
+- For slide decks: finish title + one content slide → show → approve → build remaining slides
+- For animations: finish storyboard → show → approve → build animation frames
+- For prototypes: finish one screen → show → approve → next screen
+The first section is the minimum viable preview. If the user rejects direction here, zero code is wasted.
 
 ### Detail Polish
 
