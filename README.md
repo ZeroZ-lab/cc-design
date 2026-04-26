@@ -76,15 +76,14 @@ The core product promise is behavioral, not just feature breadth:
 
 ## Installation
 
-```bash
-# Install or update via skills CLI
-npx skills install cc-design
-```
-
-For subsequent updates:
+Source: [ZeroZ-lab/cc-design](https://github.com/ZeroZ-lab/cc-design)
 
 ```bash
-npx skills update cc-design
+# Install via skills CLI
+npx skills add ZeroZ-lab/cc-design
+
+# Update to the latest version
+npx skills update
 ```
 
 ## Version Awareness
