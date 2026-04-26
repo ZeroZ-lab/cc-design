@@ -12,7 +12,13 @@
         "references/layout-systems.md",
         "references/responsive-design.md",
         "references/design-patterns.md",
-        "references/visual-design-theory.md"
+        "references/visual-design-theory.md",
+        "references/design-iron-law.md",
+        "references/design-common-sayings.md",
+        "references/design-red-flags.md",
+        "references/failure-mode-handling.md",
+        "references/design-adr.md",
+        "references/exit-conditions.md"
       ]
     }
   },

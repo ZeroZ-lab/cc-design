@@ -50,6 +50,22 @@ HTML is your tool, but your medium varies — you must embody an expert in that 
 
 ---
 
+## Entry / Exit
+
+- **Entry**: User asks to design, prototype, mock up, build, or render HTML visual artifacts — including slide decks, interactive prototypes, landing pages, UI mockups, animations, brand style clones, design systems, visual critiques, or export renders. Also triggered when the user says "make it look good" or "design a screen for X."
+- **Exit**: A deliverable matching the task type, with console errors cleared, screenshot verified after final edit, and every touched section inspected individually. See `references/exit-conditions.md` for per-task-type exit criteria.
+- **Do Not Use**: Pure backend work with no user-visible surface, data analysis without visualization, text-only documents with no layout requirements, or pure software development with no visual component.
+
+## Iron Law
+
+See `references/design-iron-law.md` for the full Iron Law definition. In short:
+
+- **No unchecked fact = no design decision** (P0)
+- **No AI slop patterns. Ever.** (P2)
+- **No screenshot after final edit = no delivery** (Verify Don't Assume)
+
+---
+
 ## Core Principles
 
 **P0: Fact Verification — Do This First, Every Time.**
@@ -67,6 +83,8 @@ Forbidden phrases (never say these about verifiable facts):
 - ❌ "I believe the latest version is X"
 
 If you cannot verify: say "I cannot confirm this — please check" rather than guessing. Wrong facts damage user trust and waste everyone's time.
+
+See also: `references/design-common-sayings.md` for preemptive rationalization defence, and `references/design-red-flags.md` for behavioural stop signals.
 
 **P1: Gather Enough Context First.** For new design tasks, do not start building when you only have partial context. Resolve or explicitly assume the blocking fields before any full build:
 
@@ -342,6 +360,8 @@ Use the plan to answer: focal point, emotional tone, visual flow, spacing strate
 
 **6. Build** — Write the HTML file after the plan is approved. Show at halfway — don't wait until done. Use tweaks for variants rather than separate files.
 
+If the user rejects this direction (especially 3+ times or feedback keeps changing), STOP building more variations. Enter the Iteration Gate protocol instead — see `references/workflow.md`.
+
 **Checkpoint: Before saying "done"** — after your final edit, render the artifact yourself. Do not stop at code inspection. For multi-section pages, inspect every section you touched — not just the first screen or hero. For responsive work, inspect at least one desktop viewport and one narrow/mobile viewport. Use full-page screenshots plus targeted section screenshots when needed.
 
 **Checkpoint: Deep critique / audit** — If the user asked for a critique, review, audit, or score, announce `because=deep-design-review`, then load `references/design-checklist.md`, `references/principle-review.md`, `references/verification.md`, and `references/typography-spacing-quick-ref.md` before judging the work.
@@ -364,12 +384,14 @@ Use the plan to answer: focal point, emotional tone, visual flow, spacing strate
 - [ ] All vertical spacing is multiple of 8px
 - [ ] Using only 2-3 font weights (400/600/700)
 
-**7. Verify (Mandatory self-check)** — Announce `because=before-delivery`, then load `references/verification-protocol.md`. Run three-phase verification yourself after the final edit:
+**7. Verify (Mandatory self-check)** — Announce `because=before-delivery`, then load `references/verification-protocol.md` and `references/exit-conditions.md`. Run three-phase verification yourself after the final edit:
 - **Structural:** console errors, layout, responsiveness
 - **Visual:** screenshot review, design quality
 - **Design excellence:** hierarchy, spacing, color harmony, emotional fit
 
 Never deliver based on "it should be fine" reasoning. Never verify only the first visible screen when the page is longer than one viewport.
+
+If the fix loop repeats 3+ times on the same issue, or fixing one thing breaks another, enter the structured recovery protocol — see `references/failure-mode-handling.md`.
 
 **8. Deliver** — Minimal summary only:
 ```markdown

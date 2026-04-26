@@ -354,6 +354,31 @@ For every design, mentally go through these dimensions and pick 2-3 to give vari
 - **Task is too large to handle at once**: Break into steps, do the first step for the user to review, then proceed.
 - **Effect the user wants is technically difficult**: Explain the technical boundary clearly, provide alternatives.
 
+## Iteration Gate
+
+If the design direction is rejected 3+ times, or if feedback keeps changing direction each round:
+
+**STOP producing more variations. Do not produce a 4th direction.**
+
+### Assessment checklist
+
+1. Is the brief complete? Are audience, scope, output shape, and constraints all clear?
+2. Are we working from the right reference context (brand assets, design system, competitor references)?
+3. Has the user provided explicit, specific feedback on what is wrong?
+4. Is there a fundamental mismatch between what was requested and what was built?
+
+### Protocol
+
+1. Present the impasse to the user: "We have explored 3 directions and none matched. Let me make sure I understand the core requirement."
+2. Re-confirm the 6 blocking fields from workflow Step 1 (Understand): audience, output shape, scope, hard constraints, reference source, success criteria.
+3. If the brief has changed since the original spec, update it explicitly on the conversation. Do not build on the old brief.
+4. Propose **ONE** new direction with explicit reasoning about why it differs from the rejected three.
+5. If the user still cannot articulate what they want, provide 2-3 concrete visual references for them to react to — "pick the closest" is easier than "describe the ideal".
+
+**Never cycle through a 4th, 5th, or 6th variation without going back to the foundation.** Each additional wasted iteration erodes trust and consumes budget.
+
+See also: `references/design-red-flags.md` for human partner signals that indicate an imminent iteration gate.
+
 ## Summary Rules
 
 When delivering, the summary should be **extremely brief**:
