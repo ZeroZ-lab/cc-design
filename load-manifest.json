@@ -363,6 +363,10 @@
       "references": [
         "references/audio-design-rules.md",
         "references/sfx-library.md"
+      ],
+      "templates": [
+        "templates/audio-engine.jsx",
+        "templates/audio-controls.jsx"
       ]
     },
     "data-visualization": {

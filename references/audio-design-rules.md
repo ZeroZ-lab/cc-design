@@ -263,6 +263,45 @@ Each layer should stand on its own. If they only sound good together, the mix is
 
 ---
 
+## Browser Playback Engine
+
+cc-design ships with a browser audio engine (`templates/audio-engine.jsx`) for in-browser preview — this is separate from the ffmpeg export pipeline (above). See `docs/features/20260426-audio-system/01-spec.md` for the full spec.
+
+### Key Differences from ffmpeg Export
+
+| Aspect | Browser (AudioContext) | ffmpeg Export |
+|--------|----------------------|---------------|
+| Audio source | `assets/sfx/<category>/<name>.mp3` | Same |
+| Frequency isolation | Not in browser (AudioContext has no high/lowpass in MVP) | `lowpass=f=4000` BGM + `highpass=f=800` SFX |
+| Frame alignment | ±5-16ms (rAF jitter) | Frame-exact (ffmpeg) |
+| Best for | Rapid iteration, preview | Final video delivery |
+
+### Usage in HTML
+
+```jsx
+<script type="text/babel" src="templates/audio-engine.jsx"></script>
+<script type="text/babel" src="templates/animations.jsx"></script>
+<script type="text/babel">
+const { Stage, Sprite, useSprite } = window.Animations;
+
+function Scene() {
+  return (
+    <Stage duration={10}>
+      <Soundtrack preset="terminal-demo">
+        <Sprite start={0} end={3}>
+          <TerminalScene />
+        </Sprite>
+      </Soundtrack>
+    </Stage>
+  );
+}
+</script>
+```
+
+Reference: `templates/audio-engine.jsx`, `templates/audio-controls.jsx`.
+
+---
+
 ## References
 
 - SFX asset catalog: `sfx-library.md`

@@ -162,12 +162,12 @@
     },
   };
 
-  function Stage({ duration = 10, width = 1920, height = 1080, fps = 60, loop = true, children, bgColor = '#fff' }) {
+  function Stage({ duration = 10, width = 1920, height = 1080, fps = 60, loop = true, children, bgColor = '#fff', onSeek }) {
     const [time, setTime] = useState(0);
+    const timeRef = useRef(0); // Track time for onSeek callback (avoids stale closure)
     const [playing, setPlaying] = useState(true);
     const [scale, setScale] = useState(1);
     const rafRef = useRef(null);
-    const startTimeRef = useRef(performance.now());
     const canvasRef = useRef(null);
 
     // Recording mode: render-video.js injects window.__recording = true before goto.
@@ -208,6 +208,7 @@
         last = now;
         setTime(prev => {
           const next = prev + delta;
+          timeRef.current = next;
           if (next >= duration) {
             // effectiveLoop honors window.__recording (forced non-loop during export).
             // Stop just shy of duration so the final-frame state stays rendered
@@ -240,13 +241,16 @@
     const handleScrub = useCallback((e) => {
       const rect = e.currentTarget.getBoundingClientRect();
       const ratio = (e.clientX - rect.left) / rect.width;
-      setTime(Math.max(0, Math.min(duration, ratio * duration)));
+      return Math.max(0, Math.min(duration, ratio * duration));
     }, [duration]);
 
     const handleSeek = useCallback((e) => {
-      handleScrub(e);
+      const newTime = handleScrub(e);
+      const prevTime = timeRef.current;
+      setTime(newTime);
       setPlaying(false);
-    }, [handleScrub]);
+      onSeek?.(newTime, prevTime);
+    }, [handleScrub, onSeek]);
 
     const progress = time / duration;
 

@@ -134,7 +134,7 @@ For editable PPTX mode (optional):
 # If it fails on your platform, editable PPTX falls back to image mode
 ```
 
-Audio assets (BGM and SFX) are not included in the repository to keep it lightweight. See `references/sfx-library.md` and `references/audio-design-rules.md` for the catalog and download instructions.
+Audio assets (SFX and BGM) are committed to the repository (~10-14 MB total). See `references/sfx-library.md` and `references/audio-design-rules.md` for the catalog and usage.
 
 ## Project Structure
 
