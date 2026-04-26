@@ -116,32 +116,40 @@ Default order of confirmation:
 3. **Fidelity & Scope** — wireframe / hi-fi? one screen / one flow / full flow?
 4. **Plan Approval** — approve the execution plan before full build
 
-Rules:
-- Prefer **step-by-step** confirmation over one giant questionnaire
-- Prefer **1 question per step**
-- Prefer **2-4 short options** plus freeform when the platform supports it
-- Stop asking once blocking uncertainty is resolved
-- If the platform lacks structured question UI, fall back to one compact text batch
-- Rich briefs may skip most questions, but they still require a visible plan before build
-- Explicit speed requests may compress the process into a mini-plan, but they do not skip planning unless the user explicitly says to
+All questions must follow a **standard option format** that works on both Claude Code and Codex:
 
-Structured confirmation example:
+```
+<question>
+<number>) <option>
+<number>) <option>
+```
+
+When the platform supports structured question UI (e.g., Claude Code's `AskUserQuestion`), use it to present the same options as selectable buttons. When it doesn't (e.g., Codex), output the exact same numbered format as text — the user picks by typing the number.
+
+Rules:
+- **Step-by-step** — 1 question per step, not one giant questionnaire
+- **2-4 short options** per question — never more
+- Stop asking once blocking uncertainty is resolved
+- Rich briefs skip most questions, but still require a visible plan before build
+- Explicit speed requests compress to a mini-plan, but still plan unless the user explicitly says to skip
+
+Canonical example (works on all platforms):
 ```markdown
 Step 1 — context
 Do you already have a design system or screenshots I should match?
-- Yes, I have references
-- No, work from scratch
+1) Yes, I have references
+2) No, work from scratch
 
 Step 2 — variations
 How broad should the exploration be?
-- 1 direction, close to expected
-- 3 directions, conservative → bold
+1) 1 direction, close to expected
+2) 3 directions, conservative → bold
 
 Step 3 — fidelity/scope
 What should I build first?
-- One screen
-- One complete flow
-- A low-fi wireframe pass first
+1) One screen
+2) One complete flow
+3) A low-fi wireframe pass first
 
 Step 4 — plan
 Plan
@@ -264,7 +272,7 @@ Approve this plan before I continue into the full build.
 
 **Save → show → wait for approval before continuing.** Skip only for minor edits, approved follow-up iterations, or when the user explicitly says to skip planning.
 
-**1. Understand** — For every design task, start by loading `all-design-tasks`. For new or underspecified work, also load `question-first-delivery` and use the platform's native question UI when available (`AskUserQuestion`, `request_user_input`, or equivalent). Ask the fixed route-shaping questions in this order until routing is locked: output type, task state, available context, interaction/device/export constraints, primary design risk. After routing is locked, ask only the remaining blocking product questions. Use this precedence order: localized edit → act directly; approved follow-up iteration → act directly; explicit speed request → ask only the missing blocking route/product questions, then produce a mini-plan; rich brief (audience + output shape + constraints + references) → skip most questioning, but still confirm any unresolved route-shaping facts before planning; everything else → ask the next blocking route-shaping question. If structured UI is unavailable, send one compact text batch instead. **Detect brand mentions** — scan for brand names (Stripe, Vercel, Notion, Linear, Apple, etc.) and route to `brand-style-clone` when the user wants that aesthetic.
+**1. Understand** — For every design task, start by loading `all-design-tasks`. For new or underspecified work, also load `question-first-delivery` and ask the route-shaping questions using the standard option format (see P1.5). Ask one question per step, 2-4 options each, until routing is locked: output type, task state, available context, interaction/device/export constraints, primary design risk. After routing is locked, ask only the remaining blocking product questions. Use this precedence order: localized edit → act directly; approved follow-up iteration → act directly; explicit speed request → ask only the missing blocking route/product questions, then produce a mini-plan; rich brief (audience + output shape + constraints + references) → skip most questioning, but still confirm any unresolved route-shaping facts before planning; everything else → ask the next blocking route-shaping question. **Detect brand mentions** — scan for brand names (Stripe, Vercel, Notion, Linear, Apple, etc.) and route to `brand-style-clone` when the user wants that aesthetic.
 
 **Existing design contract rule** — if the project already has `DESIGN.md` (or an equivalent explicit design system file) and the current task would change it, do not silently rewrite it. Ask the user to choose one mode before editing:
 - **Append** — add a new section or extension, keep the existing contract intact
