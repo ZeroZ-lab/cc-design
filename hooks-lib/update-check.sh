@@ -46,10 +46,10 @@ fi
 STATE_DIR="${CCDESIGN_STATE_DIR:-$HOME/.ccdesign}"
 CACHE_FILE="$STATE_DIR/last-update-check"
 VERSION_FILE="$PLUGIN_ROOT/VERSION"
-REMOTE_URL="${CCDESIGN_REMOTE_URL:-https://raw.githubusercontent.com/ZeroZ-lab/claritas-design/master/VERSION}"
+REMOTE_URL="${CCDESIGN_REMOTE_URL:-https://raw.githubusercontent.com/ZeroZ-lab/cc-design/master/VERSION}"
 
 # ── Warn on URL override ─────────────────────────────────────────────────────
-DEFAULT_URL="https://raw.githubusercontent.com/ZeroZ-lab/claritas-design/master/VERSION"
+DEFAULT_URL="https://raw.githubusercontent.com/ZeroZ-lab/cc-design/master/VERSION"
 if [ "$REMOTE_URL" != "$DEFAULT_URL" ]; then
   printf '[cc-design] Warning: CCDESIGN_REMOTE_URL overridden to %s\n' "$REMOTE_URL" >&2
 fi
