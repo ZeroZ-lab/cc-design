@@ -1,0 +1,13 @@
+{
+  "name": "cc-design",
+  "owner": {
+    "name": "ZeroZ-lab"
+  },
+  "plugins": [
+    {
+      "name": "cc-design",
+      "source": ".",
+      "description": "High-fidelity HTML design skill — slide decks, landing pages, interactive prototypes, animations, design systems, and more"
+    }
+  ]
+}

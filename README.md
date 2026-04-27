@@ -13,23 +13,31 @@ Slide decks, landing pages, interactive prototypes, animations, design systems, 
 ### Claude Code
 
 ```bash
-# 1. Clone the plugin
-git clone https://github.com/ZeroZ-lab/cc-design.git ~/.claude/plugins/cc-design
+# 1. Add the cc-design marketplace
+/plugin marketplace add ZeroZ-lab/cc-design
 
-# 2. Install export dependencies (optional)
-cd ~/.claude/plugins/cc-design/scripts && npm install && cd -
+# 2. Install the plugin
+/plugin install cc-design@cc-design
 
-# 3. Start designing — cc-design activates via /design command
+# 3. Reload plugins to activate
+/reload-plugins
 ```
+
+After installation, cc-design activates via `/cc-design:design` command.
 
 ### Codex
 
 ```bash
-# 1. Clone the plugin
-git clone https://github.com/ZeroZ-lab/cc-design.git ~/.codex/skills/cc-design
+# 1. Open the plugin browser in Codex CLI
+/plugins
 
-# 2. Start designing — cc-design activates via $cc-design
+# 2. Navigate to cc-design and select "Install plugin"
+
+# Alternatively, clone directly to skills directory:
+git clone https://github.com/ZeroZ-lab/cc-design.git ~/.codex/skills/cc-design
 ```
+
+After installation, cc-design activates via `$cc-design` reference.
 
 ### Example prompts
 
