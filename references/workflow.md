@@ -6,6 +6,7 @@ The runtime contract lives in `SKILL.md`:
 - new ambiguous tasks start with structured step-by-step confirmation
 - richly specified briefs can skip most clarification, but still require a visible plan
 - follow-up iterations and minor fixes act directly unless scope changes
+- update checks and design context management are handled by plugin hooks (`hooks/session-start.sh`, `hooks/pre-compact-preserve.sh`, `hooks/stop-cleanup.sh`) rather than inline SKILL.md instructions
 
 Use this file to structure the step-by-step confirmation flow and the follow-through after that decision has already been made.
 

@@ -1,0 +1,16 @@
+{
+  "name": "cc-design",
+  "description": "High-fidelity HTML design skill — Iron Law enforcement, auto update check, design context preservation, and temp cleanup via hooks",
+  "version": "0.5.0",
+  "author": {
+    "name": "ZeroZ-lab",
+    "url": "https://github.com/ZeroZ-lab/claritas-design"
+  },
+  "homepage": "https://github.com/ZeroZ-lab/claritas-design",
+  "compatibility": {
+    "claude-code": ">=1.0.0",
+    "codex": ">=0.125.0"
+  },
+  "hooks": "./hooks/hooks.json",
+  "skills": "./SKILL.md"
+}

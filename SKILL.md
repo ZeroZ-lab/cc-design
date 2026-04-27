@@ -31,12 +31,10 @@ allowed-tools:
 
 ## Runtime Update Check
 
+Update checks are handled automatically by the SessionStart hook (`hooks/session-start.sh` → `hooks-lib/update-check.sh`). If hooks are unavailable in your environment, you can run the check manually:
+
 ```bash
-_CCD_ROOT="$HOME/.codex/skills/cc-design"
-[ -x "$_CCD_ROOT/bin/ccdesign-update-check" ] || _CCD_ROOT="$(cd "$(dirname "${BASH_SOURCE:-$0}")" 2>/dev/null && pwd)"
-[ -x "$_CCD_ROOT/bin/ccdesign-update-check" ] || _CCD_ROOT="$(pwd)"
-_CCD_UPD=$("$_CCD_ROOT/bin/ccdesign-update-check" 2>/dev/null || true)
-[ -n "$_CCD_UPD" ] && echo "$_CCD_UPD" || true
+bash hooks-lib/update-check.sh
 ```
 
 If output shows `UPGRADE_AVAILABLE <old> <new>`:

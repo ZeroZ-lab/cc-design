@@ -1,0 +1,12 @@
+{
+  "description": "Fixture for Stop hook test — simulates session end event",
+  "env": {
+    "CLAUDE_PLUGIN_ROOT": "<PROJECT_DIR>",
+    "CLAUDE_PROJECT_DIR": "<TMP_DIR>"
+  },
+  "expect": {
+    "exitCode": 0,
+    "jsonOutput": false,
+    "silent": true
+  }
+}

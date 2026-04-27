@@ -1,0 +1,6 @@
+# Playwright MCP — generated logs and page snapshots
+.playwright-mcp/
+
+# Claude Code / Codex runtime — hook logs and design context
+.claude/
+

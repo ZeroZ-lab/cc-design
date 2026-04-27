@@ -1,0 +1,14 @@
+{
+  "description": "Fixture for SessionStart hook test — simulates Claude Code/Codex session start event",
+  "env": {
+    "CLAUDE_PLUGIN_ROOT": "<PROJECT_DIR>",
+    "CLAUDE_PROJECT_DIR": "<TMP_DIR>"
+  },
+  "expect": {
+    "exitCode": 0,
+    "jsonOutput": true,
+    "hasHookSpecificOutput": true,
+    "hasAdditionalContext": true,
+    "hookEventName": "SessionStart"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "description": "Fixture for PreCompact hook test — simulates context compression event",
+  "env": {
+    "CLAUDE_PLUGIN_ROOT": "<PROJECT_DIR>",
+    "CLAUDE_PROJECT_DIR": "<TMP_DIR>"
+  },
+  "expect": {
+    "exitCode": 0,
+    "jsonOutput": true,
+    "hasHookSpecificOutput": true,
+    "hasAdditionalContext": true,
+    "hookEventName": "PreCompact"
+  }
+}
