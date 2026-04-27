@@ -115,15 +115,20 @@ Default order of confirmation:
 4. **Fidelity & Scope** — wireframe / hi-fi? one screen / one flow / full flow?
 5. **Plan Approval** — approve the execution plan before full build
 
-All questions must follow a **standard option format** that works on both Claude Code and Codex:
+All questions on Claude Code **MUST** use `AskUserQuestion` with structured options. This is a hard requirement — never output plain text questions when `AskUserQuestion` is available. Only fall back to text format on platforms that lack structured question UI (e.g., Codex).
 
+**`AskUserQuestion` usage:**
+- `question` — clear and specific, ending with `?`
+- `header` — short label, max 12 chars (e.g. `"Context"`, `"Direction"`, `"Variations"`)
+- `options` — 2-4 options, each with `label` (1-5 words) and `description` (1 sentence explaining the choice)
+- `multiSelect: true` — only when multiple answers can apply simultaneously
+
+**Text fallback (Codex only — do NOT use on Claude Code):**
 ```
 <question>
 <number>) <option>
 <number>) <option>
 ```
-
-When the platform supports structured question UI (e.g., Claude Code's `AskUserQuestion`), use it to present the same options as selectable buttons. When it doesn't (e.g., Codex), output the exact same numbered format as text — the user picks by typing the number.
 
 Rules:
 - **Step-by-step** — 1 question per step, not one giant questionnaire
@@ -132,7 +137,38 @@ Rules:
 - Rich briefs skip most questions, but still require a visible plan before build
 - Explicit speed requests compress to a mini-plan, but still plan unless the user explicitly says to skip
 
-Canonical example (works on all platforms):
+Canonical example — Claude Code (use `AskUserQuestion` for each step):
+
+**Step 1 — context**
+→ `AskUserQuestion` with header `"Context"`, question `"Do you already have a design system or screenshots I should match?"`, options:
+  1. `"Yes, I have references"` — brand guide, screenshots, UI kit, or design files to match
+  2. `"No, work from scratch"` — create a new design direction without references
+
+**Step 2 — direction confirmation**
+→ `AskUserQuestion` with header `"Direction"`, question `"I understand we're building a landing page (Stripe-style) for SaaS buyers, with sign-up as the core action. Is this correct?"`, options:
+  1. `"Yes, proceed"` — direction is correct, continue to next step
+  2. `"No, adjust the type"` — the output format needs to change
+  3. `"No, adjust the audience"` — the target audience needs to change
+
+**Step 3 — variations**
+→ `AskUserQuestion` with header `"Variations"`, question `"How broad should the exploration be?"`, options:
+  1. `"1 direction"` — close to expected, single focused design
+  2. `"3 directions"` — conservative → bold, multiple options to compare
+
+**Step 4 — fidelity/scope**
+→ `AskUserQuestion` with header `"Scope"`, question `"What should I build first?"`, options:
+  1. `"One screen"` — single high-fidelity screen
+  2. `"One complete flow"` — full user journey across screens
+  3. `"Wireframe pass first"` — low-fidelity structure before detailed design
+
+**Step 5 — plan**
+Present the plan inline, then:
+→ `AskUserQuestion` with header `"Plan"`, question `"Approve this plan, or tell me what to change before I build."`, options:
+  1. `"Approve"` — proceed with the build
+  2. `"Adjust scope"` — change fidelity, screen count, or variation breadth
+  3. `"Adjust direction"` — change the design approach or assumptions
+
+Canonical example — text fallback (Codex only):
 ```markdown
 Step 1 — context
 Do you already have a design system or screenshots I should match?
