@@ -1,0 +1,39 @@
+{
+  "name": "cc-design",
+  "version": "0.5.0",
+  "description": "High-fidelity HTML design skill for slide decks, landing pages, interactive prototypes, animations, and design systems.",
+  "author": {
+    "name": "ZeroZ-lab",
+    "url": "https://github.com/ZeroZ-lab"
+  },
+  "homepage": "https://github.com/ZeroZ-lab/cc-design",
+  "repository": "https://github.com/ZeroZ-lab/cc-design",
+  "license": "MIT",
+  "keywords": [
+    "design",
+    "html",
+    "prototype",
+    "slides",
+    "codex"
+  ],
+  "skills": "./SKILL.md",
+  "interface": {
+    "displayName": "cc-design",
+    "shortDescription": "High-fidelity HTML design for Codex.",
+    "longDescription": "Create slide decks, landing pages, interactive prototypes, animations, design systems, and export-ready visual artifacts with structured design planning and quality guardrails.",
+    "developerName": "ZeroZ-lab",
+    "category": "Productivity",
+    "capabilities": [
+      "Design",
+      "Prototype",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/ZeroZ-lab/cc-design",
+    "defaultPrompt": [
+      "Design a landing page for this product.",
+      "Create a pitch deck from this outline.",
+      "Build an interactive prototype for this flow."
+    ],
+    "brandColor": "#111827"
+  }
+}

@@ -28,13 +28,14 @@ After installation, cc-design activates via `/cc-design:design` command.
 ### Codex
 
 ```bash
-# 1. Open the plugin browser in Codex CLI
-/plugins
+# 1. Add the cc-design marketplace from GitHub
+/plugin marketplace add ZeroZ-lab/cc-design
 
-# 2. Navigate to cc-design and select "Install plugin"
+# 2. Install the plugin
+/plugin install cc-design@cc-design
 
-# Alternatively, clone directly to skills directory:
-git clone https://github.com/ZeroZ-lab/cc-design.git ~/.codex/skills/cc-design
+# 3. Reload plugins to activate
+/reload-plugins
 ```
 
 After installation, cc-design activates via `$cc-design` reference.
