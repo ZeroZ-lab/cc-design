@@ -64,3 +64,16 @@ For each task type, a deliverable is complete only when **ALL** of these conditi
 - [ ] Each direction is distinct from the others (not minor colour/typography swaps)
 - [ ] Each direction has a rationale linkable to the design brief or brand reference
 - [ ] Tweaks panel integrates variants cleanly for side-by-side comparison
+
+## Interactive Explainer
+
+- [ ] All steps navigable (keyboard ← → + click prev/next)
+- [ ] Hover focus shows detail and highlights connected edges (desktop)
+- [ ] Tap-to-inspect works on mobile
+- [ ] Entry animation respects prefers-reduced-motion (skip + instant transition + outline for hover)
+- [ ] Any user input skips entry animation (click/keydown/touchstart → immediate ready state)
+- [ ] Responsive three breakpoints: desktop ≥1024px, tablet 768-1023px, mobile <768px
+- [ ] Pulse animation plays limited times then stops (4 iterations)
+- [ ] Node colors WCAG AA compliant (all kind colors pass 4.5:1 contrast with text)
+- [ ] Schema comment + complete example data present in template
+- [ ] No console errors

@@ -271,6 +271,7 @@ Use a two-stage route. Stage 1: always load `all-design-tasks` (`基础必载`) 
 | Animation pitfalls | `references/animation-pitfalls.md` | — | No common failures |
 | Mobile mockup | `references/starter-components.md` + `references/react-setup.md` | `templates/ios_frame.jsx` or `android_frame.jsx` | Bezel rendering — **MUST use template, never handwrite Dynamic Island/status bar** |
 | Interactive prototype | `references/interactive-prototype.md` + `references/react-setup.md` | Choose frame template | Navigation works |
+| **Interactive explainer** | `references/explainer-interaction-patterns.md` + `references/explainer-node-graph-visuals.md` + `references/react-setup.md` | `templates/flow_explainer.jsx` | Step-by-step playback + hover/tap interaction + responsive |
 | Wireframe / low-fi | `references/frontend-design.md` | `templates/design_canvas.jsx` | Layout structure visible |
 | Design system creation | `references/design-system-creation.md` | — | Tokens apply + coherence |
 | No design system provided | `references/frontend-design.md` | Choose template | Aesthetic coherence |
@@ -291,10 +292,10 @@ Ask only until routing is locked. These questions change bundle selection:
 
 Map answers explicitly before semantic matching:
 
-- **Output type** → `landing-page`, `slide-deck`, `interactive-prototype`, `animation-motion`, `design-system-creation`, `deep-design-review`, `editable-pptx-export`, `pdf-export`, `video-export`
+- **Output type** → `landing-page`, `slide-deck`, `interactive-prototype`, `interactive-explainer`, `animation-motion`, `design-system-creation`, `deep-design-review`, `editable-pptx-export`, `pdf-export`, `video-export`
 - **Task state** → new or underspecified work includes `question-first-delivery`; localized edits and approved follow-ups skip it unless scope changes
 - **Available context** → brand reference/clone adds `brand-style-clone`; asset sourcing adds `brand-asset-acquisition`; no references adds `no-design-system`
-- **Interaction/device/export constraints** → interactive adds `interactive-prototype` or `interaction-design`; iOS adds `mobile-mockup` + `before-ios-mockup`; PDF/PPTX/video adds the matching export task type + `before-export`
+- **Interaction/device/export constraints** → "explain process/flow" + "interactive" → `interactive-explainer`; "clickable prototype" + "product demo" → `interactive-prototype`; iOS adds `mobile-mockup` + `before-ios-mockup`; PDF/PPTX/video adds the matching export task type + `before-export`
 - **Primary design risk** → layout adds `layout-problems`; typography adds `typography-problems`; color adds `color-problems`; information hierarchy adds `information-architecture`; interaction adds `interaction-problems`; brand tone adds `brand-tone`
 
 ## Workflow

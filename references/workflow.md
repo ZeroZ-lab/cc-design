@@ -124,6 +124,7 @@ When you are in the question-first path, ask these **route-shaping questions fir
   `page → landing-page`
   `deck → slide-deck`
   `clickable prototype → interactive-prototype`
+  `interactive explainer / flow diagram → interactive-explainer`
   `animation → animation-motion`
   `design system → design-system-creation`
   `critique/review/audit → deep-design-review`
@@ -156,6 +157,8 @@ When you are in the question-first path, ask these **route-shaping questions fir
 - Does the task need interaction, an iOS/Android frame, or export output?
 - Route mapping:
   `interactive flow → interactive-prototype` or `interaction-design`
+  `explain process/flow + interactive → interactive-explainer`
+  `clickable prototype + product demo → interactive-prototype` (not explainer)
   `iOS → mobile-mockup + before-ios-mockup`
   `PDF / PPTX / video → matching export task type + before-export`
 

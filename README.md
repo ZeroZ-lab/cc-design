@@ -2,7 +2,7 @@
 
 **High-fidelity HTML design for Claude Code & Codex.**
 
-Slide decks, landing pages, interactive prototypes, animations, design systems, and more — powered by structured design thinking and built-in quality guardrails.
+Slide decks, landing pages, interactive prototypes, interactive explainers, animations, design systems, and more — powered by structured design thinking and built-in quality guardrails.
 
 [Demo](https://cc-design-demo.vercel.app) · [Examples](./EXAMPLES.md) · [Report Bug](https://github.com/ZeroZ-lab/cc-design/issues)
 
@@ -46,6 +46,7 @@ After installation, cc-design activates via `$cc-design` reference.
 "Design a landing page for our SaaS product"
 "Create a 10-slide pitch deck for the Q3 board meeting"
 "Build an interactive prototype of the checkout flow"
+"Create an interactive explainer showing how our RAG pipeline works"
 "Animate this logo reveal with the Pentagram style"
 "Export the deck as editable PPTX"
 ```

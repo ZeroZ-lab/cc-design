@@ -316,6 +316,24 @@
         "templates/macos_window.jsx"
       ]
     },
+    "interactive-explainer": {
+      "description": "Interactive explainer pages, flow diagrams, product process explainers, architecture walkthroughs, 交互式解释页面, 流程解释, 交互式流程图, 解释页面, 产品流程图, 技术解释",
+      "detect": {
+        "anyKeywords": [
+          "interactive explainer", "interactive flow diagram", "explain how",
+          "product flow diagram", "system flow explainer", "interactive process",
+          "交互式解释", "流程解释", "交互式流程图", "解释页面", "产品流程图", "技术解释"
+        ]
+      },
+      "references": [
+        "references/explainer-interaction-patterns.md",
+        "references/explainer-node-graph-visuals.md",
+        "references/react-setup.md"
+      ],
+      "templates": [
+        "templates/flow_explainer.jsx"
+      ]
+    },
     "wireframe-low-fi": {
       "description": "Wireframes, low-fidelity designs, lo-fi mockups, 线框图, 低保真设计, 简稿",
       "detect": {
