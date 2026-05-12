@@ -70,7 +70,7 @@ See `references/design-iron-law.md` for the full Iron Law definition. In short:
 
 Before stating anything as fact about a brand, product, price, release status, or spec — search first. This is non-negotiable.
 
-Hard flow: `WebSearch → product-facts.md (if exists) → proceed`
+Hard flow: `WebSearch → proceed`
 
 Cost comparison: 10 seconds of search << 2 hours of rework after delivering wrong information.
 
@@ -243,7 +243,7 @@ Use short, stable reasons such as `all-design-tasks`, `react-prototype`, `questi
 
 ## Routing Table
 
-Use a two-stage route. Stage 1: always load `all-design-tasks` (`基础必载`) for every design task. If the task is new or underspecified, also load `question-first-delivery` and ask the route-shaping questions below before selecting more bundles. Stage 2: map those answers to conditionally required bundles (`条件命中后必载`), then use semantic matching only to supplement any remaining unlocked `taskTypes` or `optionalInspirations`. For tasks not in the table, default to `all-design-tasks`, ask the route-shaping questions, and set the `question-first-delivery` checkpoint when the task is still ambiguous.
+Use a two-stage route. Stage 1: always load `all-design-tasks` (`基础必载`) for every design task. If the task is new or underspecified, also load `question-first-delivery` and ask the route-shaping questions below before selecting more bundles. **Skip `question-first-delivery` when the brief already contains enough information to route** (audience + output shape + reference/constraint are all stated or clearly implied). Stage 2: map those answers to conditionally required bundles (`条件命中后必载`), then use semantic matching only to supplement any remaining unlocked `taskTypes` or `optionalInspirations`. For tasks not in the table, default to `all-design-tasks`, ask the route-shaping questions, and set the `question-first-delivery` checkpoint when the task is still ambiguous.
 
 | Task type | Load reference | Copy template | Verify focus |
 |-----------|---------------|---------------|-------------|
@@ -270,8 +270,9 @@ Use a two-stage route. Stage 1: always load `all-design-tasks` (`基础必载`) 
 | Variant exploration | `references/tweaks-system.md` | `templates/design_canvas.jsx` | Tweaks panel visible |
 | Landing page | `references/starter-components.md` + `references/design-patterns.md` | `templates/browser_window.jsx` (optional) | Responsive layout |
 | Animation / motion | `references/animation-best-practices.md` + `references/animations.md` | `templates/animations.jsx` | Timeline playback + __ready signal |
-| Animation pitfalls | `references/animation-pitfalls.md` | — | No common failures |
 | Mobile mockup | `references/starter-components.md` + `references/react-setup.md` | `templates/ios_frame.jsx` or `android_frame.jsx` | Bezel rendering — **MUST use template, never handwrite Dynamic Island/status bar** |
+| Desktop mockup | `references/starter-components.md` + `references/react-setup.md` + `references/responsive-design.md` | `templates/macos_window.jsx` | Desktop window rendering |
+| Form design | `references/form-design.md` + `references/interaction-design-theory.md` | — | Form UX + interaction patterns |
 | Interactive prototype | `references/interactive-prototype.md` + `references/react-setup.md` | Choose frame template | Navigation works |
 | **Interactive explainer -- Flow** | `references/explainer-interaction-patterns.md` + `references/explainer-node-graph-visuals.md` + `references/react-setup.md` | `templates/flow_explainer.jsx` | Step-by-step playback + hover/tap interaction + responsive |
 | **Interactive explainer -- Compare** | `references/explainer-interaction-patterns.md` + `references/explainer-node-graph-visuals.md` + `references/react-setup.md` | `templates/compare_explainer.jsx` | Overview + dimension switching + hover/tap detail + dual encoding + responsive |
@@ -282,6 +283,7 @@ Use a two-stage route. Stage 1: always load `all-design-tasks` (`基础必载`) 
 | No design system provided | `references/frontend-design.md` | Choose template | Aesthetic coherence |
 | Video export | `references/video-export.md` | — | ffmpeg available + correct specs |
 | Audio design | `references/audio-design-rules.md` + `references/sfx-library.md` | — | Dual-track + loudness ratio |
+| Data visualization | `references/data-visualization.md` + `references/color-theory.md` | — | Chart/graph design |
 | PDF export | `references/platform-tools.md` | — | File generated |
 | Scene output specs | `references/scene-templates.md` | — | Dimensions + format match |
 
