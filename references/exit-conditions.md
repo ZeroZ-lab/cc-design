@@ -65,7 +65,7 @@ For each task type, a deliverable is complete only when **ALL** of these conditi
 - [ ] Each direction has a rationale linkable to the design brief or brand reference
 - [ ] Tweaks panel integrates variants cleanly for side-by-side comparison
 
-## Interactive Explainer
+## Interactive Explainer -- Flow
 
 - [ ] All steps navigable (keyboard ← → + click prev/next)
 - [ ] Hover focus shows detail and highlights connected edges (desktop)
@@ -77,3 +77,27 @@ For each task type, a deliverable is complete only when **ALL** of these conditi
 - [ ] Node colors WCAG AA compliant (all kind colors pass 4.5:1 contrast with text)
 - [ ] Schema comment + complete example data present in template
 - [ ] No console errors
+
+## Interactive Explainer -- Compare
+
+- [ ] Overview mode correct: entering defaults to overview, verdict badge + diff summary + diff count visible
+- [ ] Dimension switching smooth: 4-phase animation sequence correct, items and connections transition without jumps
+- [ ] Hover detail correct: hover/tap item → detail overlay + associated connections highlighted + other items dimmed
+- [ ] Dual encoding: each item card shows kind color bar + kind icon + kind text simultaneously
+- [ ] Score 5-dot visualization: score > 0 shows dots, score = 0 hides dots
+- [ ] Mobile degradation: two-column vertical stack + horizontal tab scrolling + tap-to-inspect overlay, no hover-only content
+- [ ] WCAG AA: all text >= 4.5:1 contrast, all UI >= 3:1 contrast, kind not reliant on single color
+- [ ] URL sanitization: cta.href passes sanitizeUrl filter, javascript: URIs blocked
+- [ ] Schema uses cta.href (not cta.target), items have id field
+
+## Interactive Explainer -- Decision Tree
+
+- [ ] Full-tree display correct: all nodes and branches visible simultaneously, BFS layout no overlaps, parent centered over children
+- [ ] Hover path highlighting correct: hover any node → entire path highlighted + accent stroke 3px + non-path dimmed
+- [ ] Conclusion emphasis: emerald background + shadow (0 2px 8px rgba(16,185,129,0.25)), visually distinct from question/factor
+- [ ] Path description text: right panel/bottom overlay shows "Node Label -> Branch Label -> ... -> Conclusion Label" format
+- [ ] Unbalanced tree fallback: >5 siblings triggers gap 64px + horizontal scrolling available
+- [ ] Mobile degradation: indented vertical list (level * 24px) + tap-to-inspect + sticky overlay
+- [ ] WCAG AA: all text >= 4.5:1 contrast, all UI >= 3:1 contrast
+- [ ] URL sanitization: cta.href passes sanitizeUrl filter, javascript: URIs blocked
+- [ ] Schema uses cta.href (not cta.target), nodes have id field

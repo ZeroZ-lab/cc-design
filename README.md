@@ -47,6 +47,8 @@ After installation, cc-design activates via `$cc-design` reference.
 "Create a 10-slide pitch deck for the Q3 board meeting"
 "Build an interactive prototype of the checkout flow"
 "Create an interactive explainer showing how our RAG pipeline works"
+"Make a comparison explainer for React vs Vue"
+"Build a decision tree for tech stack selection"
 "Animate this logo reveal with the Pentagram style"
 "Export the deck as editable PPTX"
 ```
@@ -72,7 +74,7 @@ cc-design handles context gathering, design planning, quality checks, and verifi
 
 | Category | What you get |
 |---|---|
-| **Design outputs** | Landing pages, slide decks, interactive prototypes, wireframes, animations, design systems, motion studies |
+| **Design outputs** | Landing pages, slide decks, interactive prototypes, interactive explainers (flow, compare, decision tree), wireframes, animations, design systems, motion studies |
 | **Design thinking** | 8-layer framework (Goal → Validation), 10 core principles, 20 philosophy schools |
 | **Brand cloning** | Progressive loading of 68+ brand design systems from [getdesign.md](https://getdesign.md) |
 | **Quality guardrails** | Anti-AI slop rules, typography system, spacing scale, mandatory screenshot verification |

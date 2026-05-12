@@ -317,12 +317,14 @@
       ]
     },
     "interactive-explainer": {
-      "description": "Interactive explainer pages, flow diagrams, product process explainers, architecture walkthroughs, 交互式解释页面, 流程解释, 交互式流程图, 解释页面, 产品流程图, 技术解释",
+      "description": "Interactive explainer pages, flow diagrams, product process explainers, comparison explainers, decision trees, 交互式解释页面, 流程解释, 交互式流程图, 解释页面, 产品流程图, 技术解释, 对比解释, 决策树",
       "detect": {
         "anyKeywords": [
           "interactive explainer", "interactive flow diagram", "explain how",
           "product flow diagram", "system flow explainer", "interactive process",
-          "交互式解释", "流程解释", "交互式流程图", "解释页面", "产品流程图", "技术解释"
+          "compare", "comparison", "versus", "decision tree", "tech selection", "choose between",
+          "交互式解释", "流程解释", "交互式流程图", "解释页面", "产品流程图", "技术解释",
+          "对比", "比较", "versus", "决策树", "选型"
         ]
       },
       "references": [
@@ -331,7 +333,9 @@
         "references/react-setup.md"
       ],
       "templates": [
-        "templates/flow_explainer.jsx"
+        "templates/flow_explainer.jsx",
+        "templates/compare_explainer.jsx",
+        "templates/decision_tree.jsx"
       ]
     },
     "wireframe-low-fi": {

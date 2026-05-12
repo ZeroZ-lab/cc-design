@@ -271,7 +271,9 @@ Use a two-stage route. Stage 1: always load `all-design-tasks` (`基础必载`) 
 | Animation pitfalls | `references/animation-pitfalls.md` | — | No common failures |
 | Mobile mockup | `references/starter-components.md` + `references/react-setup.md` | `templates/ios_frame.jsx` or `android_frame.jsx` | Bezel rendering — **MUST use template, never handwrite Dynamic Island/status bar** |
 | Interactive prototype | `references/interactive-prototype.md` + `references/react-setup.md` | Choose frame template | Navigation works |
-| **Interactive explainer** | `references/explainer-interaction-patterns.md` + `references/explainer-node-graph-visuals.md` + `references/react-setup.md` | `templates/flow_explainer.jsx` | Step-by-step playback + hover/tap interaction + responsive |
+| **Interactive explainer -- Flow** | `references/explainer-interaction-patterns.md` + `references/explainer-node-graph-visuals.md` + `references/react-setup.md` | `templates/flow_explainer.jsx` | Step-by-step playback + hover/tap interaction + responsive |
+| **Interactive explainer -- Compare** | `references/explainer-interaction-patterns.md` + `references/explainer-node-graph-visuals.md` + `references/react-setup.md` | `templates/compare_explainer.jsx` | Overview + dimension switching + hover/tap detail + dual encoding + responsive |
+| **Interactive explainer -- Decision Tree** | `references/explainer-interaction-patterns.md` + `references/explainer-node-graph-visuals.md` + `references/react-setup.md` | `templates/decision_tree.jsx` | Full-tree + hover path highlighting + conclusion emphasis + responsive |
 | Wireframe / low-fi | `references/frontend-design.md` | `templates/design_canvas.jsx` | Layout structure visible |
 | Design system creation | `references/design-system-creation.md` | — | Tokens apply + coherence |
 | No design system provided | `references/frontend-design.md` | Choose template | Aesthetic coherence |
@@ -295,7 +297,7 @@ Map answers explicitly before semantic matching:
 - **Output type** → `landing-page`, `slide-deck`, `interactive-prototype`, `interactive-explainer`, `animation-motion`, `design-system-creation`, `deep-design-review`, `editable-pptx-export`, `pdf-export`, `video-export`
 - **Task state** → new or underspecified work includes `question-first-delivery`; localized edits and approved follow-ups skip it unless scope changes
 - **Available context** → brand reference/clone adds `brand-style-clone`; asset sourcing adds `brand-asset-acquisition`; no references adds `no-design-system`
-- **Interaction/device/export constraints** → "explain process/flow" + "interactive" → `interactive-explainer`; "clickable prototype" + "product demo" → `interactive-prototype`; iOS adds `mobile-mockup` + `before-ios-mockup`; PDF/PPTX/video adds the matching export task type + `before-export`
+- **Interaction/device/export constraints** → "explain process/flow" + "interactive" → `interactive-explainer` (flow); "对比/比较/versus 两个方案" + "交互" → `interactive-explainer` (compare); "决策树/选型/技术选型" + "交互" → `interactive-explainer` (decision_tree); "分层架构/层次" + "交互" → `interactive-explainer` (currently flow, v0.3 will add layer); "可点击原型" + "产品演示" → `interactive-prototype` (not explainer); "图表/数据展示" → `data-visualization` (not explainer); iOS adds `mobile-mockup` + `before-ios-mockup`; PDF/PPTX/video adds the matching export task type + `before-export`
 - **Primary design risk** → layout adds `layout-problems`; typography adds `typography-problems`; color adds `color-problems`; information hierarchy adds `information-architecture`; interaction adds `interaction-problems`; brand tone adds `brand-tone`
 
 ## Workflow
