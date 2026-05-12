@@ -455,7 +455,67 @@ The three reference videos correspond to three product personalities. **Choose t
 
 ---
 
-## 8. Relationship to Other References
+## 8. When to Animate — Trigger Decision Framework
+
+Before deciding on animation, detect whether the content contains **dynamic cognitive structures**. If any are present, animation is required (minimum A2 intensity).
+
+### 8.1 Dynamic Cognitive Structure Detection
+
+Scan content for these 10 structures. Hit any → animation required.
+
+| # | Structure | Required dynamic expression |
+|---|-----------|---------------------------|
+| 1 | **Process** (RAG flow, Agent loop, pipeline, journey) | Stepper, stage progression, path flow |
+| 2 | **Change** (state transitions, cache hit/miss, token generation) | Before/After, state machine, timeline |
+| 3 | **Causation** (why X causes Y, risk propagation) | Node highlight, path tracing, variable feedback |
+| 4 | **Hierarchy** (architecture layers, permission models) | Layer expand, module click, view switch |
+| 5 | **Variables** (pricing, trade-offs, parameters) | Sliders, weight adjustment, dynamic computation |
+| 6 | **Paths** (decision trees, user flows, branching) | Path highlight, step progression |
+| 7 | **Feedback loops** (control systems, CI/CD) | State feedback panel, result update, loop visualization |
+| 8 | **Evolution** (maturity, lifecycle, history) | Timeline, stage switching |
+| 9 | **State transitions** (transactions, request lifecycle) | State machine, current-state panel |
+| 10 | **Decision trade-offs** (tech selection, priority planning) | Scorecards, filters, recommendation updates |
+
+### 8.2 Intensity Selection
+
+After confirming animation is needed, select intensity:
+
+- **A1 (State feedback)** — short explanations, no complex dynamics
+- **A2 (Process demo, DEFAULT)** — workflows, mechanisms, tutorials. CSS transitions or `animations.jsx`
+- **A3 (Controllable simulation)** — abstract mechanisms, variable analysis. `flow_explainer.jsx` + custom logic
+- **A4 (Interactive explainer)** — Transformer internals, RAG, consensus algorithms. `flow_explainer.jsx` as primary
+
+Full level definitions: `knowledge-artifact-spec.md` Section 2.
+
+### 8.3 Static-only Ban
+
+The following content MUST NOT use static-only expression (cards/tables/diagrams without interaction):
+
+1. AI model mechanism explanations
+2. Dynamic mechanisms (Transformer / Attention / RAG / Agent loop)
+3. Data flows, control flows, permission flows, workflows
+4. Database queries, indexing, transactions, caching, message queues
+5. System architecture layering and module collaboration
+6. User paths, product flows, business processes
+7. Causal analysis, risk propagation, strategy reasoning
+8. Learning paths, course modules, teaching demonstrations
+9. Tech selection, solution comparison, weight-based decisions
+10. Any content containing: process, change, feedback, reasoning, or evolution
+
+Full ban definitions: `knowledge-artifact-spec.md` Section 4.
+
+### 8.4 Necessity Verification
+
+After adding animation, apply this test: **Remove the animation. Does understanding degrade?**
+
+- **YES** → Animation is justified. Keep it.
+- **NO** → Animation is decorative. Downgrade or remove.
+
+This test prevents animation that exists only for visual interest without cognitive gain.
+
+---
+
+## 9. Relationship to Other References
 
 | Reference | Position | Relationship |
 |---|---|---|

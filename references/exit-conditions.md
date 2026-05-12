@@ -101,3 +101,28 @@ For each task type, a deliverable is complete only when **ALL** of these conditi
 - [ ] WCAG AA: all text >= 4.5:1 contrast, all UI >= 3:1 contrast
 - [ ] URL sanitization: cta.href passes sanitizeUrl filter, javascript: URIs blocked
 - [ ] Schema uses cta.href (not cta.target), nodes have id field
+
+## Knowledge Artifact
+
+**Interaction density verification:**
+- [ ] Interaction density level determined (Level 0-3) and minimum requirements met
+- [ ] Interaction types match content type (concept / architecture / comparison / tutorial / analysis)
+- [ ] At least 3 meaningful interactions present (Level 2 minimum)
+
+**Animation intensity verification:**
+- [ ] Animation intensity level determined (A0-A4) and minimum components included
+- [ ] At least one primary interaction/animation module exists
+- [ ] Primary module carries core explanation task (not decorative)
+
+**Cognitive loop verification:**
+- [ ] Static-only Ban not violated for applicable content types
+- [ ] Information structure forms cognitive loop (conclusion → structure → mechanism → exploration → practice → boundaries → summary)
+- [ ] Hero section communicates topic and core conclusion within 10 seconds
+
+**Animation quality verification:**
+- [ ] User can control pace: prev/next/pause/reset available
+- [ ] Every animation state has accompanying text explanation
+- [ ] Removing animation would degrade understanding (necessity test)
+- [ ] `prefers-reduced-motion` supported
+- [ ] Core content readable when JavaScript disabled
+- [ ] Mobile does not depend on hover (tap alternative exists)

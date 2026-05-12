@@ -1,7 +1,7 @@
 {
   "name": "cc-design",
   "description": "High-fidelity HTML design skill — Iron Law enforcement, auto update check, design context preservation, and temp cleanup via hooks",
-  "version": "0.5.1",
+  "version": "0.8.0",
   "author": {
     "name": "ZeroZ-lab",
     "url": "https://github.com/ZeroZ-lab/cc-design"

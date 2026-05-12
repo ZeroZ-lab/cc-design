@@ -323,8 +323,10 @@
           "interactive explainer", "interactive flow diagram", "explain how",
           "product flow diagram", "system flow explainer", "interactive process",
           "compare", "comparison", "versus", "decision tree", "tech selection", "choose between",
+          "explainer", "explorable explanation", "architecture walkthrough",
           "交互式解释", "流程解释", "交互式流程图", "解释页面", "产品流程图", "技术解释",
-          "对比", "比较", "versus", "决策树", "选型"
+          "对比", "比较", "versus", "决策树", "选型",
+          "技术架构解释", "机制解释", "原理图", "流程动画"
         ]
       },
       "references": [
@@ -336,6 +338,28 @@
         "templates/flow_explainer.jsx",
         "templates/compare_explainer.jsx",
         "templates/decision_tree.jsx"
+      ]
+    },
+    "knowledge-artifact": {
+      "description": "Knowledge artifacts, structured HTML responses, interactive explanations, cognitive interfaces, visual explainers, comparison scorecards, teaching modules, one-page reports, architecture diagrams, 知识产物, 结构化回复, 交互式说明, 视觉化解释, 对比评分卡, 教学模块, 一页式报告, 架构图页面",
+      "detect": {
+        "anyKeywords": [
+          "HTML 结构化回复", "视觉化解释", "交互式说明", "HTML slides",
+          "一页式报告", "架构图页面", "对比评分卡", "教学模块",
+          "文章转视觉化产物", "做成 HTML 页面", "用 HTML 回复",
+          "交互式知识页面", "动画解释器", "可视化解释器",
+          "explorable explanation", "knowledge artifact", "structured response",
+          "知识产物", "认知界面", "交互式解释", "评分卡"
+        ]
+      },
+      "references": [
+        "references/knowledge-artifact-spec.md",
+        "references/information-design-theory.md",
+        "references/interaction-design-theory.md"
+      ],
+      "templates": [
+        "templates/flow_explainer.jsx",
+        "templates/animations.jsx"
       ]
     },
     "wireframe-low-fi": {

@@ -88,6 +88,18 @@ In addition to the three-phase protocol, verify task-type-specific items:
 
 Full details in `references/exit-conditions.md`.
 
+## Phase 3.5: Cognitive Verification (Knowledge/Interactive Output)
+
+**When to apply:** Only when output includes interaction or animation components, or when routed through `knowledge-artifact` / `interactive-explainer` taskTypes.
+
+1. **Primary module check:** Does a primary interaction/animation module exist that carries the core explanation task? (Not just decorative hover effects)
+2. **Dynamic structure coverage:** Are all dynamic cognitive structures (process/change/causation/etc.) in the content matched to appropriate dynamic expressions?
+3. **Understanding gain:** Remove animation/interaction → does understanding degrade? If not, consider downgrading.
+4. **Cognitive loop:** Does information structure form: conclusion → structure → mechanism → interactive exploration → practical advice → boundaries → summary?
+5. **Static-only ban:** If content falls under Static-only Ban categories, verify at least one dynamic explanation module is present.
+
+Full cognitive checklist: `knowledge-artifact-spec.md` Section 7.
+
 ## Fix Loop
 
 The verification loop is strict:
