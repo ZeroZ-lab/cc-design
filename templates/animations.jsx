@@ -11,6 +11,11 @@
  * - Easing: {linear, easeIn, easeOut, easeInOut, spring, anticipation}
  * - interpolate(t, [input0, input1], [output0, output1], easing?)
  *
+ * Window bridges (mounted by Stage on mount, cleaned up on unmount):
+ * - window.__seek(t): Seek to time t, pause playback, sync DOM via flushSync
+ * - window.__seek_sync: true = flushSync path (DOM sync immediate)
+ * - window.__resumeRecording(): Resume playback (only in window.__recording mode)
+ *
  * Usage:
  *   <Stage duration={10}>
  *     <Sprite start={0} end={3}>
@@ -26,6 +31,7 @@
 
 (function() {
   const { createContext, useContext, useState, useEffect, useRef, useCallback } = React;
+  const flushSync = ReactDOM.flushSync;
 
   const TimeContext = createContext({ time: 0, duration: 10, playing: false });
   const SpriteContext = createContext(null);
@@ -238,6 +244,39 @@
       };
     }, [playing, duration, effectiveLoop]);
 
+    // Expose window.__seek(t) for Playwright verification and render-video.js.
+    // flushSync guarantees synchronous DOM update so callers can read state
+    // immediately after page.evaluate(() => __seek(t)) without rAF wait.
+    // __seek also pauses playback — AI agent needs a fixed time point to read.
+    // __resumeRecording resumes playback only in recording mode (window.__recording),
+    // so regular browser usage still pauses after seek (KD-1 behavior).
+    useEffect(() => {
+      if (typeof window === 'undefined') return;
+
+      window.__seek = (t) => {
+        // Clamp t to [0, duration]; NaN/undefined → 0
+        const clamped = Math.max(0, Math.min(duration, (typeof t === 'number' && !isNaN(t)) ? t : 0));
+        flushSync(() => {
+          timeRef.current = clamped;
+          setPlaying(false);
+          setTime(clamped);
+        });
+      };
+      window.__seek_sync = true; // Signal: flushSync path active
+
+      window.__resumeRecording = () => {
+        if (window.__recording) {
+          setPlaying(true);
+        }
+      };
+
+      return () => {
+        delete window.__seek;
+        delete window.__seek_sync;
+        delete window.__resumeRecording;
+      };
+    }, [duration]);
+
     const handleScrub = useCallback((e) => {
       const rect = e.currentTarget.getBoundingClientRect();
       const ratio = (e.clientX - rect.left) / rect.width;
@@ -308,7 +347,7 @@
     );
   }
 
-  function Sprite({ start = 0, end, children, style }) {
+  function Sprite({ start = 0, end, name, children, style }) {
     const { time } = useContext(TimeContext);
     const actualEnd = end == null ? Infinity : end;
 
@@ -324,7 +363,7 @@
 
     return (
       <SpriteContext.Provider value={spriteValue}>
-        <div style={{ position: 'absolute', inset: 0, ...style }}>
+        <div style={{ position: 'absolute', inset: 0, ...style }} data-sprite={name || undefined}>
           {children}
         </div>
       </SpriteContext.Provider>

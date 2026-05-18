@@ -26,7 +26,7 @@ This workflow is the **execution process**. The 8-layer framework (`design-think
 | **Step 4: Plan** (Visible execution plan) | Layer 1-7 (condensed) | Turn confirmed facts and assumptions into a build plan |
 | **Step 5: Approval** (Manager review) | Layer 8 (Validation) | Confirm direction before expensive execution |
 | **Step 6: Design** (Build artifacts) | Layer 3 (Structure) + Layer 4 (Interaction) + Layer 5 (Visual) | Execute structure, interaction, and visual design |
-| **Step 7: Verify** (Check quality) | Layer 8 (Validation) | Test technical feasibility, usability, design quality |
+| **Step 7: Verify** (Check quality) | Layer 8 (Validation) | Test technical feasibility, usability, design quality; for Stage+Sprite animations, use `__seek(t)` numerical verification (see `references/verification-protocol.md`) |
 | **Step 8: Iterate** (Refine based on feedback) | Layer 8 → Layer 1 (feedback loop) | Use validation results to refine goals and execution |
 
 **When to use which:**

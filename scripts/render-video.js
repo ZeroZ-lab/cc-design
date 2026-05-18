@@ -211,16 +211,33 @@ console.log(`  output: ${MP4_OUT}`);
     const seekCorrected = await page.evaluate(() => {
       if (typeof window.__seek === 'function') {
         window.__seek(0);
-        return true;
+        // __seek pauses playback; resume for recording via bridge
+        if (typeof window.__resumeRecording === 'function') {
+          window.__resumeRecording();
+        }
+        return { sought: true, seekSync: typeof window.__seek_sync === 'boolean' ? window.__seek_sync : null };
       }
-      return false;
+      return { sought: false, seekSync: null };
     });
-    if (seekCorrected) {
-      // Wait two rAFs for seek to take effect and render t=0 frame
-      await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))));
+    if (seekCorrected.sought) {
+      // Wait for DOM to reflect t=0 frame before recording starts.
+      // When __seek_sync === true (flushSync path), DOM is already synchronous;
+      // 2 rAFs ensure paint. When __seek_sync === false (fallback path), need
+      // extra rAF for async React render to commit.
+      if (seekCorrected.seekSync === false) {
+        // Fallback path: need extra rAF wait for DOM sync (3 rAFs total)
+        await page.evaluate(() => new Promise(resolve => {
+          requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        }));
+      } else {
+        // flushSync path: DOM already updated synchronously, just 2 rAFs for paint
+        await page.evaluate(() => new Promise(resolve => {
+          requestAnimationFrame(() => requestAnimationFrame(resolve));
+        }));
+      }
     }
     animationStartSec = (Date.now() - T0) / 1000;
-    console.log(`▸ Ready at ${animationStartSec.toFixed(2)}s (from window.__ready${seekCorrected ? ' + __seek(0) correction' : ''})`);
+    console.log(`▸ Ready at ${animationStartSec.toFixed(2)}s (from window.__ready${seekCorrected.sought ? ' + __seek(0) correction' : ''})`);
   } else {
     await page.waitForTimeout(FONT_WAIT * 1000);
     animationStartSec = (Date.now() - T0) / 1000;

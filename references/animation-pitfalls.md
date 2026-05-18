@@ -74,23 +74,25 @@ Read this before writing animation code. It saves an entire iteration.
 - Or use an "anchor element" (like the main sentence) as visual continuity between scenes, briefly reappearing during zoom transitions
 - Calculate CSS transition durations carefully, avoid triggering the next transition before the previous one finishes
 
-## 5. Pure Render Principle -- Animation State Should Be Seekable
+## 5. Pure Render Principle -- __seek is Implemented
 
-**The bug**: Used `setTimeout` + `fireOnce(key, fn)` chains to trigger animation state. Normal playback was fine, but when doing frame-by-frame recording or seeking to an arbitrary time point, the setTimeouts had already fired and couldn't "go back in time".
+`window.__seek(t)` is now implemented in the Stage component (animations.jsx). For Stage+Sprite animations, call `window.__seek(t)` directly — it handles `flushSync` DOM sync, `timeRef` sync, playback pause, and boundary clamping (`[0, duration]`, NaN→0).
 
-**Rule**:
-- `render(t)` function should ideally be a **pure function**: given t, output unique DOM state
-- If side effects are necessary (e.g., class toggle), use a `fired` set with explicit reset:
-  ```js
-  const fired = new Set();
-  function fireOnce(key, fn) { if (!fired.has(key)) { fired.add(key); fn(); } }
-  function reset() { fired.clear(); /* clear all .show classes */ }
-  ```
-- Expose `window.__seek(t)` for Playwright / debugging:
-  ```js
-  window.__seek = (t) => { reset(); render(t); };
-  ```
-- Animation-related setTimeout shouldn't span >1 second, otherwise seek-back will break things
+**Usage** (in Playwright):
+```js
+page.evaluate(() => __seek(2.5));  // Seek to t=2.5, pause playback, sync DOM
+const opacity = page.evaluate(() => parseFloat(getComputedStyle(el).opacity));
+```
+
+**For hand-written HTML animations not using Stage**: still use the starter tick template and manually add `window.__seek`:
+```js
+const fired = new Set();
+function fireOnce(key, fn) { if (!fired.has(key)) { fired.add(key); fn(); } }
+function reset() { fired.clear(); }
+window.__seek = (t) => { fired.clear(); time = t; lastTick = null; render(t); };
+```
+
+Animation-related setTimeout shouldn't span >1 second, otherwise seek-back will break things.
 
 ## 6. Pre-Font-Load Measurement = Wrong Measurement
 
@@ -269,12 +271,12 @@ window.__seek = (t) => { fired.clear(); time = t; lastTick = null; render(t); };
 | `playing = false` default | During font loading, even if `tick` runs it doesn't advance time, preventing render misalignment |
 | `__ready` set in tick's first frame | Recording script starts timing at this moment, the corresponding frame is animation's true t=0 |
 | `document.fonts.ready.then(...)` before starting tick | Avoids font fallback width measurement, prevents first-frame font jump |
-| `window.__seek` exists | Lets `render-video.js` actively correct -- second line of defense |
+| `window.__seek` exists | Stage component now implements `__seek(t)` with `flushSync` DOM sync, `timeRef` sync, and playback pause. Hand-written animations still need manual `__seek` in the starter template |
 
 **Recording script's corresponding defense**:
 1. `addInitScript` injects `window.__recording = true` (before page goto)
 2. `waitForFunction(() => window.__ready === true)`, records this moment's offset as ffmpeg trim
-3. **Additionally**: After `__ready`, actively `page.evaluate(() => window.__seek && window.__seek(0))`, force-resetting any time offset in the HTML -- second line of defense against HTMLs that don't strictly follow the starter template
+3. **Additionally**: After `__ready`, actively `page.evaluate(() => window.__seek && window.__seek(0))`, force-resetting any time offset in the HTML -- second line of defense against HTMLs that don't strictly follow the starter template. Then call `__resumeRecording()` to resume playback (since `__seek` pauses). For Stage+Sprite: `__resumeRecording` is provided automatically; for hand-written: add it yourself
 
 **Verification method**: After exporting MP4
 ```bash

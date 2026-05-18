@@ -163,6 +163,78 @@ Built-in easing curves:
 **Default primary easing is `expoOut`** (not `easeOut`) — see `animation-best-practices.md` §2.
 Enter with `expoOut`, exit with `easeIn`, toggle with `overshoot` — the basic rhythm of production-grade animation.
 
+## Seek API for Verification
+
+Stage exposes `window.__seek(t)` for Playwright-based numerical verification of animations. This allows AI agents to seek to any time point, read computed styles, and compare against brief expectations — without relying on screenshots.
+
+### `window.__seek(t)`
+
+Seek to time `t`, pause playback, and synchronously update DOM via `ReactDOM.flushSync`.
+
+```js
+// In Playwright:
+page.evaluate(() => __seek(2.5));
+// DOM is now at t=2.5, animation paused — read state immediately
+const opacity = page.evaluate(() => {
+  const el = document.querySelector('[data-sprite="title"]');
+  return parseFloat(getComputedStyle(el.querySelector('div')).opacity);
+});
+```
+
+**Behavior:**
+- Pauses playback after seek (AI agent needs a fixed time point to read)
+- DOM updates synchronously (`flushSync` path, confirmed by spike test)
+- Clamps `t` to `[0, duration]`; NaN or undefined → treated as `t=0`
+- Does NOT modify `window.__ready` (that signal is set once by the tick function)
+
+### `window.__seek_sync`
+
+`true` when `flushSync` path is active (DOM updated synchronously — read state immediately after `__seek`). `false` when using fallback path (caller must wait ~2 rAF or `page.waitForTimeout(100)` before reading).
+
+### `window.__resumeRecording()`
+
+Resume playback after `__seek`, but **only when `window.__recording` is true** (recording mode injected by `render-video.js`). In regular browser usage, calling this has no effect — the animation stays paused after seek, as designed for verification.
+
+### Degradation Workflow
+
+If `__seek_sync === false` (flushSync unavailable in the environment):
+```js
+page.evaluate(() => __seek(2.5));
+page.waitForTimeout(100); // Wait for async React render
+// Now read state
+```
+
+### Sprite `name` Prop → `data-sprite` Attribute
+
+Sprites accept an optional `name` string prop, rendered as a `data-sprite` HTML attribute for Playwright targeting:
+
+```jsx
+<Sprite start={0} end={5} name="title">
+  <Title />
+</Sprite>
+```
+
+The Sprite's wrapper div gets `data-sprite="title"`, enabling:
+
+```js
+page.evaluate(() => {
+  const el = document.querySelector('[data-sprite="title"]');
+  return el ? parseFloat(getComputedStyle(el.querySelector('div')).opacity) : null;
+});
+```
+
+**Backward compatible**: if `name` is not provided, no `data-sprite` attribute is rendered. Existing animation HTML works unchanged.
+
+### Verification Flow (2-Node)
+
+1. **Seek-and-Read**: Seek to 3-5 key time points (t=0, first transition, midpoint, last transition, t=duration). At each point, read `getComputedStyle` for opacity/visibility.
+
+2. **Brief-Comparison**: Compare numerical values against brief expectations using qualitative bounds:
+   - "Title should be visible at t=2" → opacity > 0.8 ✓
+   - "Title should fade out by t=5" → opacity < 0.1 ✓
+
+See `references/motion-contract.md` for contract constraint rules.
+
 ## Timing and Duration Guide
 
 ### Micro-interactions (0.1-0.3s)

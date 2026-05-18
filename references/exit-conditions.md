@@ -34,6 +34,9 @@ For each task type, a deliverable is complete only when **ALL** of these conditi
 - [ ] Each phase has a minimum dwell time (>= 3s for text, >= 1s for transitions)
 - [ ] Entries use ease-out; exits use ease-in
 - [ ] No stacked simultaneous animations without purpose
+- [ ] `__seek(t)` available and functional (for Stage+Sprite animations)
+- [ ] Key timestamps verified numerically (opacity/visibility at entry/exit/midpoint)
+- [ ] All Sprites with meaningful content have `name` prop
 
 ## Interactive Prototype
 

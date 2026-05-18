@@ -82,7 +82,7 @@ cc-design handles context gathering, design planning, quality checks, and verifi
 | **Export** | PDF (multi-file + single-file), PPTX (image + editable), MP4 video, inline HTML |
 | **Audio** | Dual-track audio (SFX + BGM), 37 SFX catalog, ffmpeg mixing |
 | **Design review** | 5-dimension scoring: philosophy, hierarchy, craft, functionality, originality |
-| **Animation** | Stage+Sprite timeline engine, easing library, signal protocol, pitfall guardrails |
+| **Animation** | Stage+Sprite timeline engine, easing library, Seek-First numerical verification (`__seek` + `getComputedStyle`), signal protocol, pitfall guardrails |
 | **Prototyping** | React + Babel inline JSX, device frames (iOS, Android, macOS, browser) |
 
 ## Design Styles

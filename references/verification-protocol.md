@@ -44,6 +44,31 @@ browser_console_messages → level: warning
 
 If Phase 1 has any failure: fix the issue, re-navigate the page, re-run Phase 1. Do not proceed to Phase 2 until Phase 1 passes clean.
 
+### Animation Numerical Check (Stage+Sprite only)
+
+After structural checks pass, for animations using Stage+Sprite, additionally verify key timestamps numerically via `window.__seek(t)` + `getComputedStyle`.
+
+**Steps:**
+1. Seek to 3-5 key time points: t=0 (initial), first transition, midpoint, last transition, t=duration (end)
+2. At each point: `page.evaluate(() => __seek(t))` then `page.evaluate(() => getComputedStyle(el))` for opacity/visibility
+3. If `__seek_sync === false` (fallback path): add `page.waitForTimeout(100)` after each seek before reading
+4. Compare against brief expectations using qualitative bounds (see `references/motion-contract.md`)
+
+**Example:**
+```js
+// Seek to t=2, read title opacity
+await page.evaluate(() => __seek(2));
+const opacity = await page.evaluate(() => {
+  const el = document.querySelector('[data-sprite="title"]');
+  return el ? parseFloat(getComputedStyle(el.querySelector('div')).opacity) : null;
+});
+// Assertion: "Title visible at t=2" → opacity > 0.8
+```
+
+**Must use Sprite `name` prop + `data-sprite` selector** for targeting elements. All Sprites with meaningful content should have a `name` prop.
+
+**For hand-written animations** (not Stage+Sprite): still use screenshot-only verification. Numerical seek-and-read is not applicable — hand-written animations cannot guarantee `render(t)` is a pure function.
+
 ## Phase 2: Visual Verification
 
 Run these after Phase 1 passes. Requires human judgment via screenshot review.

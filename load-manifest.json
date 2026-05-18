@@ -264,7 +264,8 @@
       },
       "references": [
         "references/animation-best-practices.md",
-        "references/animations.md"
+        "references/animations.md",
+        "references/motion-contract.md"
       ],
       "templates": [
         "templates/animations.jsx"
@@ -489,7 +490,8 @@
       "description": "Before starting animation or motion design work, 开始动画/动效设计前加载",
       "references": [
         "references/animation-best-practices.md",
-        "references/animation-pitfalls.md"
+        "references/animation-pitfalls.md",
+        "references/motion-contract.md"
       ],
       "templates": [
         "templates/animations.jsx"

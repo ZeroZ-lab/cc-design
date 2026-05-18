@@ -33,7 +33,6 @@ allowed-tools:
 
 Update checks are handled automatically by the SessionStart hook (`hooks/session-start.sh` → `hooks-lib/update-check.sh`). If hooks are unavailable in your environment, you can run the check manually:
 
-```bash
 bash hooks-lib/update-check.sh
 ```
 
@@ -269,7 +268,7 @@ Use a two-stage route. Stage 1: always load `all-design-tasks` (`基础必载`) 
 | Editable PPTX export | `references/slide-decks.md` + `references/editable-pptx.md` | — | 4 hard constraints met |
 | Variant exploration | `references/tweaks-system.md` | `templates/design_canvas.jsx` | Tweaks panel visible |
 | Landing page | `references/starter-components.md` + `references/design-patterns.md` | `templates/browser_window.jsx` (optional) | Responsive layout |
-| Animation / motion | `references/animation-best-practices.md` + `references/animations.md` | `templates/animations.jsx` | Timeline playback + __ready signal |
+| Animation / motion | `references/animation-best-practices.md` + `references/animations.md` + `references/motion-contract.md` | `templates/animations.jsx` | Timeline playback + __ready signal + motion-contract numerical verification |
 | Mobile mockup | `references/starter-components.md` + `references/react-setup.md` | `templates/ios_frame.jsx` or `android_frame.jsx` | Bezel rendering — **MUST use template, never handwrite Dynamic Island/status bar** |
 | Desktop mockup | `references/starter-components.md` + `references/react-setup.md` + `references/responsive-design.md` | `templates/macos_window.jsx` | Desktop window rendering |
 | Form design | `references/form-design.md` + `references/interaction-design-theory.md` | — | Form UX + interaction patterns |
@@ -439,7 +438,7 @@ If the user rejects this direction (especially 3+ times or feedback keeps changi
 
 **Checkpoint: Deep critique / audit** — If the user asked for a critique, review, audit, or score, announce `because=deep-design-review`, then load `references/design-checklist.md`, `references/principle-review.md`, `references/verification.md`, and `references/typography-spacing-quick-ref.md` before judging the work.
 
-**Checkpoint: Before animation** — Announce `because=before-animation`, then load `references/animation-best-practices.md` AND `references/animation-pitfalls.md`. Verify the 16 hard rules before writing any motion code.
+**Checkpoint: Before animation** — Announce `because=before-animation`, then load `references/animation-best-practices.md`, `references/animation-pitfalls.md`, AND `references/motion-contract.md`. Verify the 16 hard rules before writing any motion code.
 
 **Checkpoint: Before export** — Announce `because=before-export`, then load the relevant export reference. For editable PPTX, verify the 4 hard constraints in `references/editable-pptx.md` BEFORE starting HTML.
 
@@ -459,6 +458,7 @@ If the user rejects this direction (especially 3+ times or feedback keeps changi
 
 **7. Verify (Mandatory self-check)** — Announce `because=before-delivery`, then load `references/verification-protocol.md` and `references/exit-conditions.md`. Run three-phase verification yourself after the final edit:
 - **Structural:** console errors, layout, responsiveness
+- **Animation Numerical Check (Stage+Sprite only):** after structural checks, use `__seek(t)` to verify 3-5 key timestamps, read `getComputedStyle` for opacity/visibility, compare against brief expectations. See `references/verification-protocol.md` Animation Numerical Check.
 - **Visual:** screenshot review, design quality
 - **Design excellence:** hierarchy, spacing, color harmony, emotional fit
 

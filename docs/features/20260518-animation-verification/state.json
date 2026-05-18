@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "feature_path": "docs/features/20260518-animation-verification",
+  "branch": "master",
+  "current_stage": "ship",
+  "last_phase_doc": "05-ship.md",
+  "next_command": null,
+  "last_activity": "2026-05-18T15:58:33+08:00",
+  "stale_reason": null
+}
