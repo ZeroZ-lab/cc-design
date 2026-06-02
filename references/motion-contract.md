@@ -52,7 +52,7 @@ These patterns are **wrong** for Motion Contract assertions:
 | `easeInOut` as contract easing | Ambiguous — which half? | Split into `easeIn` (exit) + `expoOut` (enter) |
 | Exact numerical targets (e.g., `opacity=0.87`) | Browser rounding, timing jitter | Use qualitative bounds: `opacity > 0.8` |
 | Proactive contract-first flow | High cognitive load, premature | Retroactive: build first, then verify with seek-and-read |
-| Asserting transform values | `getComputedStyle` returns `matrix(...)` string | Use opacity/visibility; transform verification deferred to v0.10 |
+| Asserting transform values | `getComputedStyle` returns `matrix(...)` string | Use opacity/visibility; transform verification not yet supported |
 
 ## Scope
 

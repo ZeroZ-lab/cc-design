@@ -146,6 +146,82 @@ Loads: `frontend-design.md` + `design_canvas.jsx` template
 
 ---
 
+## Interactive Explainers
+
+### Flow Explainer
+
+```
+/cc-design "Interactive flow diagram showing how a RAG pipeline works, step by step"
+```
+
+Loads: `explainer-interaction-patterns.md` + `explainer-node-graph-visuals.md` + `react-setup.md` + `flow_explainer.jsx`
+
+Output: A guided walkthrough of the RAG pipeline with nodes (input → embed → retrieve → augment → generate), edges connecting them, and step-by-step playback that highlights each stage in sequence. Users click through steps to see how data flows.
+
+**What to verify:** Each step has a `focus` array highlighting the relevant nodes; node kinds (`input`, `process`, `output`, `decision`) match their role; the graph is a valid connected directed graph.
+
+---
+
+### Compare Explainer
+
+```
+/cc-design "对比 PostgreSQL 和 MongoDB 作为主力数据库的优劣，做成交互式对比图"
+```
+
+Loads: Same explainer references + `compare_explainer.jsx`
+
+Output: A multi-dimension comparison with PostgreSQL and MongoDB as subjects, tabs for switching dimensions (performance, scalability, data model, ecosystem), pro/con items with scores, and a verdict for each subject. Users switch dimensions via tabs.
+
+**What to verify:** At least 2 subjects with distinct `accentColor`; items have valid `kind` (pro/con/neutral/highlight) and `score` (0-5); dimension tab switching works.
+
+---
+
+### Decision Tree Explainer
+
+```
+/cc-design "Interactive decision tree to help choose between React, Vue, Svelte, and Angular for a new project"
+```
+
+Loads: Same explainer references + `decision_tree.jsx`
+
+Output: A branching tree with question nodes ("Type safety important?"), factor nodes adding context, and conclusion nodes with verdicts ("Choose TypeScript + React"). Every branch edge has a label explaining the condition. Users hover to highlight paths.
+
+**What to verify:** Single root node; `question`/`factor`/`conclusion` kinds are correct; every edge has a `label`; conclusion nodes have `conclusion` verdict strings; no cycles.
+
+---
+
+## Knowledge Artifacts
+
+```
+/cc-design "Knowledge artifact explaining how DNS resolution works, from browser cache to authoritative name server"
+```
+
+Loads: `knowledge-artifact-spec.md` + `information-design-theory.md` + `interaction-design-theory.md`
+
+Output: A structured explanation with interactive elements — not just a static article. Default density is **Level 2** (3-5 interactions: navigation, expand/collapse, tab switching, stepper). Default animation is **A2** (process demonstration with path highlighting or stepper). Content category "data flow / control flow" triggers the **Static-only Ban**, so at least one dynamic module is required.
+
+**What to verify:**
+- Content was scanned for cognitive structures (process, change, paths, feedback)
+- At least one primary animation/interaction module carries the core explanation
+- Interaction density matches content complexity (not Level 0 for a multi-step process)
+- Animation intensity is proportional to content depth
+
+---
+
+## Design Review / Critique
+
+```
+/cc-design "Review and score this landing page design: landing.html"
+```
+
+Loads: `design-checklist.md` + `principle-review.md` + `verification.md` + `typography-spacing-quick-ref.md` (via `deep-design-review` checkpoint)
+
+Output: A structured critique covering hierarchy, spacing, color, typography, interaction quality, and emotional fit. Scores each dimension and highlights specific issues with file/line references. Does NOT just say "looks good" — identifies at least 2-3 concrete improvement areas.
+
+**What to verify:** The `deep-design-review` checkpoint was announced; all loaded references were consulted; critique references specific elements, not vague impressions; scoring uses the 5-dimension design scoring framework.
+
+---
+
 ## Advanced Workflows
 
 ### Brand Style + Existing Design System

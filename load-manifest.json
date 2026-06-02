@@ -542,7 +542,8 @@
       "description": "Presentation and pitch deck case studies for inspiration, 演示文稿案例参考",
       "references": [
         "references/case-studies/presentations/keynote-style.md",
-        "references/case-studies/presentations/pitch-deck-example.md"
+        "references/case-studies/presentations/pitch-deck-example.md",
+        "references/case-studies/presentations/data-story.md"
       ]
     },
     "product-page-case-studies": {
@@ -556,7 +557,14 @@
     "mobile-case-studies": {
       "description": "Mobile app case studies for inspiration, 移动端应用案例参考",
       "references": [
-        "references/case-studies/mobile-apps/ios-onboarding.md"
+        "references/case-studies/mobile-apps/ios-onboarding.md",
+        "references/case-studies/mobile-apps/android-dashboard.md"
+      ]
+    },
+    "creative-works-case-studies": {
+      "description": "Award-winning creative works for inspiration, 创意作品案例参考",
+      "references": [
+        "references/case-studies/creative-works/portfolio-site.md"
       ]
     }
   },

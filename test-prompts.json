@@ -52,5 +52,35 @@
     "prompt": "Create a Stripe-style pricing page and export it as PDF",
     "expected": "Loads the base-required bundle first; routes to brand-style-clone + landing-page; includes before-export for the PDF target; asks only for missing brand/context details before planning; keeps export constraints visible before build",
     "tests": "brand clone + landing page + export checkpoint + two-stage routing"
+  },
+  {
+    "id": 10,
+    "prompt": "Create an interactive flow diagram explaining how a RAG (Retrieval-Augmented Generation) pipeline works, step by step",
+    "expected": "Routes to interactive-explainer (flow); loads explainer-interaction-patterns.md + explainer-node-graph-visuals.md + react-setup.md; copies flow_explainer.jsx; builds a valid directed graph with nodes (input/process/output/decision kinds), edges, and guided steps with focus arrays; triggers before-animation checkpoint for motion elements; responsive layout",
+    "tests": "interactive-explainer flow routing + flow_explainer.jsx template + node/edge schema compliance + step-by-step playback + responsive"
+  },
+  {
+    "id": 11,
+    "prompt": "对比 PostgreSQL 和 MongoDB 作为主力数据库的优劣，做成交互式对比图",
+    "expected": "Routes to interactive-explainer (compare); detects Chinese '对比' keyword; loads explainer-interaction-patterns.md + explainer-node-graph-visuals.md + react-setup.md; copies compare_explainer.jsx; creates at least 2 subjects with distinct accentColor; builds multi-dimension comparison with items carrying pro/con/neutral/highlight kinds and valid scores (0-5); dimension tab switching works; responsive",
+    "tests": "interactive-explainer compare routing via Chinese keyword + compare_explainer.jsx template + multi-subject multi-dimension schema + dimension switching + dual encoding"
+  },
+  {
+    "id": 12,
+    "prompt": "做一个交互式技术选型决策树，帮用户在 React/Vue/Svelte/Angular 之间选择前端框架",
+    "expected": "Routes to interactive-explainer (decision_tree); loads explainer references; copies decision_tree.jsx; builds a valid tree with question/factor/conclusion node kinds; every edge has a label describing the branch condition; at least one root node and multiple conclusion nodes with verdict strings; no cycles; hover path highlighting; responsive",
+    "tests": "interactive-explainer decision_tree routing + decision_tree.jsx template + tree schema (acyclic, single root, conclusion verdicts) + edge labels required"
+  },
+  {
+    "id": 13,
+    "prompt": "Create a knowledge artifact explaining how DNS resolution works, from browser cache to authoritative name server",
+    "expected": "Routes to knowledge-artifact; loads knowledge-artifact-spec.md + information-design-theory.md + interaction-design-theory.md; content category 'data flow / control flow' triggers Static-only Ban (P4 applies); defaults to Level 2 interaction density (3-5 interactions) and A2 animation (process demonstration with stepper or path highlighting); uses flow_explainer.jsx or animations.jsx as template; at least one primary animation module carrying core explanation; responsive",
+    "tests": "knowledge-artifact routing + Static-only Ban enforcement + Level 2 density default + A2 animation default + cognitive structure detection (process, change, paths) + template selection by animation intensity"
+  },
+  {
+    "id": 14,
+    "prompt": "Make an editable PowerPoint export of a 5-slide quarterly business review deck",
+    "expected": "Routes to slide-deck + editable-pptx-export; triggers before-export checkpoint; loads editable-pptx.md and verifies the 4 hard constraints BEFORE starting HTML: (1) one HTML file per slide, (2) only text boxes, rectangles, and images, (3) no absolute positioning on text, (4) UTF-8 encoding with proper escaping; uses deck_stage.js for the slide canvas; font size ≥24px; exports via platform-tools.md PPTX pipeline",
+    "tests": "editable PPTX export routing + before-export checkpoint + 4 hard constraints verified before build + deck_stage template + PPTX export pipeline"
   }
 ]
