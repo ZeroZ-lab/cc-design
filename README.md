@@ -144,28 +144,8 @@ choco install ffmpeg         # Windows
 
 | Platform | Activation | Integration |
 |---|---|---|
-| **Claude Code** | `/design` command | Commands + hooks + SKILL.md |
+| **Claude Code** | `/design` command | Commands + SKILL.md |
 | **Codex / OpenAI** | `$cc-design` reference | `agents/openai.yaml` |
-
-## Plugin Hooks (v0.5.0)
-
-cc-design includes 3 lifecycle hooks that fire automatically on both **Claude Code** and **Codex** (v0.125.0+):
-
-| Hook | Trigger | Behavior |
-|------|---------|----------|
-| **SessionStart** | Session start, clear, compact | Auto update check + design context recovery + Iron Law injection |
-| **PreCompact** | Before context compression | Preserves design tokens (colors, fonts, CSS vars) to `.claude/design-context.json` |
-| **Stop** | Session end | Cleans stale `.playwright-mcp/console-*.log` files (>7 days) |
-
-**Opt-out**: Set any of these env vars to `off` to disable individual hooks:
-
-```bash
-export CCDESIGN_HOOK_SESSION_START=off
-export CCDESIGN_HOOK_PRE_COMPACT=off
-export CCDESIGN_HOOK_STOP=off
-```
-
-All hooks log activity to `.claude/hook-log.txt` and gracefully degrade if `python3` is unavailable.
 
 ## Contributing
 

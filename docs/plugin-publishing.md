@@ -220,8 +220,6 @@ Claude manifest 需要显式列出每个 skill：
 - `references/`
 - `templates/`
 - `scripts/`
-- `hooks/`
-- `hooks-lib/`
 - `assets/`
 - `agents/`
 - `load-manifest.json`

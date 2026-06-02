@@ -65,8 +65,6 @@ for (const runtimePath of [
   "references",
   "templates",
   "scripts",
-  "hooks",
-  "hooks-lib",
   "assets",
   "agents"
 ]) {
