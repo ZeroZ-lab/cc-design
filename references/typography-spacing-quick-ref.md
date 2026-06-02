@@ -156,3 +156,20 @@ body.debug-grid {
 ```
 
 Add `class="debug-grid"` to verify 8px rhythm. Remove before delivery.
+
+---
+
+## Typography Guardrails (CJK & Mixed-Script)
+
+Treat typography as a system, not decoration. The primary language of the page determines the typography system.
+
+- **Primary script wins.** If the page is mostly Chinese, build the typography system around Chinese first. If mostly Latin, build around Latin first.
+- **Role-based fonts only.** Assign fonts by role: body/UI, CJK headings, Latin display, mono. Do not swap fonts section by section for novelty.
+- **Maximum font families:** 2 core families + 1 mono. Example: one sans for body/UI, one serif/display family for headings or brand, one mono for code.
+- **Decorative Latin display is limited.** Use Latin display faces for logos, short English brand words, or isolated labels — not for mixed CJK body copy.
+- **No mixed-script headline trap.** If a heading is primarily Chinese, set the entire heading with the CJK headline font. Do not let a Latin display face control the same line and force Chinese fallback.
+- **No fake weights.** Only use weights that are actually loaded. Do not rely on browser-synthesized bold/italic for headline typography.
+- **CJK tracking defaults to neutral.** Do not apply negative letter-spacing to Chinese headings by default. Keep tracking at `0` unless screenshot review proves a tighter value works.
+- **Metadata is still readable text.** For CJK-heavy docs/products, avoid a sea of 12-13px labels. Most metadata/UI copy should remain 14-16px.
+- **Display fonts are accent, not structure.** Decorative type should cover a small minority of total text area. If removing the display face breaks the page, the system is over-dependent on it.
+- **Verify mixed-script headlines visually.** Any heading that mixes Chinese + English must be screenshot-checked for line breaks, weight mismatch, and rhythm before delivery.

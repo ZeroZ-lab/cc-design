@@ -18,7 +18,8 @@
         "references/design-red-flags.md",
         "references/failure-mode-handling.md",
         "references/design-adr.md",
-        "references/exit-conditions.md"
+        "references/exit-conditions.md",
+        "references/typography-spacing-quick-ref.md"
       ]
     }
   },
@@ -483,7 +484,8 @@
       "references": [
         "references/workflow.md",
         "references/design-context.md",
-        "references/junior-designer-mode.md"
+        "references/junior-designer-mode.md",
+        "references/question-first-delivery-examples.md"
       ]
     },
     "before-animation": {
