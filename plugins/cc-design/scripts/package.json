@@ -1,0 +1,22 @@
+{
+  "name": "cc-design-scripts",
+  "private": true,
+  "description": "Export utility scripts for cc-design skill",
+  "scripts": {
+    "lint:load-manifest": "node lint-load-manifest.mjs",
+    "resolve:load-bundles": "node resolve-load-bundles.mjs",
+    "pdf": "node export_deck_pdf.mjs",
+    "pdf-stage": "node export_deck_stage_pdf.mjs",
+    "pptx": "node export_deck_pptx.mjs",
+    "video": "node render-video.js",
+    "inline": "node super_inline_html.js"
+  },
+  "dependencies": {
+    "playwright": "^1.53.0",
+    "pptxgenjs": "^3.12.0",
+    "pdf-lib": "^1.17.1"
+  },
+  "optionalDependencies": {
+    "sharp": "^0.33.0"
+  }
+}

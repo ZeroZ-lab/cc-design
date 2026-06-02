@@ -8,7 +8,7 @@
       "name": "cc-design",
       "source": {
         "source": "local",
-        "path": "./"
+        "path": "./plugins/cc-design"
       },
       "policy": {
         "installation": "AVAILABLE",

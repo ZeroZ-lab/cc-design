@@ -1,0 +1,361 @@
+/* ============================================
+   TYPOGRAPHY DESIGN SYSTEM
+
+   Theory: Modular scale (Major Third 1.25)
+   Baseline: 8px grid for vertical rhythm
+   Body size: 16px (accessibility minimum)
+   Line length: 45-75 characters optimal
+
+   References:
+   - Bringhurst's "Elements of Typographic Style"
+   - Material Design Typography
+   - Apple Human Interface Guidelines
+   ============================================ */
+
+:root {
+  /* ===== Type Scale (Major Third 1.25) ===== */
+  --text-xs: 10px;      /* Level -2: Micro text, legal */
+  --text-sm: 13px;      /* Level -1: Small, captions */
+  --text-base: 16px;    /* Level  0: Body text */
+  --text-lg: 20px;      /* Level  1: Large body, intro */
+  --text-xl: 25px;      /* Level  2: H3, card titles */
+  --text-2xl: 31px;     /* Level  3: H2, section headers */
+  --text-3xl: 39px;     /* Level  4: H1, page titles */
+  --text-4xl: 49px;     /* Level  5: Display, hero */
+  --text-5xl: 61px;     /* Level  6: Large display */
+  --text-6xl: 76px;     /* Level  7: Massive hero */
+
+  /* ===== Line Heights (matched to use case) ===== */
+  --lh-none: 1.0;       /* Single line, logos */
+  --lh-tight: 1.25;     /* Display, hero (48px+) */
+  --lh-snug: 1.375;     /* Headings (24-48px) */
+  --lh-normal: 1.5;     /* Body text (16-20px) */
+  --lh-relaxed: 1.625;  /* Small text (12-14px) */
+  --lh-loose: 1.75;     /* Dense content, CJK */
+
+  /* ===== Font Weights (perceptual hierarchy) ===== */
+  --weight-light: 300;     /* Rarely used, luxury brands */
+  --weight-normal: 400;    /* Body text */
+  --weight-medium: 500;    /* Subtle emphasis, UI */
+  --weight-semibold: 600;  /* Strong emphasis, subheadings */
+  --weight-bold: 700;      /* Headings, CTAs */
+  --weight-black: 900;     /* Rarely used, extreme emphasis */
+
+  /* ===== Letter Spacing (tracking) ===== */
+  --tracking-tighter: -0.05em;  /* Display text (48px+) */
+  --tracking-tight: -0.025em;   /* Headings (24-48px) */
+  --tracking-normal: 0;         /* Body text */
+  --tracking-wide: 0.025em;     /* Small text, all-caps */
+  --tracking-wider: 0.05em;     /* Tiny text, labels */
+
+  /* ===== Spacing Scale (8px baseline grid) ===== */
+  --space-0: 0;
+  --space-1: 4px;       /* 0.5 × 8 */
+  --space-2: 8px;       /* 1 × 8 */
+  --space-3: 12px;      /* 1.5 × 8 */
+  --space-4: 16px;      /* 2 × 8 */
+  --space-5: 20px;      /* 2.5 × 8 */
+  --space-6: 24px;      /* 3 × 8 */
+  --space-8: 32px;      /* 4 × 8 */
+  --space-10: 40px;     /* 5 × 8 */
+  --space-12: 48px;     /* 6 × 8 */
+  --space-16: 64px;     /* 8 × 8 */
+  --space-20: 80px;     /* 10 × 8 */
+  --space-24: 96px;     /* 12 × 8 */
+  --space-32: 128px;    /* 16 × 8 */
+
+  /* ===== Semantic Spacing ===== */
+  --space-heading-to-body: var(--space-3);    /* 12px */
+  --space-paragraph: var(--space-4);          /* 16px */
+  --space-paragraph-loose: var(--space-6);    /* 24px */
+  --space-section-sm: var(--space-12);        /* 48px */
+  --space-section-md: var(--space-16);        /* 64px */
+  --space-section-lg: var(--space-24);        /* 96px */
+
+  /* ===== Image Spacing ===== */
+  --space-image-top: var(--space-8);          /* 32px - after text */
+  --space-image-bottom: var(--space-4);       /* 16px - before caption */
+  --space-caption-bottom: var(--space-12);    /* 48px - after caption */
+
+  /* ===== Container Padding ===== */
+  --padding-card: var(--space-8);             /* 32px */
+  --padding-section-v: var(--space-16);       /* 64px vertical */
+  --padding-section-h: var(--space-6);        /* 24px horizontal */
+  --padding-button-v: var(--space-3);         /* 12px vertical */
+  --padding-button-h: var(--space-6);         /* 24px horizontal */
+}
+
+/* ============================================
+   BASE TYPOGRAPHY
+   ============================================ */
+
+body {
+  font-size: var(--text-base);
+  line-height: var(--lh-normal);
+  font-weight: var(--weight-normal);
+  letter-spacing: var(--tracking-normal);
+
+  /* Optical improvements */
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   HEADINGS
+   ============================================ */
+
+h1 {
+  font-size: var(--text-3xl);
+  line-height: var(--lh-tight);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-heading-to-body);
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: var(--text-2xl);
+  line-height: var(--lh-snug);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tight);
+  margin-top: var(--space-section-md);
+  margin-bottom: var(--space-heading-to-body);
+  text-wrap: balance;
+}
+
+h3 {
+  font-size: var(--text-xl);
+  line-height: var(--lh-snug);
+  font-weight: var(--weight-semibold);
+  margin-top: var(--space-section-sm);
+  margin-bottom: var(--space-heading-to-body);
+  text-wrap: balance;
+}
+
+h4 {
+  font-size: var(--text-lg);
+  line-height: var(--lh-snug);
+  font-weight: var(--weight-semibold);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-3);
+}
+
+/* ============================================
+   BODY TEXT
+   ============================================ */
+
+p {
+  max-width: 65ch; /* Optimal line length */
+  margin-bottom: var(--space-paragraph);
+
+  /* Advanced features */
+  orphans: 2;
+  widows: 2;
+  text-wrap: pretty;
+}
+
+/* Intro paragraph */
+.lead {
+  font-size: var(--text-lg);
+  line-height: var(--lh-normal);
+  margin-bottom: var(--space-paragraph-loose);
+}
+
+/* Small text */
+small, .text-small {
+  font-size: var(--text-sm);
+  line-height: var(--lh-relaxed);
+}
+
+/* ============================================
+   LISTS
+   ============================================ */
+
+ul, ol {
+  margin-bottom: var(--space-paragraph);
+  padding-left: var(--space-6);
+}
+
+li {
+  margin-bottom: var(--space-2);
+}
+
+li:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================================
+   IMAGES & FIGURES
+   ============================================ */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+figure {
+  margin: var(--space-image-top) 0 var(--space-caption-bottom);
+}
+
+figure img {
+  margin-bottom: var(--space-image-bottom);
+}
+
+figcaption {
+  font-size: var(--text-sm);
+  line-height: var(--lh-relaxed);
+  color: #666;
+  text-align: center;
+}
+
+/* ============================================
+   LINKS
+   ============================================ */
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* ============================================
+   EMPHASIS
+   ============================================ */
+
+strong, b {
+  font-weight: var(--weight-semibold);
+}
+
+em, i {
+  font-style: italic;
+}
+
+/* ============================================
+   CODE
+   ============================================ */
+
+code {
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+  font-size: 0.9em;
+  padding: 2px 6px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+}
+
+pre {
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', monospace;
+  font-size: var(--text-sm);
+  line-height: var(--lh-relaxed);
+  padding: var(--space-4);
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  overflow-x: auto;
+  margin-bottom: var(--space-paragraph);
+}
+
+pre code {
+  padding: 0;
+  background: none;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+/* Display text */
+.text-display {
+  font-size: var(--text-4xl);
+  line-height: var(--lh-tight);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tighter);
+}
+
+.text-display-lg {
+  font-size: var(--text-5xl);
+  line-height: var(--lh-tight);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tighter);
+}
+
+.text-display-xl {
+  font-size: var(--text-6xl);
+  line-height: var(--lh-tight);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-tighter);
+}
+
+/* Text wrapping */
+.text-balance {
+  text-wrap: balance;
+}
+
+.text-pretty {
+  text-wrap: pretty;
+}
+
+.text-nowrap {
+  white-space: nowrap;
+}
+
+/* Text alignment */
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+/* Font weights */
+.font-normal { font-weight: var(--weight-normal); }
+.font-medium { font-weight: var(--weight-medium); }
+.font-semibold { font-weight: var(--weight-semibold); }
+.font-bold { font-weight: var(--weight-bold); }
+
+/* ============================================
+   RESPONSIVE TYPOGRAPHY
+   ============================================ */
+
+/* Mobile adjustments */
+@media (max-width: 640px) {
+  :root {
+    --text-3xl: 32px;  /* H1 smaller on mobile */
+    --text-2xl: 26px;  /* H2 smaller on mobile */
+    --text-xl: 22px;   /* H3 smaller on mobile */
+  }
+
+  p {
+    max-width: 100%; /* Full width on mobile */
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 641px) and (max-width: 1024px) {
+  :root {
+    --text-3xl: 36px;
+    --text-2xl: 28px;
+  }
+}
+
+/* ============================================
+   DEBUG GRID (Development only)
+   Remove before production
+   ============================================ */
+
+body.debug-grid {
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 7px,
+      rgba(255, 0, 0, 0.1) 7px,
+      rgba(255, 0, 0, 0.1) 8px
+    );
+}
+
+/* Usage: Add class="debug-grid" to body to verify 8px rhythm */

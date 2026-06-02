@@ -1,0 +1,568 @@
+{
+  "defaults": {
+    "all-design-tasks": {
+      "description": "Always loaded for every design task — base-required (`基础必载`) design quality, typography, color, layout, responsive design, and visual system references",
+      "references": [
+        "references/design-excellence.md",
+        "references/content-guidelines.md",
+        "references/color-theory.md",
+        "references/typography-spacing-examples.md",
+        "references/design-philosophy.md",
+        "references/typography-design-system.md",
+        "references/layout-systems.md",
+        "references/responsive-design.md",
+        "references/design-patterns.md",
+        "references/visual-design-theory.md",
+        "references/design-iron-law.md",
+        "references/design-common-sayings.md",
+        "references/design-red-flags.md",
+        "references/failure-mode-handling.md",
+        "references/design-adr.md",
+        "references/exit-conditions.md"
+      ]
+    }
+  },
+  "taskTypes": {
+    "design-philosophy": {
+      "description": "Design philosophy, principles, rationale, why behind design decisions, 设计哲学, 设计原则, 设计理念",
+      "detect": {
+        "anyKeywords": ["design philosophy", "design principle", "design rationale", "why this design", "philosophy"]
+      },
+      "references": [
+        "references/design-principles.md",
+        "references/user-research-methods.md"
+      ]
+    },
+    "complex-multi-screen-flow": {
+      "description": "Multi-screen flows, user journeys, onboarding flows, end-to-end flows, 多屏流程, 用户流程, 完整流程, 用户旅程, 引导流程",
+      "detect": {
+        "anyKeywords": ["multi-screen", "multi screen", "user flow", "customer journey", "onboarding flow", "end-to-end flow"]
+      },
+      "references": [
+        "references/design-thinking-framework.md",
+        "references/user-research-methods.md"
+      ]
+    },
+    "information-architecture": {
+      "description": "Information architecture, sitemaps, navigation structure, content hierarchy, 信息架构, 导航结构, 内容层级, 站点地图",
+      "detect": {
+        "anyKeywords": ["information architecture", "ia", "sitemap", "navigation structure", "content hierarchy"]
+      },
+      "references": [
+        "references/information-design-theory.md"
+      ]
+    },
+    "interaction-design": {
+      "description": "Interaction design, microinteractions, state transitions, UX flows, 交互设计, 微交互, 状态转换, 交互流程",
+      "detect": {
+        "anyKeywords": ["interaction design", "interaction flow", "microinteraction", "state transition", "ux flow"]
+      },
+      "references": [
+        "references/interaction-design-theory.md"
+      ]
+    },
+    "visual-composition": {
+      "description": "Visual composition, art direction, visual hierarchy, layout composition, 视觉构图, 艺术指导, 视觉层次, 排版构图. Compatibility alias: `all-design-tasks` already loads `references/visual-design-theory.md`; route here when composition is the explicit focus or failure mode.",
+      "detect": {
+        "anyKeywords": ["visual composition", "art direction", "visual hierarchy", "composition", "layout composition"]
+      },
+      "references": [
+        "references/visual-design-theory.md"
+      ]
+    },
+    "brand-tone": {
+      "description": "Brand tone, brand personality, emotional tone, brand feeling, aesthetic tone, 品牌调性, 品牌个性, 情感基调, 品牌感",
+      "detect": {
+        "anyKeywords": ["brand tone", "brand personality", "emotional tone", "brand feeling", "aesthetic tone"]
+      },
+      "references": [
+        "references/brand-emotion-theory.md",
+        "references/design-styles.md",
+        "references/color-theory.md"
+      ]
+    },
+    "design-system-architecture": {
+      "description": "Design systems, design tokens, component libraries, system architecture, style guides, 设计系统, 组件库, 设计令牌, 样式指南",
+      "detect": {
+        "anyKeywords": ["design system", "design tokens", "component library", "system architecture", "style guide"]
+      },
+      "references": [
+        "references/system-design-theory.md",
+        "references/color-theory.md",
+        "references/layout-systems.md"
+      ]
+    },
+    "layout-problems": {
+      "description": "Layout issues, grid problems, spacing issues, misalignment, 布局问题, 网格问题, 间距问题, 对齐问题",
+      "detect": {
+        "anyKeywords": ["layout issue", "layout problem", "grid issue", "spacing issue", "misaligned layout"]
+      },
+      "references": [
+        "references/layout-systems.md",
+        "references/anti-patterns/layout.md"
+      ]
+    },
+    "color-problems": {
+      "description": "Color issues, palette problems, contrast issues, color harmony, 颜色问题, 配色问题, 对比度问题, 色彩和谐",
+      "detect": {
+        "anyKeywords": ["color issue", "color problem", "palette issue", "contrast issue", "color harmony"]
+      },
+      "references": [
+        "references/color-theory.md",
+        "references/anti-patterns/color.md"
+      ]
+    },
+    "typography-problems": {
+      "description": "Typography issues, font problems, line height, type scale, readability, 字体问题, 行高, 字号比例, 可读性",
+      "detect": {
+        "anyKeywords": ["typography issue", "font issue", "line height", "type scale", "readability"]
+      },
+      "references": [
+        "references/anti-patterns/typography.md"
+      ]
+    },
+    "typography-system-design": {
+      "description": "Typography systems, type systems, modular scales, baseline grids, 字体系统, 模化比例, 基线网格. Compatibility alias: `all-design-tasks` already loads `references/typography-design-system.md`; route here when typography system work is the explicit focus.",
+      "detect": {
+        "anyKeywords": ["typography system", "type system", "font system", "modular scale", "baseline grid"]
+      },
+      "references": [
+        "references/typography-design-system.md"
+      ],
+      "templates": [
+        "templates/typography-system.css"
+      ]
+    },
+    "interaction-problems": {
+      "description": "Interaction issues, feedback issues, hover/click state problems, 交互问题, 反馈问题, 悬停状态, 点击状态",
+      "detect": {
+        "anyKeywords": ["interaction issue", "feedback issue", "hover state", "click state", "state problem"]
+      },
+      "references": [
+        "references/anti-patterns/interaction.md"
+      ]
+    },
+    "high-quality-output": {
+      "description": "High quality, premium, polish, best-in-class, world-class output, 高质量, 精品, 打磨, 世界级, 专业级. Compatibility alias: `all-design-tasks` already loads `references/design-patterns.md`; route here when pattern quality or case-study reinforcement is the explicit goal.",
+      "detect": {
+        "anyKeywords": ["high quality", "premium", "polish", "best-in-class", "world-class"]
+      },
+      "references": [
+        "references/design-patterns.md",
+        "references/case-studies/README.md"
+      ]
+    },
+    "brand-style-clone": {
+      "description": "Cloning a specific brand style/aesthetic, inspired by X, X-style, 仿照品牌风格, 品牌风格克隆, 参考风格",
+      "detect": {
+        "anyKeywords": ["brand style", "brand aesthetic", "inspired by", "style of"],
+        "regexAny": ["\\b[a-z0-9-]+-style\\b"]
+      },
+      "references": [
+        "references/getdesign-loader.md",
+        "references/design-context.md"
+      ]
+    },
+    "brand-asset-acquisition": {
+      "description": "Brand assets, logos, sourcing real assets, 品牌资产, Logo, 素材获取, 资源获取",
+      "detect": {
+        "anyKeywords": ["brand asset", "logo", "real asset", "asset acquisition", "source assets"]
+      },
+      "references": [
+        "references/asset-acquisition.md",
+        "references/design-context.md"
+      ]
+    },
+    "choose-design-style": {
+      "description": "Choosing a design style, visual direction, aesthetic direction, 选择设计风格, 视觉方向, 美学方向",
+      "detect": {
+        "anyKeywords": ["design style", "style direction", "visual direction", "aesthetic direction"]
+      },
+      "references": [
+        "references/design-styles.md"
+      ]
+    },
+    "react-prototype": {
+      "description": "React/JSX component prototypes, React原型, JSX组件原型",
+      "detect": {
+        "anyKeywords": ["react", "jsx", "component prototype", "react prototype"]
+      },
+      "references": [
+        "references/react-setup.md"
+      ],
+      "templates": [
+        "templates/ios_frame.jsx",
+        "templates/android_frame.jsx",
+        "templates/browser_window.jsx",
+        "templates/macos_window.jsx"
+      ]
+    },
+    "slide-deck": {
+      "description": "Slide decks, presentations, pitch decks, slideshows, 幻灯片, 演示文稿, PPT, 汇报, 投资人演示",
+      "detect": {
+        "anyKeywords": ["slide deck", "slides", "presentation", "pitch deck", "deck"]
+      },
+      "references": [
+        "references/slide-decks.md",
+        "references/starter-components.md"
+      ],
+      "templates": [
+        "templates/deck_stage.js"
+      ]
+    },
+    "form-design": {
+      "description": "Form design, input forms, signup forms, checkout forms, contact forms, multi-step forms, 表单设计, 输入表单, 注册表单, 结账表单",
+      "detect": {
+        "anyKeywords": ["form design", "input form", "signup form", "checkout form", "contact form", "multi-step form"]
+      },
+      "references": [
+        "references/form-design.md",
+        "references/interaction-design-theory.md",
+        "references/typography-design-system.md"
+      ]
+    },
+    "editable-pptx-export": {
+      "description": "Editable PowerPoint exports, 可编辑的PPT导出",
+      "detect": {
+        "anyKeywords": ["editable pptx", "editable powerpoint", "editable deck", "powerpoint export"]
+      },
+      "references": [
+        "references/slide-decks.md",
+        "references/editable-pptx.md"
+      ]
+    },
+    "variant-exploration": {
+      "description": "Exploring variants, variations, design options, comparing options, 设计变体, 方案对比, 多方案探索",
+      "detect": {
+        "anyKeywords": ["variants", "variations", "directions", "explore options", "compare options"]
+      },
+      "references": [
+        "references/tweaks-system.md"
+      ],
+      "templates": [
+        "templates/design_canvas.jsx"
+      ]
+    },
+    "landing-page": {
+      "description": "Landing pages, homepages, hero sections, marketing pages, product introduction pages, 着陆页, 首页, 产品介绍页, 营销页面, 官网",
+      "detect": {
+        "anyKeywords": ["landing page", "homepage", "hero section", "marketing page"]
+      },
+      "references": [
+        "references/starter-components.md",
+        "references/design-patterns.md",
+        "references/responsive-design.md"
+      ],
+      "templates": [
+        "templates/browser_window.jsx"
+      ]
+    },
+    "animation-motion": {
+      "description": "Animations, motion design, timelines, motion studies, 动画, 动效, 运动设计, 交互动画",
+      "detect": {
+        "anyKeywords": ["animation", "motion", "animate", "timeline", "motion study"]
+      },
+      "references": [
+        "references/animation-best-practices.md",
+        "references/animations.md",
+        "references/motion-contract.md"
+      ],
+      "templates": [
+        "templates/animations.jsx"
+      ]
+    },
+    "mobile-mockup": {
+      "description": "Mobile app mockups, iOS/Android app screens, app designs, 移动端原型, 手机APP界面, iOS应用, Android应用",
+      "detect": {
+        "anyKeywords": ["mobile mockup", "ios app", "iphone", "android app", "mobile app", "app screen", "ios onboarding", "onboarding screen", "mobile onboarding", "mobile prototype", "app prototype"]
+      },
+      "references": [
+        "references/starter-components.md",
+        "references/react-setup.md",
+        "references/responsive-design.md"
+      ],
+      "templates": [
+        "templates/ios_frame.jsx",
+        "templates/android_frame.jsx"
+      ]
+    },
+    "desktop-mockup": {
+      "description": "Desktop app mockups, macOS/Windows desktop designs, 桌面应用原型, macOS应用, 桌面端",
+      "detect": {
+        "anyKeywords": ["desktop mockup", "desktop app", "macos", "desktop window"]
+      },
+      "references": [
+        "references/starter-components.md",
+        "references/react-setup.md",
+        "references/responsive-design.md"
+      ],
+      "templates": [
+        "templates/macos_window.jsx"
+      ]
+    },
+    "interactive-prototype": {
+      "description": "Interactive prototypes, clickable prototypes, prototype flows, clickthroughs, 交互原型, 可点击原型, 原型流程, 产品演示",
+      "detect": {
+        "anyKeywords": ["interactive prototype", "clickthrough", "prototype flow", "interactive flow", "interactive mobile prototype", "interactive app prototype"]
+      },
+      "references": [
+        "references/interactive-prototype.md",
+        "references/react-setup.md",
+        "references/responsive-design.md"
+      ],
+      "templates": [
+        "templates/ios_frame.jsx",
+        "templates/android_frame.jsx",
+        "templates/browser_window.jsx",
+        "templates/macos_window.jsx"
+      ]
+    },
+    "interactive-explainer": {
+      "description": "Interactive explainer pages, flow diagrams, product process explainers, comparison explainers, decision trees, 交互式解释页面, 流程解释, 交互式流程图, 解释页面, 产品流程图, 技术解释, 对比解释, 决策树",
+      "detect": {
+        "anyKeywords": [
+          "interactive explainer", "interactive flow diagram", "explain how",
+          "product flow diagram", "system flow explainer", "interactive process",
+          "compare", "comparison", "versus", "decision tree", "tech selection", "choose between",
+          "explainer", "explorable explanation", "architecture walkthrough",
+          "交互式解释", "流程解释", "交互式流程图", "解释页面", "产品流程图", "技术解释",
+          "对比", "比较", "versus", "决策树", "选型",
+          "技术架构解释", "机制解释", "原理图", "流程动画"
+        ]
+      },
+      "references": [
+        "references/explainer-interaction-patterns.md",
+        "references/explainer-node-graph-visuals.md",
+        "references/react-setup.md"
+      ],
+      "templates": [
+        "templates/flow_explainer.jsx",
+        "templates/compare_explainer.jsx",
+        "templates/decision_tree.jsx"
+      ]
+    },
+    "knowledge-artifact": {
+      "description": "Knowledge artifacts, structured HTML responses, interactive explanations, cognitive interfaces, visual explainers, comparison scorecards, teaching modules, one-page reports, architecture diagrams, 知识产物, 结构化回复, 交互式说明, 视觉化解释, 对比评分卡, 教学模块, 一页式报告, 架构图页面",
+      "detect": {
+        "anyKeywords": [
+          "HTML 结构化回复", "视觉化解释", "交互式说明", "HTML slides",
+          "一页式报告", "架构图页面", "对比评分卡", "教学模块",
+          "文章转视觉化产物", "做成 HTML 页面", "用 HTML 回复",
+          "交互式知识页面", "动画解释器", "可视化解释器",
+          "explorable explanation", "knowledge artifact", "structured response",
+          "知识产物", "认知界面", "交互式解释", "评分卡"
+        ]
+      },
+      "references": [
+        "references/knowledge-artifact-spec.md",
+        "references/information-design-theory.md",
+        "references/interaction-design-theory.md"
+      ],
+      "templates": [
+        "templates/flow_explainer.jsx",
+        "templates/animations.jsx"
+      ]
+    },
+    "wireframe-low-fi": {
+      "description": "Wireframes, low-fidelity designs, lo-fi mockups, 线框图, 低保真设计, 简稿",
+      "detect": {
+        "anyKeywords": ["wireframe", "low-fi", "low fidelity", "lo-fi", "lofi"]
+      },
+      "references": [
+        "references/frontend-design.md"
+      ],
+      "templates": [
+        "templates/design_canvas.jsx"
+      ]
+    },
+    "design-system-creation": {
+      "description": "Creating/building a design system from scratch, 创建设计系统, 构建设计系统",
+      "detect": {
+        "anyKeywords": ["create design system", "build design system", "design tokens", "style guide"]
+      },
+      "references": [
+        "references/design-system-creation.md"
+      ],
+      "templates": [
+        "templates/typography-system.css"
+      ]
+    },
+    "no-design-system": {
+      "description": "No design system provided by the user, need to work from scratch, 没有设计系统, 从零开始设计",
+      "references": [
+        "references/frontend-design.md"
+      ]
+    },
+    "video-export": {
+      "description": "Video export, MP4, recording video, rendering video, 视频导出, 录制视频, 渲染视频",
+      "detect": {
+        "anyKeywords": ["video export", "mp4", "record video", "render video"]
+      },
+      "references": [
+        "references/video-export.md"
+      ]
+    },
+    "audio-design": {
+      "description": "Audio design, sound effects, SFX, background music, 音频设计, 音效, 背景音乐",
+      "detect": {
+        "anyKeywords": ["audio design", "sfx", "sound design", "bgm", "music"]
+      },
+      "references": [
+        "references/audio-design-rules.md",
+        "references/sfx-library.md"
+      ],
+      "templates": [
+        "templates/audio-engine.jsx",
+        "templates/audio-controls.jsx"
+      ]
+    },
+    "data-visualization": {
+      "description": "Data visualization, charts, graphs, dashboards, analytics, metrics, statistics display, 数据可视化, 图表, 仪表板, 数据展示",
+      "detect": {
+        "anyKeywords": ["data visualization", "chart", "graph", "dashboard", "analytics", "metrics", "stat", "data display"]
+      },
+      "references": [
+        "references/data-visualization.md",
+        "references/color-theory.md",
+        "references/typography-design-system.md"
+      ]
+    },
+    "pdf-export": {
+      "description": "PDF export/save, PDF导出, 保存PDF",
+      "detect": {
+        "anyKeywords": ["pdf export", "export pdf", "save pdf", "pdf"]
+      },
+      "references": [
+        "references/platform-tools.md"
+      ]
+    },
+    "scene-output-specs": {
+      "description": "Scene output, storyboards, shot lists, scene templates, 场景输出, 分镜, 镜头列表, 场景模板",
+      "detect": {
+        "anyKeywords": ["scene output", "scene spec", "storyboard", "shot list", "scene template"]
+      },
+      "references": [
+        "references/scene-templates.md"
+      ]
+    },
+    "ux-writing": {
+      "description": "UX writing, microcopy, interface text, button labels, error messages, UX文案, 界面文案, 微文案, 按钮文本",
+      "detect": {
+        "anyKeywords": ["ux writing", "microcopy", "interface text", "button text", "error message", "copy", "label text", "cta text"]
+      },
+      "references": [
+        "references/ux-writing.md",
+        "references/content-guidelines.md"
+      ]
+    },
+    "usability-testing": {
+      "description": "Usability testing, user testing, A/B testing, test scripts, user research validation, 可用性测试, 用户测试, A/B测试",
+      "detect": {
+        "anyKeywords": ["usability testing", "user testing", "ab testing", "a/b testing", "a/b test", "test script", "validation testing", "user research"]
+      },
+      "references": [
+        "references/usability-testing.md",
+        "references/user-research-methods.md"
+      ]
+    },
+    "design-handoff": {
+      "description": "Design handoff, design-to-developer workflow, design specs, developer collaboration, 设计交接, 开发协作, 设计规范",
+      "detect": {
+        "anyKeywords": ["design handoff", "developer handoff", "design specs", "design to development", "developer collaboration", "design tokens"]
+      },
+      "references": [
+        "references/design-handoff.md",
+        "references/design-system-creation.md",
+        "references/system-design-theory.md"
+      ]
+    }
+  },
+  "checkpoints": {
+    "question-first-delivery": {
+      "description": "New ambiguous task needs structured confirmation before proceeding, 新任务需要确认后再开始",
+      "references": [
+        "references/workflow.md",
+        "references/design-context.md",
+        "references/junior-designer-mode.md"
+      ]
+    },
+    "before-animation": {
+      "description": "Before starting animation or motion design work, 开始动画/动效设计前加载",
+      "references": [
+        "references/animation-best-practices.md",
+        "references/animation-pitfalls.md",
+        "references/motion-contract.md"
+      ],
+      "templates": [
+        "templates/animations.jsx"
+      ]
+    },
+    "before-export": {
+      "description": "Before any export (PDF, PPTX, video), 导出前加载",
+      "detect": {
+        "anyKeywords": ["export", "pdf", "pptx", "powerpoint", "mp4", "video export"]
+      },
+      "references": [
+        "references/platform-tools.md"
+      ]
+    },
+    "before-ios-mockup": {
+      "description": "Before creating iOS mockups, 创建iOS模拟界面前加载",
+      "detect": {
+        "anyKeywords": ["ios", "iphone", "dynamic island", "ios mockup"]
+      },
+      "templates": [
+        "templates/ios_frame.jsx"
+      ]
+    },
+    "before-delivery": {
+      "description": "Final delivery verification, 最终交付前验证",
+      "references": [
+        "references/verification-protocol.md"
+      ]
+    },
+    "deep-design-review": {
+      "description": "Deep design review, critique, audit, scoring, 深度设计评审, 设计批评, 评分",
+      "detect": {
+        "anyKeywords": ["design review", "critique", "audit", "score", "scorecard", "review this design"]
+      },
+      "references": [
+        "references/critique-guide.md",
+        "references/design-checklist.md",
+        "references/principle-review.md",
+        "references/verification.md",
+        "references/typography-spacing-quick-ref.md"
+      ]
+    }
+  },
+  "optionalInspirations": {
+    "presentation-case-studies": {
+      "description": "Presentation and pitch deck case studies for inspiration, 演示文稿案例参考",
+      "references": [
+        "references/case-studies/presentations/keynote-style.md",
+        "references/case-studies/presentations/pitch-deck-example.md"
+      ]
+    },
+    "product-page-case-studies": {
+      "description": "Product page and landing page case studies for inspiration, 产品页案例参考",
+      "references": [
+        "references/case-studies/product-pages/linear-features.md",
+        "references/case-studies/product-pages/notion-landing.md",
+        "references/case-studies/product-pages/stripe-homepage.md"
+      ]
+    },
+    "mobile-case-studies": {
+      "description": "Mobile app case studies for inspiration, 移动端应用案例参考",
+      "references": [
+        "references/case-studies/mobile-apps/ios-onboarding.md"
+      ]
+    }
+  },
+  "maintainerOnly": {
+    "references": [],
+    "templates": [],
+    "scripts": [
+      "scripts/check-behavior-contract.sh"
+    ]
+  }
+}

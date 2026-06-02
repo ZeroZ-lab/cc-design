@@ -1,0 +1,71 @@
+{
+  "_meta": {
+    "description": "Personal asset index template — copy this file and fill in your real data",
+    "how_to_use": "1. Copy this file to ~/.claude/memory/personal-asset-index.json  2. Fill in your real information  3. design-philosophy skill will auto-read it",
+    "note": "Do not put real data files inside the skill directory, to avoid leaking privacy when the skill is distributed"
+  },
+
+  "identity": {
+    "real_name": "Your real name",
+    "pen_names": ["Pen name 1", "Pen name 2"],
+    "english_name": "English Name",
+    "title": "Your title / one-line introduction",
+    "bio_short": "50-100 word short bio",
+    "bio_long": "200-300 word detailed introduction",
+    "avatar_url": "Avatar URL",
+    "source": "Data source notes"
+  },
+
+  "contact": {
+    "email": "your@email.com",
+    "wechat_personal": "WeChat ID",
+    "source": "Data source notes"
+  },
+
+  "social_media": {
+    "github": {
+      "url": "https://github.com/yourname",
+      "username": "yourname"
+    },
+    "youtube": {
+      "url": "https://www.youtube.com/@YourChannel",
+      "channel_name": "Channel name"
+    },
+    "source": "Data source notes"
+  },
+
+  "websites": {
+    "main_site": {
+      "url": "https://yoursite.com",
+      "description": "Website description",
+      "local_path": "/path/to/local/project/"
+    }
+  },
+
+  "products": {
+    "product_1": {
+      "name": "Product name",
+      "type": "iOS App / Web App / CLI Tool / Ebook",
+      "achievement": "Main achievement",
+      "icon_path": "/path/to/icon.png",
+      "project_path": "/path/to/project/"
+    }
+  },
+
+  "stats": {
+    "social_followers": "Followers count",
+    "product_users": "Users count",
+    "source": "Data source notes"
+  },
+
+  "design_assets": {
+    "article_images": {
+      "base_path": "/path/to/images/",
+      "notable_sets": []
+    }
+  },
+
+  "knowledge_base": {
+    "wechat_articles": "/path/to/knowledge_base/"
+  }
+}
