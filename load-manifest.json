@@ -3,6 +3,7 @@
     "all-design-tasks": {
       "description": "Always loaded for every design task — base-required (`基础必载`) design quality, typography, color, layout, responsive design, and visual system references",
       "references": [
+        "references/core-constraints.md",
         "references/design-excellence.md",
         "references/content-guidelines.md",
         "references/color-theory.md",
@@ -21,6 +22,40 @@
         "references/exit-conditions.md",
         "references/typography-spacing-quick-ref.md"
       ]
+    }
+  },
+  "domains": {
+    "output": {
+      "description": "产出物:决定 HTML 的形态与结构",
+      "taskTypes": ["landing-page", "slide-deck", "interactive-prototype", "interactive-explainer", "knowledge-artifact", "animation-motion", "wireframe-low-fi", "design-system-creation", "data-visualization", "scene-output-specs"]
+    },
+    "device": {
+      "description": "设备框架:决定渲染容器与交互范式",
+      "taskTypes": ["mobile-mockup", "desktop-mockup", "react-prototype"]
+    },
+    "brand": {
+      "description": "品牌/风格:决定视觉调性与设计语言",
+      "taskTypes": ["brand-style-clone", "brand-asset-acquisition", "brand-tone", "choose-design-style", "no-design-system"]
+    },
+    "export": {
+      "description": "导出:决定交付格式与后处理",
+      "taskTypes": ["editable-pptx-export", "pdf-export", "video-export", "audio-design"]
+    },
+    "domain": {
+      "description": "垂直领域:决定领域专属约束",
+      "taskTypes": ["form-design", "ux-writing", "complex-multi-screen-flow", "design-handoff", "usability-testing"]
+    },
+    "repair": {
+      "description": "修复:针对具体缺陷的反模式修复",
+      "taskTypes": ["layout-problems", "color-problems", "typography-problems", "interaction-problems"]
+    },
+    "enhance": {
+      "description": "系统提升:无具体缺陷的系统性深度建设",
+      "taskTypes": ["design-system-architecture", "typography-system-design", "information-architecture", "interaction-design", "visual-composition"]
+    },
+    "strategy": {
+      "description": "策略:方向性决策与方案探索",
+      "taskTypes": ["high-quality-output", "design-philosophy", "variant-exploration"]
     }
   },
   "taskTypes": {
@@ -50,7 +85,8 @@
         "anyKeywords": ["information architecture", "ia", "sitemap", "navigation structure", "content hierarchy"]
       },
       "references": [
-        "references/information-design-theory.md"
+        "references/information-design-theory.md",
+        "references/core-constraints.md"
       ]
     },
     "interaction-design": {
@@ -59,7 +95,8 @@
         "anyKeywords": ["interaction design", "interaction flow", "microinteraction", "state transition", "ux flow"]
       },
       "references": [
-        "references/interaction-design-theory.md"
+        "references/interaction-design-theory.md",
+        "references/core-constraints.md"
       ]
     },
     "visual-composition": {
@@ -68,7 +105,8 @@
         "anyKeywords": ["visual composition", "art direction", "visual hierarchy", "composition", "layout composition"]
       },
       "references": [
-        "references/visual-design-theory.md"
+        "references/visual-design-theory.md",
+        "references/core-constraints.md"
       ]
     },
     "brand-tone": {
@@ -119,7 +157,8 @@
         "anyKeywords": ["typography issue", "font issue", "line height", "type scale", "readability"]
       },
       "references": [
-        "references/anti-patterns/typography.md"
+        "references/anti-patterns/typography.md",
+        "references/core-constraints.md"
       ]
     },
     "typography-system-design": {
@@ -128,7 +167,8 @@
         "anyKeywords": ["typography system", "type system", "font system", "modular scale", "baseline grid"]
       },
       "references": [
-        "references/typography-design-system.md"
+        "references/typography-design-system.md",
+        "references/core-constraints.md"
       ],
       "templates": [
         "templates/typography-system.css"
@@ -140,7 +180,8 @@
         "anyKeywords": ["interaction issue", "feedback issue", "hover state", "click state", "state problem"]
       },
       "references": [
-        "references/anti-patterns/interaction.md"
+        "references/anti-patterns/interaction.md",
+        "references/core-constraints.md"
       ]
     },
     "high-quality-output": {
@@ -180,7 +221,8 @@
         "anyKeywords": ["design style", "style direction", "visual direction", "aesthetic direction"]
       },
       "references": [
-        "references/design-styles.md"
+        "references/design-styles.md",
+        "references/core-constraints.md"
       ]
     },
     "react-prototype": {
@@ -189,7 +231,8 @@
         "anyKeywords": ["react", "jsx", "component prototype", "react prototype"]
       },
       "references": [
-        "references/react-setup.md"
+        "references/react-setup.md",
+        "references/core-constraints.md"
       ],
       "templates": [
         "templates/ios_frame.jsx",
@@ -238,7 +281,8 @@
         "anyKeywords": ["variants", "variations", "directions", "explore options", "compare options"]
       },
       "references": [
-        "references/tweaks-system.md"
+        "references/tweaks-system.md",
+        "references/core-constraints.md"
       ],
       "templates": [
         "templates/design_canvas.jsx"
@@ -370,7 +414,8 @@
         "anyKeywords": ["wireframe", "low-fi", "low fidelity", "lo-fi", "lofi"]
       },
       "references": [
-        "references/frontend-design.md"
+        "references/frontend-design.md",
+        "references/core-constraints.md"
       ],
       "templates": [
         "templates/design_canvas.jsx"
@@ -382,7 +427,8 @@
         "anyKeywords": ["create design system", "build design system", "design tokens", "style guide"]
       },
       "references": [
-        "references/design-system-creation.md"
+        "references/design-system-creation.md",
+        "references/core-constraints.md"
       ],
       "templates": [
         "templates/typography-system.css"
@@ -391,7 +437,8 @@
     "no-design-system": {
       "description": "No design system provided by the user, need to work from scratch, 没有设计系统, 从零开始设计",
       "references": [
-        "references/frontend-design.md"
+        "references/frontend-design.md",
+        "references/core-constraints.md"
       ]
     },
     "video-export": {
@@ -400,7 +447,8 @@
         "anyKeywords": ["video export", "mp4", "record video", "render video"]
       },
       "references": [
-        "references/video-export.md"
+        "references/video-export.md",
+        "references/core-constraints.md"
       ]
     },
     "audio-design": {
@@ -434,7 +482,8 @@
         "anyKeywords": ["pdf export", "export pdf", "save pdf", "pdf"]
       },
       "references": [
-        "references/platform-tools.md"
+        "references/platform-tools.md",
+        "references/core-constraints.md"
       ]
     },
     "scene-output-specs": {
@@ -443,7 +492,8 @@
         "anyKeywords": ["scene output", "scene spec", "storyboard", "shot list", "scene template"]
       },
       "references": [
-        "references/scene-templates.md"
+        "references/scene-templates.md",
+        "references/core-constraints.md"
       ]
     },
     "ux-writing": {
