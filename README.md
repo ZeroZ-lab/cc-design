@@ -77,7 +77,7 @@ cc-design handles context gathering, design planning, quality checks, and verifi
 | **Design outputs** | Landing pages, slide decks, interactive prototypes, interactive explainers (flow, compare, decision tree), wireframes, animations, design systems, motion studies |
 | **Design thinking** | 8-layer framework (Goal → Validation), 10 core principles, 20 philosophy schools |
 | **Brand cloning** | Progressive loading of 68+ brand design systems from [getdesign.md](https://getdesign.md) |
-| **Quality guardrails** | Anti-AI slop rules, typography system, spacing scale, mandatory screenshot verification |
+| **Quality guardrails** | Always-loaded `core-constraints.md` layer (Iron Law + 12-item anti-slop quick-ref + delivery checklist), typography system, spacing scale, mandatory screenshot verification |
 | **Variations** | 3+ design directions across layout, interaction, visual intensity, and motion |
 | **Export** | PDF (multi-file + single-file), PPTX (image + editable), MP4 video, inline HTML |
 | **Audio** | Dual-track audio (SFX + BGM), 37 SFX catalog, ffmpeg mixing |
