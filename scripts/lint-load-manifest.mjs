@@ -135,6 +135,22 @@ for (const group of ["taskTypes", "checkpoints", "optionalInspirations"]) {
   }
 }
 
+const undomainTaskTypes = [];
+const domainMembers = new Set();
+for (const [domainName, domainConfig] of Object.entries(manifest.domains ?? {})) {
+  for (const taskType of domainConfig.taskTypes ?? []) {
+    domainMembers.add(taskType);
+  }
+}
+for (const taskTypeName of Object.keys(manifest.taskTypes ?? {})) {
+  if (!domainMembers.has(taskTypeName)) {
+    undomainTaskTypes.push(taskTypeName);
+  }
+}
+
+const allDesignReferences = manifest.defaults?.["all-design-tasks"]?.references ?? [];
+const hasCoreConstraints = allDesignReferences.includes("references/core-constraints.md");
+
 const uncoveredReferences = referencePaths.filter(
   (file) => !coveredRuntimePaths.has(file)
 );
@@ -148,7 +164,9 @@ if (
   uncoveredTemplates.length === 0 &&
   invalidSkillReferences.length === 0 &&
   undocumentedCheckpoints.length === 0 &&
-  missingDescriptions.length === 0
+  missingDescriptions.length === 0 &&
+  undomainTaskTypes.length === 0 &&
+  hasCoreConstraints
 ) {
   console.log("load-manifest OK");
   process.exit(0);
@@ -194,6 +212,17 @@ if (missingDescriptions.length > 0) {
   for (const key of missingDescriptions) {
     console.error(`- ${key}`);
   }
+}
+
+if (undomainTaskTypes.length > 0) {
+  console.error("TaskTypes not assigned to any domain:");
+  for (const taskType of undomainTaskTypes) {
+    console.error(`- ${taskType}`);
+  }
+}
+
+if (!hasCoreConstraints) {
+  console.error("defaults.all-design-tasks.references must include references/core-constraints.md");
 }
 
 process.exit(1);

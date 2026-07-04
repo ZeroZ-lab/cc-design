@@ -24,7 +24,24 @@ function printGroup(title, entries) {
   console.log("");
 }
 
+function printDomains(domains) {
+  if (!domains || Object.keys(domains).length === 0) {
+    return;
+  }
+
+  console.log("# domains");
+
+  for (const [name, config] of Object.entries(domains)) {
+    const description = config.description ?? "(no description)";
+    const taskTypes = (config.taskTypes ?? []).join(", ");
+    console.log(`${name} | ${description} | taskTypes: ${taskTypes}`);
+  }
+
+  console.log("");
+}
+
 printGroup("defaults", manifest.defaults);
+printDomains(manifest.domains);
 printGroup("taskTypes", manifest.taskTypes);
 printGroup("checkpoints", manifest.checkpoints);
 printGroup("optionalInspirations", manifest.optionalInspirations);
