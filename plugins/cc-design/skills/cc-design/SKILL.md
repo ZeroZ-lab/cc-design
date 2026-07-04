@@ -41,106 +41,114 @@ HTML is your tool, but your medium varies — you must embody an expert in that 
 - **Exit**: A deliverable matching the task type, with console errors cleared, screenshot verified after final edit, and every touched section inspected individually. See `references/exit-conditions.md` for per-task-type exit criteria.
 - **Do Not Use**: Pure backend work with no user-visible surface, data analysis without visualization, text-only documents with no layout requirements, or pure software development with no visual component.
 
-## Iron Law
+---
 
-See `references/design-iron-law.md` for the full Iron Law definition. In short:
+## ⚡ Core Constraints
 
-- **No unchecked fact = no design decision** (P0)
-- **No AI slop patterns. Ever.** (P2)
-- **No screenshot after final edit = no delivery** (Verify Don't Assume)
+> 完整规则与展开 → `references/core-constraints.md`(all-design-tasks 始终加载,第一位)
+
+### Iron Law(违反 = 硬停止)
+1. **No unchecked fact** — 陈述品牌/价格/事实前必须先 WebSearch 验证
+2. **No AI slop** — 见下表,违反则删除并替换
+3. **No screenshot = no delivery** — 每次最终编辑后必须渲染 + 截图 + 逐 section 检查
+
+### AI Slop 速查(违反即删)
+| 模式 | 替代 |
+|---|---|
+| 紫粉蓝全屏渐变 | 单色微妙渐变或纯色 |
+| 圆角卡 + 左边框色 | 背景对比 / 字重对比 / 分隔线 |
+| emoji 装饰(🚀✨) | 真图标库(Lucide/Heroicons)或留空 |
+| SVG 画人物/场景 | 灰色占位框 + 标签 |
+| 假数据/假评价 | 占位符或向用户索取真实数据 |
+| bento grid(非必要) | 按 信息结构选布局 |
+| dark mode slop(#0D1117+neon) | 仅开发者工具类,且需有意为之 |
+| glassmorphism 滥用 | glass 仅作 accent |
+| illustration slop(flat vector 角色) | 真实摄影或不用 |
+| stats section(四数字无来源) | 有真实数据才放 |
+| feature slop(3 列同质) | 真价值差异才用 |
+| badge slop(New/Popular 贴满) | badge 仅用于真实例外 |
+
+完整 12 项 + CSS 示例 → `references/core-constraints.md` §2
+
+### 禁用字体
+Inter / Roboto / Arial / Fraunces / Space Grotesk → 用 serif+sans / mono+sans 等组合
 
 ---
 
 ## Core Principles
 
-**P0: Fact Verification — Do This First, Every Time.** Before stating anything as fact about a brand, product, price, release status, or spec — search first (`WebSearch → proceed`). Never use "I remember", "As far as I know", or "It should be like this" about verifiable facts. If you cannot verify: say "I cannot confirm this — please check." See `references/design-common-sayings.md` and `references/design-red-flags.md`.
+- **P0 事实优先** — 验证后才陈述。详见 `references/core-constraints.md` §1
+- **P1 先聚上下文** — 未锁定 audience/scope/constraint 不动工
+- **P1.5 可见计划** — 动工前呈现 Goal/Facts/Assumptions/Plan,等批准。Confirmation order: Design Context → Direction → Variations → Fidelity & Scope → Plan Approval
+- **P2 反 slop** — 见上方 ⚡ Core Constraints 速查表
+- **P3 加载可闻** — 每次 load 输出 `Load: because=<reason> loaded=<paths>`;已加载则 `already_loaded=`。从不静默加载或静默去重
+- **P4 知识内容强交互** — 解释/架构/对比类默认加动画交互(见 `references/knowledge-artifact-spec.md`)。不适用于 brand/marketing 输出
 
-**P1: Gather Enough Context First.** Do not start building with partial context. Resolve or explicitly assume: audience, output shape, scope, hard constraints, reference source, success criteria. Convert unknowns into explicit assumptions in a visible plan.
-
-**P1.5: Visible Plan Before Build.** Present an execution plan before writing real UI code. Must include: Goal, Confirmed Facts, Assumptions, First Artifact, Variation Axes, Verification. End with: `Approve this plan, or tell me what to change before I build.` Confirmation order: Design Context → Direction → Variations → Fidelity & Scope → Plan Approval.
-
-All questions on Claude Code **MUST** use `AskUserQuestion` with structured options (never plain text). Only fall back to text on platforms without structured UI (e.g., Codex).
-
-**See `references/question-first-delivery-examples.md` for worked AskUserQuestion and text-fallback examples.**
-
-**P2: Anti-AI Slop.** These are banned without exception:
-
-- ❌ Aggressive gradients (purple→pink→blue full-screen, mesh backgrounds)
-- ❌ Rounded cards with left-border color accent
-- ❌ Emoji in UI (unless the brand uses them: Notion, Slack)
-- ❌ SVG illustrations of people/scenes/objects — use a labeled gray placeholder instead
-- ❌ Overused fonts: Inter, Roboto, Arial, Fraunces, Space Grotesk
-- ❌ Fabricated data: fake metrics, fake reviews, fake stats
-- ❌ Bento grid unless the content actually calls for it
-- ❌ Big hero + 3-column features + testimonials + CTA (the default AI landing page)
-
-Full rules in `references/content-guidelines.md`.
-
-**P3: Loading Must Be Audible.** Announce every runtime load: `Load: because=<reason> loaded=<paths>`. If already in context: `Load: because=<reason> already_loaded=<paths>`. Never silently load or silently dedupe.
-
-**P4: Aggressive Interaction for Knowledge Content.** When output is knowledge-focused (explanations, architectures, comparisons, tutorials, analysis), default to assuming interaction and animation are needed. Scan content for 10 dynamic cognitive structures: process, change, causation, hierarchy, variables, paths, feedback, evolution, state transitions, decision trade-offs (see `references/knowledge-artifact-spec.md` Section 3). If any is present, generate at least one **primary** animation/interaction module that carries the core explanation task. The Static-only Ban applies to 10 content categories (see `references/knowledge-artifact-spec.md` Section 4). Do NOT apply P4 to brand/marketing output (landing pages, product pages, pitch decks) — those follow normal design principles.
-
-Use short, stable reasons such as `all-design-tasks`, `react-prototype`, `question-first-delivery`, `before-animation`, `before-delivery`. `load-manifest.json` is the machine-readable source of truth for bundle contents, `scripts/generate-bundle-catalog.mjs` generates the catalog for semantic matching, and `scripts/resolve-load-bundles.mjs` remains the keyword-based fallback. Organize runtime bundles into three groups: base-required bundles (`基础必载`) for every design task, conditionally required bundles (`条件命中后必载`) for matched `taskTypes` and `checkpoints`, and truly optional inspirations (`真正可选`) for case-study-only reference.
+All questions on Claude Code **MUST** use `AskUserQuestion` with structured options. See `references/question-first-delivery-examples.md`.
 
 ---
 
 ## Routing
 
-Use a two-stage route. Stage 1: always load `all-design-tasks` (`基础必载`) for every design task. If the task is new or underspecified, also load `question-first-delivery` and ask the route-shaping questions below before selecting more bundles. **Skip `question-first-delivery` when the brief already contains enough information to route** (audience + output shape + reference/constraint are all stated or clearly implied). Stage 2: map those answers to conditionally required bundles (`条件命中后必载`), then use semantic matching only to supplement any remaining unlocked `taskTypes` or `optionalInspirations`. For tasks not in the table, default to `all-design-tasks`, ask the route-shaping questions, and set the `question-first-delivery` checkpoint when the task is still ambiguous.
+Use a two-stage route. Stage 1: always load `all-design-tasks`(`基础必载`,含 `references/core-constraints.md`)。新任务或欠定义任务:另载 `question-first-delivery` 并问下方 route-shaping questions。**Brief 已足够明确时跳过 question-first-delivery**。Stage 2: 8 场景域分组(`load-manifest.json` 的 `domains` 键),先选域再选域内 taskType。
 
-For full task-type → reference/template mapping, see `load-manifest.json`. For answer-to-taskType mapping, see `references/workflow.md` Route-Shaping Questions section.
+### 8 Scene Domains
+
+| 域 | 含义 | taskType 数 |
+|---|---|---|
+| **Output** | 产出物:landing/deck/prototype/explainer/animation/wireframe/design-system/data-viz/scene | 10 |
+| **Device** | 设备框架:mobile/desktop/react-prototype | 3 |
+| **Brand** | 品牌/风格:brand-clone/asset/tone/style/no-system | 5 |
+| **Export** | 导出:pptx/pdf/video/audio | 4 |
+| **Domain** | 垂直领域:form/ux-writing/multi-screen/handoff/testing | 5 |
+| **Repair** | 修复:layout/color/typography/interaction-problems | 4 |
+| **Enhance** | 系统提升:design-system-arch/typography-system/info-arch/interaction-design/visual-composition | 5 |
+| **Strategy** | 策略:high-quality-output/design-philosophy/variant-exploration | 3 |
+
+完整 taskType → reference/template 映射见 `load-manifest.json`。answer → taskType 映射见 `references/workflow.md` Route-Shaping Questions。
 
 ### Route-Shaping Questions
 
-Ask only until routing is locked. These questions change bundle selection:
+Ask only until routing is locked:
 
-1. **Output type** — page / deck / clickable prototype / animation / design system / critique / export target / knowledge artifact
-2. **Task state** — new task / localized edit / approved follow-up
-3. **Available context** — design system / codebase / screenshots / brand reference / no reference
+1. **Output type** — page / deck / clickable prototype / animation / design system / critique / export / knowledge artifact
+2. **Task state** — new / localized edit / approved follow-up
+3. **Available context** — design system / codebase / screenshots / brand reference / none
 4. **Interaction or delivery constraints** — interactive / iOS / Android / PDF / PPTX / video / none
-5. **Primary design risk** — layout / typography / color / information hierarchy / interaction / brand tone
-6. **Content type** (only for knowledge artifact / interactive explainer) — concept explanation / technical architecture / comparison or decision / teaching or analysis
+5. **Primary design risk** — layout / typography / color / hierarchy / interaction / brand tone(→ Repair);整体系统专业度(→ Enhance);方向不明(→ Strategy)
+6. **Content type**(仅 knowledge artifact)— concept / architecture / comparison / teaching
 
 ### Checkpoints
 
-Set checkpoints explicitly based on task context (not from the subagent result):
+Set checkpoints explicitly based on task context:
 - Question-first path → `question-first-delivery`
 - Critique/review/audit/score → `deep-design-review`
 - Animation/motion → `before-animation`
-- iOS mockup → `before-ios-mockup` — MUST use `templates/ios_frame.jsx`
+- iOS mockup → `before-ios-mockup`(MUST use `templates/ios_frame.jsx`)
 - Before final delivery → `before-delivery`
 - Before any export → `before-export`
 
-See `references/workflow.md` Checkpoint Details section for full checkpoint instructions.
+See `references/workflow.md` Checkpoint Details.
 
 ---
 
 ## Workflow
 
 0. **Junior Designer Mode** — Write execution-plan comment, show, wait for approval. See `references/junior-designer-mode.md`.
-1. **Understand** — Load `all-design-tasks`. New/underspecified tasks: also load `question-first-delivery` and ask route-shaping questions. Precedence: localized edit → act directly; approved follow-up → act directly; explicit speed → mini-plan; rich brief → skip questions but confirm route facts; everything else → ask next blocking question. Detect brand mentions → route to `brand-style-clone`.
-2. **Route** — Two-stage route via Agent subagent using `load-manifest.json`. Use the Agent subagent prompt template from `references/workflow.md`. Announce every load: `Load: because=<reason> loaded=<paths>`. Fall back to `scripts/resolve-load-bundles.mjs` if Agent unavailable.
+1. **Understand** — Load `all-design-tasks`。新任务:另载 `question-first-delivery` 并问 route-shaping questions。Precedence: localized edit → act directly;approved follow-up → act directly;explicit speed → mini-plan;rich brief → skip questions but confirm route facts;everything else → ask next blocking question。Detect brand mentions → route to `brand-style-clone`。
+2. **Route** — Two-stage:Stage 1 base-required load → Stage 2 identify domain(s) → taskType(s)。Announce every load: `Load: because=<reason> loaded=<paths>`。Fall back to `scripts/resolve-load-bundles.mjs` if Agent unavailable.
 3. **Acquire Context** — Priority: user design system > codebase > published product > brand guidelines > competitor refs > known fallbacks. Vocalize the system before planning.
 4. **Plan** — Present visible execution plan (Goal/Facts/Assumptions/First artifact/Variation axes/Verification). Full checklist in `references/design-excellence.md`.
 5. **Approval** — Stop and wait for user approval. Do not treat silence as approval on new tasks.
 6. **Build** — Per-section preview pattern: finish one section → render → screenshot → show → approve → next. First section is the minimum viable preview. Use tweaks for variants. Rejection 3× → Iteration Gate (`references/workflow.md`).
-7. **Verify** — Announce `before-delivery`. Load `references/verification-protocol.md` + `references/exit-conditions.md`. Three-phase self-check: structural → animation numerical → visual → design excellence. **Never deliver based on "it should be fine" reasoning. Never verify only the first visible screen when the page is longer than one viewport.** Fix loop 3× → `references/failure-mode-handling.md`. Then present to user for review (see `references/workflow.md` Step 7a).
+7. **Verify** — Announce `before-delivery`. Load `references/core-constraints.md` + `references/verification-protocol.md` + `references/exit-conditions.md`. Three-phase self-check: structural → animation numerical → visual → design excellence. **Never deliver based on "it should be fine". Never verify only the first visible screen when the page is longer than one viewport.** Fix loop 3× → `references/failure-mode-handling.md`. Then present to user for review (see `references/workflow.md` Step 7a).
 8. **Deliver** — Minimal summary: done + caveat + next step. No self-praise.
 
 ---
 
 ## Output Contracts
 
-Every delivered artifact must satisfy: no console errors, screenshot verified after final edit, maker self-check completed (not code review alone), all touched sections inspected (not just hero), viewport coverage (desktop + mobile), descriptive filename, fixed-size content scales (deck_stage for decks), tweaks panel for variants, and clear design quality (hierarchy + spacing + color + tone).
-
-## Content Guidelines
-
-No filler. Every element earns its place. Full rules in `references/content-guidelines.md`. Key: establish layout system upfront; text ≥24px slides / ≥12pt print / ≥44px hit targets; give 3+ variations as tweaks; placeholder > bad asset; use design system colors (oklch fallback); emoji only if brand uses them.
-
-## Typography & Spacing System
-
-Apply `references/typography-spacing-quick-ref.md` (always loaded) before every screenshot. Includes CJK/mixed-script guardrails, pre-screenshot checklist, font size scales, spacing scale, and CSS variables template.
-All vertical spacing must be multiples of 8px. Theory foundation: `references/typography-design-system.md`.
+Every delivered artifact must satisfy: no console errors, screenshot verified after final edit, maker self-check completed (not code review alone), all touched sections inspected (not just hero), viewport coverage (desktop + mobile), descriptive filename, fixed-size content scales (deck_stage for decks), tweaks panel for variants, clear design quality (hierarchy + spacing + color + tone), and all `references/core-constraints.md` §4 delivery checklist items passed.
 
 ## Slide and Screen Labels
 

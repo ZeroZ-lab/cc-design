@@ -37,6 +37,42 @@ This workflow is the **execution process**. The 8-layer framework (`design-think
 
 Treat runtime loading as visible work, not invisible thought. `load-manifest.json` is the source of truth for route bundles, checkpoint bundles, and optional inspiration bundles. Bundle matching is done by an Agent subagent that reads the catalog from `scripts/generate-bundle-catalog.mjs` and semantically matches the user's prompt. `scripts/resolve-load-bundles.mjs` is kept as a keyword-based fallback.
 
+### Agent Subagent Prompt Template
+
+When routing via the Agent tool (subagent_type `general-purpose`), use this prompt:
+
+```
+Read the bundle catalog by running:
+  node <skill-dir>/scripts/generate-bundle-catalog.mjs
+Then read <skill-dir>/load-manifest.json for bundle details (references/templates/scripts).
+
+Given the user's request: "<user request>"
+Confirmed routing facts (include only what you know):
+- output_type: ...
+- task_state: ...
+- context: ...
+- constraints: ...
+- primary_risk: ...
+
+Match only the remaining unresolved intent against the catalog. Return JSON:
+{
+  "taskTypes": ["matched-name", ...],
+  "optionalInspirations": ["matched-name", ...]
+}
+
+Rules:
+- Match semantic intent, not just keywords — consider Chinese equivalents, indirect intent, and paraphrases
+- Do not repeat bundles already locked by the confirmed routing facts
+- Only use bundle names that appear in the catalog output — never invent names
+- A prompt can match 0 or more bundles in each category
+- Do NOT match checkpoints — those are set by the calling skill based on workflow context
+```
+
+If the Agent tool is unavailable, fall back to:
+```bash
+node <skill-dir>/scripts/resolve-load-bundles.mjs --prompt "<user request>"
+```
+
 Rules:
 - announce before reading runtime references or copying templates
 - use the exact line format: `Load: because=<reason> loaded=<comma-separated paths>`
@@ -55,13 +91,16 @@ Bundle classes:
 Use a two-stage route instead of loading every plausible reference up front.
 
 **Stage 1: Base-required load**
-- always load `all-design-tasks`
+- always load `all-design-tasks`(含 `core-constraints.md`,第一位)
 - if the task is new or underspecified, also load `question-first-delivery`
 
-**Stage 2: Route-shaping questions**
-- ask the fixed question batch below
+**Stage 2: Domain → taskType 两步匹配**
+- Step 2a: 从 8 场景域(`load-manifest.json` 的 `domains` 键)识别主域(Output / Device / Brand / Export / Domain / Repair / Enhance / Strategy)
+- Step 2b: 域内 taskType 精确匹配
 - map those answers directly to `taskTypes` and `checkpoints`
 - only after explicit mapping, use semantic matching to supplement unresolved `taskTypes` or `optionalInspirations`
+
+**约束深度均衡化:** 所有约束深度 ≤1 的 taskType 已在 manifest 中补加 `references/core-constraints.md`,确保核心约束始终加载,消除 task type 质量不均。
 
 This keeps typography, layout, and visual/color theory in the default context while preserving conditional loading for brand, interaction, export, animation, device mockups, and review work.
 
@@ -161,7 +200,7 @@ When you are in the question-first path, ask these **route-shaping questions fir
   `explain process/flow + interactive → interactive-explainer (flow)`
   `compare/对比/versus + interactive → interactive-explainer (compare)`
   `decision tree/选型 + interactive → interactive-explainer (decision_tree)`
-  `分层架构/层次 + interactive → interactive-explainer (currently flow, v0.3 will add layer)`
+  `分层架构/层次 + interactive → interactive-explainer (flow)`
   `clickable prototype + product demo → interactive-prototype` (not explainer)
   `chart/data display → data-visualization` (not explainer)
   `iOS → mobile-mockup + before-ios-mockup`
@@ -436,3 +475,74 @@ Don't:
 - Brag about how good your design is
 
 Caveats + next steps, done.
+
+---
+
+## Checkpoint Details
+
+These checkpoints are announced during the Build and Verify steps (SKILL.md Steps 6-7). Announce `because=<checkpoint-name>` then load the specified references before proceeding.
+
+### Checkpoint: Before saying "done"
+
+After your final edit, render the artifact yourself. Do not stop at code inspection. For multi-section pages, inspect every section you touched — not just the first screen or hero. For responsive work, inspect at least one desktop viewport and one narrow/mobile viewport. Use full-page screenshots plus targeted section screenshots when needed.
+
+### Checkpoint: Deep critique / audit
+
+If the user asked for a critique, review, audit, or score, announce `because=deep-design-review`, then load `references/core-constraints.md`, `references/design-checklist.md`, `references/principle-review.md`, `references/verification-protocol.md`, and `references/typography-spacing-quick-ref.md` before judging the work.
+
+### Checkpoint: Before animation
+
+Announce `because=before-animation`, then load `references/animation-best-practices.md`, `references/animation-pitfalls.md`, AND `references/motion-contract.md`. Verify the 16 hard rules before writing any motion code.
+
+### Checkpoint: Before export
+
+Announce `because=before-export`, then load the relevant export reference. For editable PPTX, verify the 4 hard constraints in `references/editable-pptx.md` BEFORE starting HTML.
+
+### Checkpoint: Before iOS mockup
+
+Announce `because=before-ios-mockup`, then **MUST use `templates/ios_frame.jsx`**. Never handwrite Dynamic Island (124×36px, top:12), status bar, or home indicator. 99% of handwritten attempts have positioning bugs. Read the template, copy the entire `iosFrameStyles` + `IosFrame` component into your HTML, wrap your screen content in `<IosFrame>`. Do not write `.dynamic-island`, `.status-bar`, or `.home-indicator` classes yourself.
+
+### Checkpoint: Typography & Spacing
+
+Before taking screenshot, verify:
+- [ ] Body text: 16-18px (web) or 24-32px (slides) — never smaller
+- [ ] Line height: 1.5+ for body text, 1.2-1.3 for headings
+- [ ] Heading → body gap: 12-16px
+- [ ] Paragraph → paragraph: 16-24px
+- [ ] Image top margin: 24-32px (after text)
+- [ ] Image bottom margin: 12-16px (before caption)
+- [ ] Section breaks: 48-64px minimum
+- [ ] All spacing from scale: 4/8/12/16/24/32/48/64/96/128
+- [ ] All vertical spacing is multiple of 8px
+- [ ] Using only 2-3 font weights (400/600/700)
+
+This checklist is also available in `references/typography-spacing-quick-ref.md` Pre-Screenshot Checklist section.
+
+---
+
+## Step 7a: User Review Format
+
+After agent self-verify (Step 7), present results to user for approval before delivery:
+
+1. **Show Phase 2 screenshot(s)** — the rendered artifact after final edit
+2. **Present exit conditions results** — checked items vs failed items from `references/exit-conditions.md`
+3. **Wait for user decision**
+
+Format:
+```markdown
+Design Review
+Exit conditions:
+- [x] No console errors
+- [x] Responsive at desktop + mobile
+- [ ] Body font >= 16px — currently 14px, needs bump
+- [x] Visual hierarchy clear
+- [screenshot: <path>]
+
+Approve for delivery?
+1) Approve, deliver it
+2) Adjust [specific item] — re-enters fix loop
+3) Rethink direction — back to Step 1 (Understand)
+```
+
+On "Adjust" → re-enter Verify (Step 7), fix the failed item, re-run all phases.
+On "Rethink" → enter Iteration Gate (see above).

@@ -97,6 +97,21 @@ This is a **maker self-check**. The person who made the change must inspect the 
 6. If all pass → proceed to Phase 4 (User Review)
 ```
 
+### Screenshot Best Practices
+
+**Full page vs viewport vs element:**
+
+| 类型 | 用途 | 命令(MCP) |
+|---|---|---|
+| Full page | 长页面整体结构 | `browser_take_screenshot` with `fullPage: true` |
+| Viewport | 当前可见区(默认) | `browser_take_screenshot`(默认行为) |
+| Element | 特定 touched section | `browser_take_screenshot` with `element` ref |
+| High-DPI | retina 渲染验证 | `browser_resize` 后截图,或 `scale: "device"` |
+
+**Wait for animation to settle:** 截图前 `browser_wait_for` time 2s,确保 CSS/JS 动画完成。
+
+**Changed-region verification:** 对长页面的迭代编辑,touched sections 必须单独截图。若编辑了 `#pricing`、`#prompts`、footer,逐个 capture,而非假设 full-page 截图足够。
+
 ## Task-Type-Specific Verification
 
 In addition to the three-phase protocol, verify task-type-specific items:
@@ -112,6 +127,14 @@ In addition to the three-phase protocol, verify task-type-specific items:
 | Export | File opens correctly. Tool dependencies confirmed. |
 
 Full details in `references/exit-conditions.md`.
+
+## Phase 3: Design Excellence Checklist
+
+Phase 1-2 是技术性与视觉性检查。Phase 3 是客观质量检查,使用独立清单文件:
+
+→ **详见 `references/design-checklist.md`**(5 类客观检查:Accessibility / Cognitive Load / Consistency / Edge Cases;Anti-AI Slop 检查已迁至 `references/core-constraints.md` §2)。
+
+deep-design-review checkpoint 会同时加载 protocol 与 checklist。
 
 ## Phase 3.5: Cognitive Verification (Knowledge/Interactive Output)
 
@@ -149,3 +172,31 @@ Steps:
    - **Approve** → proceed to Deliver step
    - **Request changes** → re-enter fix loop (back to Phase 1), fix the specific item, re-run all phases
    - **Rethink direction** → trigger Iteration Gate in `references/workflow.md` (back to Step 1 — Understand)
+
+## Troubleshooting Verification Errors
+
+### White Screen
+
+Console 必有 error。按序检查:
+1. React+Babel script tag integrity hash 是否正确?(见 `references/react-setup.md`)
+2. 是否有 `const styles = {...}` 命名冲突?
+3. 跨文件组件是否 export 到 `window`?
+4. JSX 语法错误(babel.min.js 不报错——用非压缩版 babel.js)
+
+### Animation Stuttering
+
+- 用 Chrome DevTools Performance tab 录制
+- 排查 layout thrashing(频繁 reflow)
+- 优先 animate `transform` 和 `opacity`(GPU 加速)
+
+### Wrong Fonts
+
+- 检查 `@font-face` URL 可达性
+- 检查 fallback fonts
+- CJK 字体加载慢:先显示 fallback,加载后切换
+
+### Layout Misalignment
+
+- 确认全局 `box-sizing: border-box`
+- 确认 `* { margin: 0; padding: 0 }` reset
+- Chrome DevTools 开 gridlines 查看实际布局
