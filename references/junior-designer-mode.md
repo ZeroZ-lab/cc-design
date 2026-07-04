@@ -122,7 +122,7 @@ After the user is satisfied with the overall shape, polish:
 
 ## Pass 4: Verification + Delivery
 
-- Use Playwright to screenshot (see `references/verification.md`)
+- Use Playwright to screenshot (see `references/verification-protocol.md`)
 - Open in browser and visually confirm
 - Deliver with a minimal summary (see Summary Rules in `references/workflow.md`)
 

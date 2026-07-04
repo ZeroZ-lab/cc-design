@@ -319,7 +319,6 @@ The 8-layer design framework is cc-design's core methodology. It breaks design i
 
 **Existing Documents:**
 - `verification-protocol.md` - Verification protocol
-- `verification.md` - Verification checklist
 
 **Validation Criteria:**
 - [ ] Technically feasible (no console errors)

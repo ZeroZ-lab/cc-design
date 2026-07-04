@@ -214,7 +214,7 @@ Output: A structured explanation with interactive elements — not just a static
 /cc-design "Review and score this landing page design: landing.html"
 ```
 
-Loads: `design-checklist.md` + `principle-review.md` + `verification.md` + `typography-spacing-quick-ref.md` (via `deep-design-review` checkpoint)
+Loads: `design-checklist.md` + `principle-review.md` + `verification-protocol.md` + `typography-spacing-quick-ref.md` (via `deep-design-review` checkpoint)
 
 Output: A structured critique covering hierarchy, spacing, color, typography, interaction quality, and emotional fit. Scores each dimension and highlights specific issues with file/line references. Does NOT just say "looks good" — identifies at least 2-3 concrete improvement areas.
 

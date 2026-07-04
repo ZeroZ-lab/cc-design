@@ -518,7 +518,9 @@
     "before-delivery": {
       "description": "Final delivery verification, 最终交付前验证",
       "references": [
-        "references/verification-protocol.md"
+        "references/core-constraints.md",
+        "references/verification-protocol.md",
+        "references/exit-conditions.md"
       ]
     },
     "deep-design-review": {
@@ -527,10 +529,11 @@
         "anyKeywords": ["design review", "critique", "audit", "score", "scorecard", "review this design"]
       },
       "references": [
+        "references/core-constraints.md",
         "references/critique-guide.md",
         "references/design-checklist.md",
         "references/principle-review.md",
-        "references/verification.md",
+        "references/verification-protocol.md",
         "references/typography-spacing-quick-ref.md"
       ]
     }

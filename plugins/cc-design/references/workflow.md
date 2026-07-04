@@ -341,7 +341,7 @@ After the user is satisfied with the overall direction, polish:
 
 ### Verification + Delivery
 
-- Use Playwright to screenshot (see `references/verification.md`)
+- Use Playwright to screenshot (see `references/verification-protocol.md`)
 - Open in browser and visually confirm after the **final** edit
 - Review the full page **and** every changed section; do not stop at the first viewport
 - For responsive work, check at least desktop + one narrow/mobile viewport
