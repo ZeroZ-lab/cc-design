@@ -91,13 +91,16 @@ Bundle classes:
 Use a two-stage route instead of loading every plausible reference up front.
 
 **Stage 1: Base-required load**
-- always load `all-design-tasks`
+- always load `all-design-tasks`(含 `core-constraints.md`,第一位)
 - if the task is new or underspecified, also load `question-first-delivery`
 
-**Stage 2: Route-shaping questions**
-- ask the fixed question batch below
+**Stage 2: Domain → taskType 两步匹配**
+- Step 2a: 从 8 场景域(`load-manifest.json` 的 `domains` 键)识别主域(Output / Device / Brand / Export / Domain / Repair / Enhance / Strategy)
+- Step 2b: 域内 taskType 精确匹配
 - map those answers directly to `taskTypes` and `checkpoints`
 - only after explicit mapping, use semantic matching to supplement unresolved `taskTypes` or `optionalInspirations`
+
+**约束深度均衡化:** 所有约束深度 ≤1 的 taskType 已在 manifest 中补加 `references/core-constraints.md`,确保核心约束始终加载,消除 task type 质量不均。
 
 This keeps typography, layout, and visual/color theory in the default context while preserving conditional loading for brand, interaction, export, animation, device mockups, and review work.
 
@@ -377,7 +380,7 @@ After the user is satisfied with the overall direction, polish:
 
 ### Verification + Delivery
 
-- Use Playwright to screenshot (see `references/verification.md`)
+- Use Playwright to screenshot (see `references/verification-protocol.md`)
 - Open in browser and visually confirm after the **final** edit
 - Review the full page **and** every changed section; do not stop at the first viewport
 - For responsive work, check at least desktop + one narrow/mobile viewport
@@ -485,7 +488,7 @@ After your final edit, render the artifact yourself. Do not stop at code inspect
 
 ### Checkpoint: Deep critique / audit
 
-If the user asked for a critique, review, audit, or score, announce `because=deep-design-review`, then load `references/design-checklist.md`, `references/principle-review.md`, `references/verification.md`, and `references/typography-spacing-quick-ref.md` before judging the work.
+If the user asked for a critique, review, audit, or score, announce `because=deep-design-review`, then load `references/core-constraints.md`, `references/design-checklist.md`, `references/principle-review.md`, `references/verification-protocol.md`, and `references/typography-spacing-quick-ref.md` before judging the work.
 
 ### Checkpoint: Before animation
 

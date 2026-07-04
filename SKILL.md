@@ -90,9 +90,9 @@ All questions on Claude Code **MUST** use `AskUserQuestion` with structured opti
 
 ## Routing
 
-Use a two-stage route. Stage 1: always load `all-design-tasks`(`基础必载`,含 `references/core-constraints.md`)。新任务或欠定义任务:另载 `question-first-delivery` 并问下方 route-shaping questions。**Brief 已足够明确时跳过 question-first-delivery**。Stage 2: 7 场景域分组(`load-manifest.json` 的 `domains` 键),先选域再选域内 taskType。
+Use a two-stage route. Stage 1: always load `all-design-tasks`(`基础必载`,含 `references/core-constraints.md`)。新任务或欠定义任务:另载 `question-first-delivery` 并问下方 route-shaping questions。**Brief 已足够明确时跳过 question-first-delivery**。Stage 2: 8 场景域分组(`load-manifest.json` 的 `domains` 键),先选域再选域内 taskType。
 
-### 7 Scene Domains
+### 8 Scene Domains
 
 | 域 | 含义 | taskType 数 |
 |---|---|---|
