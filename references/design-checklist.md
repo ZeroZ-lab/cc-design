@@ -1,9 +1,10 @@
 # Design Quality Checklist
 
-> **Load when:** Every design review (auto-run), final delivery, quality audit
-> **Skip when:** Never (always check)
+> **Appendix to:** `references/verification-protocol.md` Phase 3 (Design Excellence)
+> **Load when:** Deep design review, final delivery quality audit, critique/scoring
 > **Why it matters:** Catches objective quality issues that subjective reviews miss
-> **Typical failure it prevents:** Accessibility violations, inconsistency, cognitive overload, AI slop
+> **Typical failure it prevents:** Accessibility violations, inconsistency, cognitive overload
+> **Note:** Anti-AI Slop checks have moved to `references/core-constraints.md` §2 (always loaded)
 
 This document provides objective, measurable quality checks. Unlike principle-based review (subjective judgment) or 5-dimension review (holistic scoring), this is a binary pass/fail checklist.
 
@@ -318,81 +319,10 @@ Check if they follow a ratio (e.g., 16, 20, 25, 31, 39, 49)
 
 ## Category 4: Anti-AI Slop
 
-### 4.1 Visual Clichés
+**Moved to** `references/core-constraints.md` §2 — AI Slop 速查表(12 项,始终加载)。
 
-**Rule:** Avoid overused AI-generated imagery
-
-**Check:**
-- [ ] No gradient spheres/orbs
-- [ ] No digital rain / matrix effect
-- [ ] No generic circuit boards
-- [ ] No robot faces / humanoid robots
-- [ ] No abstract "tech" backgrounds (blue particles, glowing lines)
-- [ ] No low-poly geometric shapes (unless brand-appropriate)
-
-**Common failures:**
-- Gradient sphere to represent AI
-- Blue circuit board background
-- Matrix-style digital rain
-
-**Severity:** Medium (originality issue)
-
----
-
-### 4.2 Typography Clichés
-
-**Rule:** Avoid overused fonts
-
-**Check:**
-- [ ] Not using Poppins for everything
-- [ ] Not using Montserrat for everything
-- [ ] Not using Roboto for everything (unless Material Design)
-- [ ] Font choice matches brand personality
-- [ ] Not using "tech startup" font stack by default
-
-**Common failures:**
-- Poppins for every project (no differentiation)
-- Default to Montserrat without considering alternatives
-
-**Severity:** Low (originality issue)
-
----
-
-### 4.3 Animation Clichés
-
-**Rule:** Avoid unnecessary showoff animations
-
-**Check:**
-- [ ] No 2-second animations on every interaction
-- [ ] No parallax scrolling for the sake of it
-- [ ] No particle effects (unless brand-appropriate)
-- [ ] No "floating" elements (unless functional)
-- [ ] Animations serve purpose (feedback, guidance, delight)
-
-**Common failures:**
-- 2-second fade-in on every element
-- Parallax scrolling that makes users dizzy
-- Floating shapes that distract from content
-
-**Severity:** Medium (usability issue)
-
----
-
-### 4.4 Layout Clichés
-
-**Rule:** Avoid generic templates
-
-**Check:**
-- [ ] Not using "hero section + 3 features + testimonials + CTA" template
-- [ ] Not using "centered logo + hamburger menu" without considering alternatives
-- [ ] Layout serves content (not template-driven)
-- [ ] Unique structure (not Wix/Squarespace template)
-
-**Common failures:**
-- Every landing page looks the same
-- Template-driven design (not content-driven)
-
-**Severity:** Low (originality issue)
+完整规则与 CSS 示例:`references/content-guidelines.md`。
+分场景反模式:`references/anti-patterns/{color,layout,typography,interaction}.md`。
 
 ---
 
