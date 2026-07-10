@@ -158,3 +158,101 @@ choco install ffmpeg         # Windows
 ## License
 
 MIT
+
+
+## FAQ
+
+### What is cc-design?
+
+cc-design is a **high-fidelity HTML design skill for Claude Code and Codex**. It creates landing pages, slide decks, interactive prototypes, animations, design systems, and more — with built-in quality guardrails and design thinking.
+
+### What can I create with cc-design?
+
+| Output Type | Description |
+|-------------|-------------|
+| Landing pages | Marketing pages, product showcases, hero sections |
+| Slide decks | Presentations, pitch decks, board meeting slides |
+| Interactive prototypes | Clickable UI flows, app walkthroughs |
+| Interactive explainers | Flow diagrams, comparisons, decision trees |
+| Wireframes | Low-fidelity layout sketches |
+| Animations | Logo reveals, motion graphics, UI transitions |
+| Design systems | Component libraries, style guides |
+| Motion studies | Animation timing, easing experiments |
+
+### How do I install cc-design?
+
+**Claude Code:**
+```bash
+/plugin marketplace add ZeroZ-lab/cc-design
+/plugin install cc-design@cc-design
+/reload-plugins
+```
+
+**Codex:**
+```bash
+/plugin marketplace add ZeroZ-lab/cc-design
+/plugin install cc-design@cc-design
+/reload-plugins
+```
+
+### What design styles are available?
+
+20 philosophy schools across 5 traditions:
+
+| Tradition | Schools |
+|-----------|---------|
+| Information Architects | Tufte, Wurman, Mau |
+| Motion Poets | Pentagram, Takram, Locomotive |
+| Minimalists | Experimental Jetset, Mu, Hara |
+| Experimental Vanguard | Sagmeister, Carson, Vasava |
+| Eastern Philosophy | Kenya Hara, Yang Jie |
+
+Use them like: `"Use the Pentagram style for this infographic"`
+
+### Can I clone brand styles?
+
+Yes! Progressive loading of 68+ brand design systems from [getdesign.md](https://getdesign.md).
+
+Examples:
+```
+"Create a pricing page with Stripe's aesthetic"
+"Notion-style kanban board"
+"Mix Vercel's minimalism with Linear's purple accents"
+```
+
+### What export formats are supported?
+
+| Format | Options |
+|--------|---------|
+| PDF | Multi-file, single-file |
+| PPTX | Image-based, editable |
+| MP4 | Video export |
+| HTML | Inline, standalone |
+
+### What quality guardrails are built-in?
+
+- **Anti-AI slop rules** — banned gradients, emoji spam, generic layouts
+- **Typography system** — consistent fonts, spacing scale
+- **Screenshot verification** — mandatory visual check before delivery
+- **5-dimension scoring** — philosophy, hierarchy, craft, functionality, originality
+
+### Is cc-design free?
+
+Yes! cc-design is **free and open source** under the MIT License.
+
+### How do I contribute?
+
+1. Fork the repo, create a feature branch
+2. Keep `SKILL.md` under 200 lines
+3. Add references to `load-manifest.json`
+4. Run the lint scripts: `node scripts/lint-load-manifest.mjs`
+5. Submit a pull request
+
+### Where can I get help?
+
+| Resource | Link |
+|----------|------|
+| Demo Gallery | [cc-design-demo.vercel.app](https://cc-design-demo.vercel.app) |
+| Examples | [EXAMPLES.md](./EXAMPLES.md) |
+| Design Styles | [references/design-styles.md](./references/design-styles.md) |
+| Issues | [GitHub Issues](https://github.com/ZeroZ-lab/cc-design/issues) |
